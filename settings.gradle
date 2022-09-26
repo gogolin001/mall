@@ -1,8 +1,6 @@
 rootProject.name = 'mall'
 include 'mall-common'
 include 'mall-admin'
-include 'mall-admin:mall-mbg'
-findProject(':mall-admin:mall-mbg')?.name = 'mall-mbg'
 include 'mall-mbg'
 include 'mall-portal'
 include 'mall-search'

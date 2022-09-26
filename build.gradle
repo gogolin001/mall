@@ -36,6 +36,9 @@ subprojects {
         javaxServletVersion = "4.0.1"
         commonsLang3Version = "3.12.0"
         jetcacheVersion = "2.7.0"
+        shardingsphereVersion = "5.2.0"
+        lombokVersion = "1.18.24"
+        hutoolVersion = "5.8.7"
     }
 
     repositories {
@@ -43,19 +46,23 @@ subprojects {
     }
 
     dependencies {
-        implementation ("javax.servlet:javax.servlet-api:$javaxServletVersion")
-        implementation("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
-        // Cache
-        implementation("com.alicp.jetcache:jetcache-starter-redis:$jetcacheVersion")
-        // Mybatis
-        implementation ("com.baomidou:mybatis-plus-boot-starter:$mybatisPlusStarterVersion")
-        // JDBC Driver
-        implementation("mysql:mysql-connector-java:$mysqlConnectorVersion")
-        // JSON
-        implementation("com.alibaba:fastjson:$fastjsonVersion")
-        // Apache Commons
-        implementation("org.apache.commons:commons-lang3:$commonsLang3Version")
+        
+        implementation(
+            "javax.servlet:javax.servlet-api:$javaxServletVersion",
+            "com.alibaba:fastjson:$fastjsonVersion",
+            "org.apache.commons:commons-lang3:$commonsLang3Version",
+            "cn.hutool:hutool-all:$hutoolVersion",
+            "org.springframework.boot:spring-boot-starter-web:$springBootVersion",
+            "com.alicp.jetcache:jetcache-starter-redis:$jetcacheVersion",
+            "com.baomidou:mybatis-plus-boot-starter:$mybatisPlusStarterVersion",
+            "mysql:mysql-connector-java:$mysqlConnectorVersion",
+            "org.apache.shardingsphere:shardingsphere-jdbc-core-spring-boot-starter:$shardingsphereVersion",
+        )
+        compileOnly("org.projectlombok:lombok:$lombokVersion")
+        annotationProcessor("org.projectlombok:lombok:$lombokVersion")
         // 单元测试
+        testCompileOnly("org.projectlombok:lombok:$lombokVersion")
+	    testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
         testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
         testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
