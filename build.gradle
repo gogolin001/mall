@@ -1,0 +1,72 @@
+buildscript {
+    ext {
+        springBootVersion = '2.7.3'
+    }
+    repositories {
+        maven{ url 'https://maven.aliyun.com/nexus/content/groups/public/'}
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+// 所有模块/项目的通用配置
+allprojects {
+    group 'com.lam'
+    version '1.0-SNAPSHOT'
+    apply plugin: 'idea'
+}
+
+
+// 子模块/项目的统一配置
+subprojects {
+    apply plugin: 'java'
+    // 指定JDK版本
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+    // 指定编码格式
+    [compileJava,compileTestJava,javadoc]*.options*.encoding = 'UTF-8'
+
+    ext {//依赖版本
+        springBootVersion = "2.7.3"
+        mysqlConnectorVersion = "8.0.30"
+        mybatisPlusStarterVersion = "3.5.2"
+        fastjsonVersion = "2.0.14"
+        junitVersion = "5.9.0"
+        javaxServletVersion = "4.0.1"
+        commonsLang3Version = "3.12.0"
+        jetcacheVersion = "2.7.0"
+    }
+
+    repositories {
+        maven{ url 'https://maven.aliyun.com/nexus/content/groups/public/'}
+    }
+
+    dependencies {
+        implementation ("javax.servlet:javax.servlet-api:$javaxServletVersion")
+        implementation("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
+        // Cache
+        implementation("com.alicp.jetcache:jetcache-starter-redis:$jetcacheVersion")
+        // Mybatis
+        implementation ("com.baomidou:mybatis-plus-boot-starter:$mybatisPlusStarterVersion")
+        // JDBC Driver
+        implementation("mysql:mysql-connector-java:$mysqlConnectorVersion")
+        // JSON
+        implementation("com.alibaba:fastjson:$fastjsonVersion")
+        // Apache Commons
+        implementation("org.apache.commons:commons-lang3:$commonsLang3Version")
+        // 单元测试
+        testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
+        testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+    }
+
+    configurations {
+        //移除spring boot 默认logger依赖
+        all*.exclude module: 'spring-boot-starter-logging'
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
