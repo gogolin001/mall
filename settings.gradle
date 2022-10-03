@@ -4,5 +4,4 @@ include 'mall-admin'
 include 'mall-mbg'
 include 'mall-portal'
 include 'mall-search'
-include 'mall-security'
 
