@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.7.3'
+        springBootVersion = '2.7.4'
     }
     repositories {
         maven{ url 'https://maven.aliyun.com/nexus/content/groups/public/'}
@@ -28,7 +28,7 @@ subprojects {
     [compileJava,compileTestJava,javadoc]*.options*.encoding = 'UTF-8'
 
     ext {//依赖版本
-        springBootVersion = "2.7.3"
+        springBootVersion = "2.7.4"
         mysqlConnectorVersion = "8.0.30"
         mybatisPlusStarterVersion = "3.5.2"
         fastjsonVersion = "2.0.14"
@@ -46,7 +46,8 @@ subprojects {
         springfoxVersion = "3.0.0"
         knife4jVersion = "3.0.3"
         logstashLogbackVersion = "7.2"
-        jjwtVerson = "0.9.1"
+        jjwtVersion = "0.9.1"
+        lettuceVersion = "6.2.1.RELEASE"
     }
 
     repositories {
@@ -64,12 +65,15 @@ subprojects {
                 // 常用库
                 "cn.hutool:hutool-all:$hutoolVersion",
                 "net.logstash.logback:logstash-logback-encoder:$logstashLogbackVersion",
+                'ch.qos.logback:logback-classic:1.4.3',
+                'org.slf4j:slf4j-api:2.0.3',
                 // web
                 "org.springframework.boot:spring-boot-starter-web:$springBootVersion",
                 "org.springframework.boot:spring-boot-starter-aop:$springBootVersion",
                 // 缓存
-                "com.alicp.jetcache:jetcache-starter-redis:$jetcacheVersion",
-                "org.springframework.data:spring-data-redis:$springBootVersion",
+                "io.lettuce:lettuce-core:$lettuceVersion",
+                "com.alicp.jetcache:jetcache-starter-redis-lettuce:$jetcacheVersion",
+                "org.springframework.boot:spring-boot-starter-data-redis:$springBootVersion",
                 // 数据库
                 "com.baomidou:mybatis-plus-boot-starter:$mybatisPlusStarterVersion",
                 "mysql:mysql-connector-java:$mysqlConnectorVersion",
@@ -85,9 +89,11 @@ subprojects {
                 "com.alipay.sdk:alipay-easysdk:$alipayEasyVersion",
                 // 在线文档
                 "io.springfox:springfox-boot-starter:$springfoxVersion",
-                "com.github.xiaoymin:knife4j-spring-boot-starter:$knife4jVersion",
+                'io.swagger:swagger-models:1.6.7',
+                'io.swagger:swagger-annotations:1.6.7',
+                //"com.github.xiaoymin:knife4j-spring-boot-starter:$knife4jVersion",
                 // 权限
-                "io.jsonwebtoken:jjwt:$jjwtVerson",
+                "io.jsonwebtoken:jjwt:$jjwtVersion",
                 "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
 
 

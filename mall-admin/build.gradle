@@ -13,10 +13,11 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 
+    implementation project(":mall-common")
+
     implementation(
             "org.springframework.boot:spring-boot-starter-web" ,
-            "org.springframework.data:spring-data-redis:",
-
+            "org.springframework.boot:spring-boot-starter-data-redis",
     )
 }
 
