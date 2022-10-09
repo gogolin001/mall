@@ -2,14 +2,70 @@ spring:
   output:
     ansi:
       enabled: always
-#  autoconfigure:
-#    exclude:
-#      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration,
-#      - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
+  application:
+    name: mall-admin
+  profiles:
+    active: dev #默认为开发环境
+  servlet:
+    multipart:
+      enabled: true #默认支持文件上传.
+      max-file-size: 100MB #最大支持文件大小
+      max-request-size: 100MB #最大支持请求大小
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   redis:
     database: 0
     host: dev.jmlide.com
     password: jmlide@redis963
     port: 16379
     timeout: 100ms
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://dev.jmlide.com:35458/mall?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&useSSL=false&serverTimezone=GMT%2B8
+    username: jmlide
+    password: w4Qa1sKe?gr6ye
+    hikari:
+      minimum-idle: 10 # 连接池中允许的最小连接数。缺省值：10
+      maximum-pool-size: 100 # 连接池中允许的最大连接数。缺省值：10
+      auto-commit: true # 自动提交
+      idle-timeout: 30000 # 一个连接idle状态的最大时长（毫秒），超时则被释放（retired），缺省:10分钟
+      pool-name: FlyduckHikariCP  # 连接池名字
+      max-lifetime: 1800000 # 一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒
+      connection-timeout: 30000 # 等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 缺省:30秒
+      connection-test-query: SELECT 1 # 数据库连接测试语句
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: mall-admin-secret #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24*7)
+  tokenHead: 'Bearer '  #JWT负载中拿到开头
+
+redis:
+  database: mall
+  key:
+    admin: 'ums:admin'
+    resourceList: 'ums:resourceList'
+  expire:
+    common: 86400 # 24小时
+secure:
+  ignored:
+    urls: #安全路径白名单
+      - /swagger-ui/
+      - /swagger-resources/**
+      - /**/v2/api-docs
+      - /**/*.html
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.map
+      - /favicon.ico
+      - /actuator/**
+      - /druid/**
+      - /admin/login
+      - /admin/register
+      - /admin/info
+      - /admin/logout
+      - /minio/upload
+
 

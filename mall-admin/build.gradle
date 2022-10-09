@@ -1,26 +1,37 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '2.7.4'
+    id 'io.spring.dependency-management' version '1.0.14.RELEASE'
 }
 
-group 'com.lam'
-version '1.0-SNAPSHOT'
+group = 'com.lam.mall.admin'
+version = '1.0-SNAPSHOT'
+sourceCompatibility = '17'
 
-repositories {
-    mavenCentral()
-}
 
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 
     implementation project(":mall-common")
+    //implementation project(":mall-mbg")
 
-    implementation(
-            "org.springframework.boot:spring-boot-starter-web" ,
-            "org.springframework.boot:spring-boot-starter-data-redis",
-    )
+    implementation "org.springframework.boot:spring-boot-starter-tomcat"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-data-redis"
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation "mysql:mysql-connector-java:$mysqlConnectorVersion"
+    //implementation "io.lettuce:lettuce-core:$lettuceVersion"
+    //implementation "com.alicp.jetcache:jetcache-starter-redis-lettuce:$jetcacheVersion"
+
+    implementation "io.springfox:springfox-boot-starter:$springfoxVersion"
+    implementation 'io.swagger:swagger-models:1.6.7'
+    implementation 'io.swagger:swagger-annotations:1.6.7'
+
+
 }
 
-test {
+tasks.named('test') {
     useJUnitPlatform()
 }

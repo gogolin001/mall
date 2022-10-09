@@ -10,10 +10,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-}
-
-test {
-    useJUnitPlatform()
+    implementation "com.baomidou:mybatis-plus-boot-starter:$mybatisPlusStarterVersion"
+    implementation "mysql:mysql-connector-java:$mysqlConnectorVersion"
+    implementation "org.apache.shardingsphere:shardingsphere-jdbc-core-spring-boot-starter:$shardingsphereVersion"
 }

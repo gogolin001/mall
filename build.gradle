@@ -1,31 +1,11 @@
-buildscript {
-    ext {
-        springBootVersion = '2.7.4'
-    }
-    repositories {
-        maven{ url 'https://maven.aliyun.com/nexus/content/groups/public/'}
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
-}
-
 // 所有模块/项目的通用配置
 allprojects {
-    group 'com.lam'
-    version '1.0-SNAPSHOT'
-    apply plugin: 'idea'
+
 }
 
 
 // 子模块/项目的统一配置
 subprojects {
-    apply plugin: 'java'
-    // 指定JDK版本
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-    // 指定编码格式
-    [compileJava,compileTestJava,javadoc]*.options*.encoding = 'UTF-8'
 
     ext {//依赖版本
         springBootVersion = "2.7.4"
@@ -38,7 +18,7 @@ subprojects {
         jetcacheVersion = "2.7.0"
         shardingsphereVersion = "5.2.0"
         lombokVersion = "1.18.24"
-        hutoolVersion = "5.8.7"
+        hutoolVersion = "5.8.8"
         easyExcelVersion = "3.1.1"
         wxjavaVersion = "4.4.0"
         alipayVersion = "4.34.0.ALL"
@@ -54,8 +34,7 @@ subprojects {
         maven{ url 'https://maven.aliyun.com/nexus/content/groups/public/'}
     }
 
-    dependencies {
-        
+    /*dependencies {
         implementation(
                 "javax.servlet:javax.servlet-api:$javaxServletVersion",
                 // json
@@ -65,8 +44,8 @@ subprojects {
                 // 常用库
                 "cn.hutool:hutool-all:$hutoolVersion",
                 "net.logstash.logback:logstash-logback-encoder:$logstashLogbackVersion",
-                'ch.qos.logback:logback-classic:1.4.3',
-                'org.slf4j:slf4j-api:2.0.3',
+                //'ch.qos.logback:logback-classic:1.4.3',
+                //'org.slf4j:slf4j-api:2.0.3',
                 // web
                 "org.springframework.boot:spring-boot-starter-web:$springBootVersion",
                 "org.springframework.boot:spring-boot-starter-aop:$springBootVersion",
@@ -107,16 +86,13 @@ subprojects {
         testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
         testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
-    }
+    }*/
 
     configurations {
         //移除spring boot 默认logger依赖
         all*.exclude module: 'spring-boot-starter-logging'
     }
 
-    test {
-        useJUnitPlatform()
-    }
 
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
