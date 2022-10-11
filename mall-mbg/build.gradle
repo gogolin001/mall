@@ -2,15 +2,19 @@ plugins {
     id 'java'
 }
 
-group 'com.lam'
+group 'com.lam.mall.mbg'
 version '1.0-SNAPSHOT'
 
-repositories {
-    mavenCentral()
-}
 
 dependencies {
+    compileOnly("org.projectlombok:lombok:$lombokVersion")
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+
     implementation "com.baomidou:mybatis-plus-boot-starter:$mybatisPlusStarterVersion"
     implementation "mysql:mysql-connector-java:$mysqlConnectorVersion"
     implementation "org.apache.shardingsphere:shardingsphere-jdbc-core-spring-boot-starter:$shardingsphereVersion"
+
+    implementation "io.springfox:springfox-boot-starter:$springfoxVersion"
+    implementation 'io.swagger:swagger-models:1.6.7'
+    implementation 'io.swagger:swagger-annotations:1.6.7'
 }
