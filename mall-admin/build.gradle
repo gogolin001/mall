@@ -24,8 +24,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation "mysql:mysql-connector-java:$mysqlConnectorVersion"
     implementation "org.opengauss:opengauss-jdbc:$opengaussVersion"
-    //implementation "io.lettuce:lettuce-core:$lettuceVersion"
-    //implementation "com.alicp.jetcache:jetcache-starter-redis-lettuce:$jetcacheVersion"
+    implementation "com.alicp.jetcache:jetcache-starter-redis-lettuce:$jetcacheVersion"
     implementation "cn.hutool:hutool-all:$hutoolVersion"
     implementation "com.baomidou:mybatis-plus-boot-starter:$mybatisPlusStarterVersion"
 

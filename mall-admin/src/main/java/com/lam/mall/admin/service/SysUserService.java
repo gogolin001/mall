@@ -1,6 +1,8 @@
 package com.lam.mall.admin.service;
 
 import cn.hutool.core.collection.CollUtil;
+import com.alicp.jetcache.anno.CacheType;
+import com.alicp.jetcache.anno.Cached;
 import com.lam.mall.admin.bo.AdminUserDetails;
 import com.lam.mall.mbg.maper.SysUserMapper;
 import com.lam.mall.mbg.model.SysUser;
@@ -20,21 +22,25 @@ public class SysUserService {
     @Autowired
     private SysUserMapper userMapper;
 
-
+    /**
+     * 根据用户名获取用户
+     * @param username
+     * @return
+     */
+    @Cached(name="user-", key="#username", expire = 3600, cacheType = CacheType.BOTH)
     public SysUser getAdminByUsername(String username) {
-        /* 从缓存中取如果缓存中有直接返回
-        SysUser admin = getCacheService().getAdmin(username);
-        if(admin!=null) return  admin;
-        */
         SysUser admin = userMapper.SelectByUserName(username);
         if (admin != null) {
-            // 设置缓存
-            // getCacheService().setAdmin(admin);
             return admin;
         }
         return null;
     }
 
+    /**
+     * 根据用户id获取具有权限的接口（同时根据用户角色返回）
+     * @param adminId
+     * @return
+     */
     public List<String> getResourceList(Long adminId) {
         List<String> resourceList = getCacheService().getResourceList(adminId);
         if(CollUtil.isNotEmpty(resourceList)){
