@@ -1,5 +1,7 @@
 package com.lam.mall.mbg.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +11,8 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class SysPermission implements Serializable {
+public class SysAuthority implements Serializable {
+    @TableId(type = IdType.ASSIGN_ID,value = "id")
     private Long id;
 
     @ApiModelProperty(value = "父级权限id")

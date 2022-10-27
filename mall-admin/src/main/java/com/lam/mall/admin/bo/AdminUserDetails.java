@@ -17,17 +17,16 @@ public class AdminUserDetails implements UserDetails {
     //后台用户
     private SysUser sysUser;
     //拥有资源列表
-    private List<String> resourceList;
+    private List<String> authorityList;
     public AdminUserDetails(SysUser sysUser, List<String> resourceList) {
         this.sysUser = sysUser;
-        this.resourceList = resourceList;
+        this.authorityList = resourceList;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         //返回当前用户的角色
-        return resourceList.stream()
-                .map(role ->new SimpleGrantedAuthority(role.getId()+":"+role.getName())).toList();
+        return authorityList.stream().map(authority ->new SimpleGrantedAuthority(authority)).toList();
     }
 
     @Override

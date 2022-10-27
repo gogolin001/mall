@@ -1,5 +1,7 @@
 package com.lam.mall.mbg.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class SysUser implements Serializable {
+    @TableId(type = IdType.ASSIGN_ID,value = "id")
     private Long id;
 
     private String username;

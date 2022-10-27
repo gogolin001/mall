@@ -1,10 +1,9 @@
 package com.lam.mall.admin.config;
 
-import com.lam.mall.mbg.model.SysPermission;
-import com.lam.mall.mbg.model.UmsResource;
+import com.lam.mall.mbg.model.SysAuthority;
 import com.lam.mall.common.component.DynamicSecurityService;
 import com.lam.mall.admin.service.SysUserService;
-import com.lam.mall.admin.service.SysPermissionService;
+import com.lam.mall.admin.service.SysAuthorityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +24,7 @@ public class MallSecurityConfig {
     @Autowired
     private SysUserService userService;
     @Autowired
-    private SysPermissionService permissionService;
+    private SysAuthorityService authorityService;
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -37,8 +36,8 @@ public class MallSecurityConfig {
     public DynamicSecurityService dynamicSecurityService() {
         return () -> {
             Map<String, ConfigAttribute> map = new ConcurrentHashMap<>();
-            List<SysPermission> resourceList = permissionService.listAll();
-            for (SysPermission resource : resourceList) {
+            List<SysAuthority> resourceList = authorityService.listAll();
+            for (SysAuthority resource : resourceList) {
                 map.put(resource.getBgUri(), new org.springframework.security.access.SecurityConfig(resource.getId() + ":" + resource.getName()));
             }
             return map;
