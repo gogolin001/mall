@@ -9,23 +9,25 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class UmsResource implements Serializable {
+public class SysRole implements Serializable {
     private Long id;
 
-    @ApiModelProperty(value = "创建时间")
-    private LocalDateTime createTime;
-
-    @ApiModelProperty(value = "资源名称")
+    @ApiModelProperty(value = "名称")
     private String name;
-
-    @ApiModelProperty(value = "资源URL")
-    private String url;
 
     @ApiModelProperty(value = "描述")
     private String description;
 
-    @ApiModelProperty(value = "资源分类ID")
-    private Long categoryId;
+    @ApiModelProperty(value = "后台用户数量")
+    private Integer adminCount;
+
+    @ApiModelProperty(value = "创建时间")
+    private LocalDateTime createTime;
+
+    @ApiModelProperty(value = "启用状态：0->禁用；1->启用")
+    private Integer status;
+
+    private Integer sort;
 
     private static final long serialVersionUID = 1L;
 
@@ -36,11 +38,12 @@ public class UmsResource implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", createTime=").append(createTime);
         sb.append(", name=").append(name);
-        sb.append(", url=").append(url);
         sb.append(", description=").append(description);
-        sb.append(", categoryId=").append(categoryId);
+        sb.append(", adminCount=").append(adminCount);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", status=").append(status);
+        sb.append(", sort=").append(sort);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

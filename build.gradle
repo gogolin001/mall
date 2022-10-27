@@ -8,7 +8,7 @@ allprojects {
 subprojects {
 
     ext {//依赖版本
-        springBootVersion = "2.7.4"
+        springBootVersion = "2.7.5"
         mysqlConnectorVersion = "8.0.30"
         mybatisPlusStarterVersion = "3.5.2"
         fastjsonVersion = "2.0.14"
@@ -28,6 +28,7 @@ subprojects {
         logstashLogbackVersion = "7.2"
         jjwtVersion = "0.9.1"
         lettuceVersion = "6.2.1.RELEASE"
+        opengaussVersion = "3.1.0"
     }
 
     repositories {

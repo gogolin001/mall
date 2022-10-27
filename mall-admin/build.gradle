@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.7.4'
+    id 'org.springframework.boot' version '2.7.5'
     id 'io.spring.dependency-management' version '1.0.14.RELEASE'
 }
 
@@ -23,13 +23,17 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation "mysql:mysql-connector-java:$mysqlConnectorVersion"
+    implementation "org.opengauss:opengauss-jdbc:$opengaussVersion"
     //implementation "io.lettuce:lettuce-core:$lettuceVersion"
     //implementation "com.alicp.jetcache:jetcache-starter-redis-lettuce:$jetcacheVersion"
+    implementation "cn.hutool:hutool-all:$hutoolVersion"
+    implementation "com.baomidou:mybatis-plus-boot-starter:$mybatisPlusStarterVersion"
 
     implementation "io.springfox:springfox-boot-starter:$springfoxVersion"
     implementation 'io.swagger:swagger-models:1.6.7'
     implementation 'io.swagger:swagger-annotations:1.6.7'
 
+    annotationProcessor 'org.springframework:spring-context-indexer'
 
 }
 

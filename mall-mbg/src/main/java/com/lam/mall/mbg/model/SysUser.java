@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class UmsAdmin implements Serializable {
+public class SysUser implements Serializable {
     private Long id;
 
     private String username;

@@ -21,9 +21,11 @@ spring:
     port: 16379
     timeout: 100ms
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://dev.jmlide.com:35458/mall?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&useSSL=false&serverTimezone=GMT%2B8
+    #driver-class-name: com.mysql.cj.jdbc.Driver
+    #url: jdbc:mysql://dev.jmlide.com:35458/mall?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&useSSL=false&serverTimezone=GMT%2B8
+    driver-class-name: org.opengauss.Driver
+    url: jdbc:opengauss://dev.jmlide.com:15432/mall
     username: jmlide
     password: w4Qa1sKe?gr6ye
     hikari:
@@ -35,6 +37,10 @@ spring:
       max-lifetime: 1800000 # 一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒
       connection-timeout: 30000 # 等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 缺省:30秒
       connection-test-query: SELECT 1 # 数据库连接测试语句
+  main:
+    lazy-initialization: true #延迟初始化
+  jmx:
+    enabled: false #关闭JMX
 jwt:
   tokenHeader: Authorization #JWT存储的请求头
   secret: mall-admin-secret #JWT加解密使用的密钥

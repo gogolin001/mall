@@ -1,7 +1,6 @@
 package com.lam.mall.admin.bo;
 
-import com.lam.mall.mbg.model.UmsAdmin;
-import com.lam.mall.mbg.model.UmsResource;
+import com.lam.mall.mbg.model.SysUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,11 +15,11 @@ import java.util.stream.Collectors;
  */
 public class AdminUserDetails implements UserDetails {
     //后台用户
-    private UmsAdmin umsAdmin;
+    private SysUser sysUser;
     //拥有资源列表
-    private List<UmsResource> resourceList;
-    public AdminUserDetails(UmsAdmin umsAdmin,List<UmsResource> resourceList) {
-        this.umsAdmin = umsAdmin;
+    private List<String> resourceList;
+    public AdminUserDetails(SysUser sysUser, List<String> resourceList) {
+        this.sysUser = sysUser;
         this.resourceList = resourceList;
     }
 
@@ -34,12 +33,12 @@ public class AdminUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return umsAdmin.getPassword();
+        return sysUser.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return umsAdmin.getUsername();
+        return sysUser.getUsername();
     }
 
     @Override
@@ -59,6 +58,6 @@ public class AdminUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return umsAdmin.getStatus().equals(1);
+        return sysUser.getStatus().equals(1);
     }
 }

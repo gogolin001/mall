@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class UmsPermission implements Serializable {
+public class SysPermission implements Serializable {
     private Long id;
 
     @ApiModelProperty(value = "父级权限id")
@@ -28,7 +28,10 @@ public class UmsPermission implements Serializable {
     private Integer type;
 
     @ApiModelProperty(value = "前端资源路径")
-    private String uri;
+    private String webUri;
+
+    @ApiModelProperty(value = "后台资源路径")
+    private String bgUri;
 
     @ApiModelProperty(value = "启用状态；0->禁用；1->启用")
     private Integer status;
@@ -53,7 +56,8 @@ public class UmsPermission implements Serializable {
         sb.append(", value=").append(value);
         sb.append(", icon=").append(icon);
         sb.append(", type=").append(type);
-        sb.append(", uri=").append(uri);
+        sb.append(", webUri=").append(webUri);
+        sb.append(", bgUri=").append(bgUri);
         sb.append(", status=").append(status);
         sb.append(", createTime=").append(createTime);
         sb.append(", sort=").append(sort);
