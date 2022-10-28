@@ -1,4 +1,4 @@
-package com.lam.mall.mbg.model;
+package com.lam.mall.mbg.model.sys;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -9,9 +9,14 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 权限表（目录、菜单、按钮、接口、资源）
+ */
 @Getter
 @Setter
 public class SysAuthority implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @TableId(type = IdType.ASSIGN_ID,value = "id")
     private Long id;
 
@@ -44,28 +49,4 @@ public class SysAuthority implements Serializable {
 
     @ApiModelProperty(value = "排序")
     private Integer sort;
-
-    private static final long serialVersionUID = 1L;
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", pid=").append(pid);
-        sb.append(", name=").append(name);
-        sb.append(", value=").append(value);
-        sb.append(", icon=").append(icon);
-        sb.append(", type=").append(type);
-        sb.append(", webUri=").append(webUri);
-        sb.append(", bgUri=").append(bgUri);
-        sb.append(", status=").append(status);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", sort=").append(sort);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
-    }
 }

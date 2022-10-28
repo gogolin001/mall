@@ -1,6 +1,6 @@
 package com.lam.mall.admin.config;
 
-import com.lam.mall.mbg.model.SysAuthority;
+import com.lam.mall.mbg.model.sys.SysAuthority;
 import com.lam.mall.common.component.DynamicSecurityService;
 import com.lam.mall.admin.service.SysUserService;
 import com.lam.mall.admin.service.SysAuthorityService;

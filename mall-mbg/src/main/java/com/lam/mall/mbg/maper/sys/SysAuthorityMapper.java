@@ -1,13 +1,12 @@
-package com.lam.mall.mbg.maper;
+package com.lam.mall.mbg.maper.sys;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.lam.mall.mbg.model.SysAuthority;
+import com.lam.mall.mbg.model.sys.SysAuthority;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Map;
 
 @Mapper
 @Component

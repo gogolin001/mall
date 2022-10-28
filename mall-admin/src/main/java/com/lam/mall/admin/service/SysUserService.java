@@ -4,8 +4,8 @@ import cn.hutool.core.collection.CollUtil;
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.Cached;
 import com.lam.mall.admin.bo.AdminUserDetails;
-import com.lam.mall.mbg.maper.SysUserMapper;
-import com.lam.mall.mbg.model.SysUser;
+import com.lam.mall.mbg.maper.sys.SysUserMapper;
+import com.lam.mall.mbg.model.sys.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,15 +42,8 @@ public class SysUserService {
      * @return
      */
     public List<String> getResourceList(Long adminId) {
-        List<String> resourceList = getCacheService().getResourceList(adminId);
-        if(CollUtil.isNotEmpty(resourceList)){
-            return  resourceList;
-        }
-        resourceList = adminRoleRelationDao.getResourceList(adminId);
-        if(CollUtil.isNotEmpty(resourceList)){
-            getCacheService().setResourceList(adminId,resourceList);
-        }
-        return resourceList;
+
+        return null;
     }
 
 

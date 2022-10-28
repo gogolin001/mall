@@ -1,7 +1,7 @@
-package com.lam.mall.mbg.maper;
+package com.lam.mall.mbg.maper.sys;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.lam.mall.mbg.model.SysUser;
+import com.lam.mall.mbg.model.sys.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

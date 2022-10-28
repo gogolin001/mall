@@ -1,13 +1,12 @@
 package com.lam.mall.admin.bo;
 
-import com.lam.mall.mbg.model.SysUser;
+import com.lam.mall.mbg.model.sys.SysUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * SpringSecurity需要的用户详情

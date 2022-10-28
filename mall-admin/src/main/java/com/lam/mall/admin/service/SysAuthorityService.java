@@ -3,16 +3,13 @@ package com.lam.mall.admin.service;
 import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.CacheManager;
 import com.alicp.jetcache.anno.CacheType;
-import com.alicp.jetcache.anno.Cached;
-import com.alicp.jetcache.anno.CreateCache;
 import com.alicp.jetcache.template.QuickConfig;
-import com.lam.mall.mbg.maper.SysAuthorityMapper;
-import com.lam.mall.mbg.model.SysAuthority;
+import com.lam.mall.mbg.maper.sys.SysAuthorityMapper;
+import com.lam.mall.mbg.model.sys.SysAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.time.Duration;
 import java.util.List;
 
 @Service
