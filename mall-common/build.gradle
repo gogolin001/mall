@@ -18,8 +18,8 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
     // 在线文档
     implementation "io.springfox:springfox-boot-starter:$springfoxVersion"
-    implementation 'io.swagger:swagger-models:1.6.7'
-    implementation 'io.swagger:swagger-annotations:1.6.7'
+    implementation 'io.swagger:swagger-models:1.6.8'
+    implementation 'io.swagger:swagger-annotations:1.6.8'
     //"com.github.xiaoymin:knife4j-spring-boot-starter:$knife4jVersion"
     implementation("net.logstash.logback:logstash-logback-encoder:$logstashLogbackVersion")
 }

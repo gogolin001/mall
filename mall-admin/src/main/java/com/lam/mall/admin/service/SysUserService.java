@@ -19,8 +19,12 @@ import java.util.List;
 public class SysUserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SysUserService.class);
 
-    @Autowired
     private SysUserMapper userMapper;
+
+    @Autowired
+    public SysUserService(SysUserMapper sysUserMapper){
+        this.userMapper = sysUserMapper;
+    }
 
     /**
      * 根据用户名获取用户

@@ -18,7 +18,7 @@ subprojects {
         jetcacheVersion = "2.7.0"
         shardingsphereVersion = "5.2.0"
         lombokVersion = "1.18.24"
-        hutoolVersion = "5.8.8"
+        hutoolVersion = "5.8.9"
         easyExcelVersion = "3.1.1"
         wxjavaVersion = "4.4.0"
         alipayVersion = "4.34.0.ALL"
