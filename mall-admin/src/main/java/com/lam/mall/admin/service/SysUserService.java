@@ -19,7 +19,7 @@ import java.util.List;
 public class SysUserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SysUserService.class);
 
-    private SysUserMapper userMapper;
+    private final SysUserMapper userMapper;
 
     @Autowired
     public SysUserService(SysUserMapper sysUserMapper){
@@ -28,22 +28,18 @@ public class SysUserService {
 
     /**
      * 根据用户名获取用户
-     * @param username
-     * @return
+     * @param username 用户名
+     * @return 用户信息
      */
     @Cached(name="user-", key="#username", expire = 3600, cacheType = CacheType.BOTH)
     public SysUser getAdminByUsername(String username) {
-        SysUser admin = userMapper.SelectByUserName(username);
-        if (admin != null) {
-            return admin;
-        }
-        return null;
+        return userMapper.SelectByUserName(username);
     }
 
     /**
      * 根据用户id获取具有权限的接口（同时根据用户角色返回）
-     * @param adminId
-     * @return
+     * @param adminId 用户id
+     * @return 用户具有的权限
      */
     public List<String> getResourceList(Long adminId) {
 

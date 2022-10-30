@@ -15,12 +15,15 @@ import java.util.List;
 @Service
 public class SysAuthorityService {
 
-    @Autowired
-    private SysAuthorityMapper authorityMapper;
+    private final SysAuthorityMapper authorityMapper;
 
-    @Autowired
-    private CacheManager cacheManager;
+    private final CacheManager cacheManager;
     private Cache<Long, SysAuthority> authorityCache;
+    @Autowired
+    private SysAuthorityService(SysAuthorityMapper sysAuthorityMapper, CacheManager cacheManager){
+        this.authorityMapper = sysAuthorityMapper;
+        this.cacheManager = cacheManager;
+    }
 
     @PostConstruct
     public void init() {
@@ -31,7 +34,7 @@ public class SysAuthorityService {
                 .syncLocal(true) // invalidate local cache in all jvm process after update
                 .build();
         authorityCache = cacheManager.getOrCreateCache(qc);
-        authorityCache.config().setLoader(key -> authorityMapper.selectById(key));
+        authorityCache.config().setLoader(authorityMapper::selectById);
     }
 
 
