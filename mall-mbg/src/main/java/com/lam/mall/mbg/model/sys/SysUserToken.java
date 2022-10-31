@@ -2,10 +2,12 @@ package com.lam.mall.mbg.model.sys;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -14,7 +16,9 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
+@TableName("sys_user_token")
 public class SysUserToken implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "主键")
@@ -44,6 +48,4 @@ public class SysUserToken implements Serializable {
 
     @ApiModelProperty(value = "最近访问时间")
     private LocalDateTime lastAccessTime;
-
-
 }

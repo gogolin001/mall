@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface SysAuthorityMapper  extends BaseMapper<SysAuthority> {
+public interface SysAuthorityMapper extends BaseMapper<SysAuthority> {
 
     @Select("SELECT * FROM sys_authority")
     List<SysAuthority> list();

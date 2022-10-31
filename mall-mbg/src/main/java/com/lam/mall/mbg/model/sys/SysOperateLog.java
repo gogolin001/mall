@@ -1,10 +1,14 @@
 package com.lam.mall.mbg.model.sys;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,11 +17,14 @@ import java.util.Date;
  */
 @Getter
 @Setter
-public class SysOperLog implements Serializable {
+@TableName("sys_operate_log")
+public class SysOperateLog implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /** 日志主键 */
-    @ApiModelProperty(value = "操作序号")
+    @ApiModelProperty(value = "操作id")
+    @TableId(type = IdType.ASSIGN_ID,value = "id")
     private Long id;
 
     /** 操作模块 */

@@ -2,10 +2,13 @@ package com.lam.mall.mbg.model.sys;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -14,9 +17,12 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
+@TableName("sys_role")
 public class SysRole implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "角色id")
     @TableId(type = IdType.ASSIGN_ID,value = "id")
     private Long id;
 
@@ -37,4 +43,7 @@ public class SysRole implements Serializable {
 
     @ApiModelProperty(value = "排序")
     private Integer sort;
+
+    @TableLogic
+    private boolean deleted;
 }

@@ -2,10 +2,12 @@ package com.lam.mall.mbg.model.sys;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -13,7 +15,9 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
+@TableName("sys_user_role")
 public class SysUserRole implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "主键")

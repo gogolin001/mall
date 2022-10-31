@@ -2,10 +2,13 @@ package com.lam.mall.mbg.model.sys;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -14,8 +17,12 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
+@TableName("sys_user")
 public class SysUser implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty(value = "用户id")
     @TableId(type = IdType.ASSIGN_ID,value = "id")
     private Long id;
 
@@ -54,4 +61,7 @@ public class SysUser implements Serializable {
 
     @ApiModelProperty(value = "帐号启用状态：0->禁用；1->启用")
     private Integer status;
+
+    @TableLogic
+    private boolean deleted;
 }

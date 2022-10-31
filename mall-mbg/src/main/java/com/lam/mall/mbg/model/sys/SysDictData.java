@@ -1,9 +1,14 @@
 package com.lam.mall.mbg.model.sys;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -11,12 +16,13 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
+@TableName("sys_dict_data")
 public class SysDictData  implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
-
-
     @ApiModelProperty(value = "字典id")
+    @TableId(type = IdType.ASSIGN_ID,value = "id")
     private Long id;
 
     @ApiModelProperty(value = "字典排序")
@@ -42,4 +48,7 @@ public class SysDictData  implements Serializable {
 
     @ApiModelProperty(value = "状态:0=正常,1=停用")
     private String status;
+
+    @TableLogic
+    private boolean deleted;
 }

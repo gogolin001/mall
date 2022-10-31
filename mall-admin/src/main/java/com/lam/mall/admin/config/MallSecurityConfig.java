@@ -20,16 +20,20 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Configuration
 public class MallSecurityConfig {
+    private final SysUserService userService;
+
+    private final SysAuthorityService authorityService;
 
     @Autowired
-    private SysUserService userService;
-    @Autowired
-    private SysAuthorityService authorityService;
+    public MallSecurityConfig(SysUserService userService, SysAuthorityService authorityService){
+        this.userService = userService;
+        this.authorityService = authorityService;
+    }
 
     @Bean
     public UserDetailsService userDetailsService() {
         //获取登录用户信息
-        return username -> userService.loadUserByUsername(username);
+        return userService::loadUserByUsername;
     }
 
     @Bean

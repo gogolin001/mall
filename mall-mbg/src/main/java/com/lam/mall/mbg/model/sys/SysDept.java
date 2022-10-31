@@ -1,9 +1,14 @@
 package com.lam.mall.mbg.model.sys;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -11,20 +16,20 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
+@TableName("sys_dept")
 public class SysDept implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "部门ID")
-    private Long Id;
+    @ApiModelProperty(value = "部门id")
+    @TableId(type = IdType.ASSIGN_ID,value = "id")
+    private Long id;
 
     @ApiModelProperty(value = "父部门ID")
-    private Long parentId;
+    private Long pid;
 
     @ApiModelProperty(value = "部门名称")
     private String deptName;
-
-    @ApiModelProperty(value = "显示顺序")
-    private Integer orderNum;
 
     @ApiModelProperty(value = "负责人")
     private String leader;
@@ -38,6 +43,12 @@ public class SysDept implements Serializable {
     @ApiModelProperty(value = "部门状态:0正常,1停用")
     private String status;
 
+    @ApiModelProperty(value = "显示顺序")
+    private Integer sort;
+
     @ApiModelProperty(value = "删除标志（0代表存在 2代表删除）")
     private String delFlag;
+
+    @TableLogic
+    private boolean deleted;
 }
