@@ -8,6 +8,7 @@ version '1.0-SNAPSHOT'
 dependencies {
     compileOnly("org.projectlombok:lombok:$lombokVersion")
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:$springBootVersion"
     implementation "javax.servlet:javax.servlet-api:$javaxServletVersion"
     implementation "com.baomidou:mybatis-plus-boot-starter:$mybatisPlusStarterVersion"
     implementation "org.springframework.boot:spring-boot-starter-aop:$springBootVersion"
@@ -16,6 +17,7 @@ dependencies {
     implementation "cn.hutool:hutool-all:$hutoolVersion"
     implementation "io.jsonwebtoken:jjwt:$jjwtVersion"
     implementation "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
+
     // 在线文档
     implementation "io.springfox:springfox-boot-starter:$springfoxVersion"
     implementation 'io.swagger:swagger-models:1.6.8'

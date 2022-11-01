@@ -1,4 +1,4 @@
-package com.lam.mall.mbg.maper.sys;
+package com.lam.mall.mbg.mapper.sys;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lam.mall.mbg.model.sys.SysDictData;

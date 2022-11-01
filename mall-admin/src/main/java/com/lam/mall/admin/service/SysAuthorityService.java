@@ -4,7 +4,7 @@ import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.CacheManager;
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.template.QuickConfig;
-import com.lam.mall.mbg.maper.sys.SysAuthorityMapper;
+import com.lam.mall.mbg.mapper.sys.SysAuthorityMapper;
 import com.lam.mall.mbg.model.sys.SysAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

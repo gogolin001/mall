@@ -1,10 +1,9 @@
 package com.lam.mall.admin.service;
 
-import cn.hutool.core.collection.CollUtil;
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.Cached;
 import com.lam.mall.admin.bo.AdminUserDetails;
-import com.lam.mall.mbg.maper.sys.SysUserMapper;
+import com.lam.mall.mbg.mapper.sys.SysUserMapper;
 import com.lam.mall.mbg.model.sys.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

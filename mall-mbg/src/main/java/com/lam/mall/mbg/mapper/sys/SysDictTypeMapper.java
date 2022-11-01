@@ -1,11 +1,11 @@
-package com.lam.mall.mbg.maper.sys;
+package com.lam.mall.mbg.mapper.sys;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.lam.mall.mbg.model.sys.SysUserToken;
+import com.lam.mall.mbg.model.sys.SysDictType;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 @Mapper
 @Repository
-public interface SysUserTokenMapper extends BaseMapper<SysUserToken> {
+public interface SysDictTypeMapper extends BaseMapper<SysDictType> {
 }

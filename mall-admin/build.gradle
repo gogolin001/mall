@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.5'
-    id 'io.spring.dependency-management' version '1.0.14.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
 group = 'com.lam.mall.admin'
@@ -27,7 +27,7 @@ dependencies {
     implementation "com.alicp.jetcache:jetcache-starter-redis-lettuce:$jetcacheVersion"
     implementation "cn.hutool:hutool-all:$hutoolVersion"
     implementation "com.baomidou:mybatis-plus-boot-starter:$mybatisPlusStarterVersion"
-
+    implementation "com.alibaba:druid-spring-boot-starter:$druidVersion"
     implementation "io.springfox:springfox-boot-starter:$springfoxVersion"
     implementation 'io.swagger:swagger-models:1.6.8'
     implementation 'io.swagger:swagger-annotations:1.6.8'
