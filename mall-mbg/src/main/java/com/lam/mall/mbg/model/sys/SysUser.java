@@ -1,9 +1,6 @@
 package com.lam.mall.mbg.model.sys;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -56,11 +53,8 @@ public class SysUser implements Serializable {
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
 
-    @ApiModelProperty(value = "最后登录时间")
-    private LocalDateTime loginTime;
-
     @ApiModelProperty(value = "帐号启用状态：0->禁用；1->启用")
-    private Integer status;
+    private boolean status;
 
     @TableLogic
     private boolean deleted;

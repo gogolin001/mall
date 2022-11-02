@@ -10,6 +10,8 @@ sourceCompatibility = '17'
 
 
 dependencies {
+    compileOnly("org.projectlombok:lombok:$lombokVersion")
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 
@@ -22,11 +24,14 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-security"
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation "org.hibernate.validator:hibernate-validator:$hibernateValidatorVersion"
     implementation "mysql:mysql-connector-java:$mysqlConnectorVersion"
     implementation "org.opengauss:opengauss-jdbc:$opengaussVersion"
     implementation "com.alicp.jetcache:jetcache-starter-redis-lettuce:$jetcacheVersion"
     implementation "cn.hutool:hutool-all:$hutoolVersion"
     implementation "com.baomidou:mybatis-plus-boot-starter:$mybatisPlusStarterVersion"
+    implementation "com.baomidou:mybatis-plus-extension:$mybatisPlusStarterVersion"
+
     implementation "com.alibaba:druid-spring-boot-starter:$druidVersion"
     implementation "io.springfox:springfox-boot-starter:$springfoxVersion"
     implementation 'io.swagger:swagger-models:1.6.8'

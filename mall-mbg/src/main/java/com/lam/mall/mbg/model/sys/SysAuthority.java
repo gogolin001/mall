@@ -26,26 +26,25 @@ public class SysAuthority implements Serializable {
     @ApiModelProperty(value = "父级权限id")
     private Long pid;
 
+    @ApiModelProperty(value = "权限类型id")
+    private Long typeId;
+
     @ApiModelProperty(value = "名称")
-    @TableField(value = "authority_name")
-    private String name;
+    private String authorityName;
 
     @ApiModelProperty(value = "权限值")
-    @TableField(value = "authority_value")
-    private String value;
+    private String authorityValue;
 
     @ApiModelProperty(value = "图标")
     private String icon;
 
-    @ApiModelProperty(value = "权限类型：0->目录；1->菜单；2->按钮（接口绑定权限）")
-    private Byte type;
+    @ApiModelProperty(value = "权限类型：0->目录；1->菜单；2->按钮（接口绑定权限）;3->纯接口")
+    private Byte authorityType;
 
     @ApiModelProperty(value = "前端资源路径")
-    @TableField(value = "web_uri")
     private String webUri;
 
     @ApiModelProperty(value = "后台资源路径")
-    @TableField(value = "bg_uri")
     private String bgUri;
 
     @ApiModelProperty(value = "启用状态；0->禁用；1->启用")
@@ -55,6 +54,5 @@ public class SysAuthority implements Serializable {
     private Byte sort;
 
     @ApiModelProperty(value = "创建时间")
-    @TableField(value = "create_time")
     private LocalDateTime createTime;
 }

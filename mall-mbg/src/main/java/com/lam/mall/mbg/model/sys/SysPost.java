@@ -32,10 +32,10 @@ public class SysPost implements Serializable {
     private String postName;
 
     @ApiModelProperty(value = "岗位排序")
-    private String postSort;
+    private Integer postSort;
 
     @ApiModelProperty(value = "状态：0=正常,1=停用")
-    private String status;
+    private boolean status;
 
     @TableLogic
     private boolean deleted;

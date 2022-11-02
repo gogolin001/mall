@@ -20,10 +20,6 @@ public class SysUserRole implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "主键")
-    @TableId(type = IdType.ASSIGN_ID,value = "id")
-    private Long id;
-
     @ApiModelProperty(value = "用户id")
     private Long userId;
 
