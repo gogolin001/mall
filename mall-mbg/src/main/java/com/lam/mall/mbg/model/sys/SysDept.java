@@ -28,6 +28,9 @@ public class SysDept implements Serializable {
     @ApiModelProperty(value = "父部门ID")
     private Long pid;
 
+    @ApiModelProperty(value = "部门编码")
+    private String deptCode;
+
     @ApiModelProperty(value = "部门名称")
     private String deptName;
 

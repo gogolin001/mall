@@ -1,4 +1,4 @@
-CREATE TABLE public."sys_authority"(
+CREATE TABLE sys_authority(
     id bigint,
     pid bigint NOT NULL DEFAULT '0',
     typeId bigint NOT NULL DEFAULT '0',
@@ -10,20 +10,23 @@ CREATE TABLE public."sys_authority"(
     bgUri varchar(200) DEFAULT '',
     status boolean NOT NULL DEFAULT '1',
     sort tinyint NOT NULL DEFAULT '0',
-    createTime date NOT NULL
-)
+    createTime date NOT NULL,
+    PRIMARY KEY (id)
+);
 
-CREATE TABLE public."sys_config"(
+CREATE TABLE sys_config(
     id bigint,
     configName varchar(50) NOT NULL,
-    configKey varchar(50) NOT NULL,
+    configKey varchar(50) NOT NULL UNIQUE,
     configValue varchar(200) NOT NULL,
-    configType boolean NOT NULL default '0'
-)
+    configType boolean NOT NULL default '0',
+    PRIMARY KEY (id)
+);
 
-CREATE TABLE public."sys_dept"(
+CREATE TABLE sys_dept(
     id bigint,
     pid bigint NOT NULL DEFAULT '0',
+    deptCode varchar(50) not null UNIQUE,
     deptName varchar(50) not null ,
     leader varchar(50) DEFAULT '',
     phone varchar(30) DEFAULT '',
@@ -31,10 +34,11 @@ CREATE TABLE public."sys_dept"(
     status boolean NOT NULL DEFAULT '1',
     sort tinyint NOT NULL DEFAULT '0',
     deptType tinyint default '0',
-    deleted boolean NOT NULL default '0'
-)
+    deleted boolean NOT NULL default '0',
+    PRIMARY KEY (id)
+);
 
-CREATE TABLE public."sys_dict_data"(
+CREATE TABLE sys_dict_data(
     id bigint,
     typeId bigint not null DEFAULT '0',
     sort tinyint NOT NULL DEFAULT '0',
@@ -43,18 +47,20 @@ CREATE TABLE public."sys_dict_data"(
     dataType varchar(50) DEFAULT '',
     isDefault boolean NOT NULL DEFAULT '0',
     status boolean NOT NULL default '1',
-    deleted boolean NOT NULL default '0'
-)
+    deleted boolean NOT NULL default '0',
+    PRIMARY KEY (id)
+);
 
-CREATE TABLE public."sys_dict_type"(
+CREATE TABLE sys_dict_type(
     id bigint,
-    dictName varchar(50) NOT NULL,
+    dictName varchar(50) NOT NULL UNIQUE,
     dictType varchar(50) DEFAULT '',
     status boolean not null DEFAULT '1',
-    deleted boolean NOT NULL default '0'
-)
+    deleted boolean NOT NULL default '0',
+    PRIMARY KEY (id)
+);
 
-CREATE TABLE public."sys_operate_log"(
+CREATE TABLE sys_operate_log(
     id bigint,
     title varchar(50) DEFAULT '',
     businessType tinyint DEFAULT '0',
@@ -70,34 +76,39 @@ CREATE TABLE public."sys_operate_log"(
     jsonResult text default '',
     status boolean not null default '1',
     errorMsg boolean default '',
-    operateTime date not null
-)
+    operateTime date not null,
+    PRIMARY KEY (id)
+);
 
-CREATE TABLE public."sys_post"(
+CREATE TABLE sys_post(
     id bigint,
-    postCode varchar(50) NOT NULL,
+    postCode varchar(50) NOT NULL UNIQUE,
     postName varchar(50) NOT NULL,
     postSort Integer not null DEFAULT '0',
     status boolean not null DEFAULT '1',
-    deleted boolean NOT NULL default '0'
-)
+    deleted boolean NOT NULL default '0',
+    PRIMARY KEY (id)
+);
 
-CREATE TABLE public."sys_role"(
+CREATE TABLE sys_role(
     id bigint,
-    roleName varchar(50) NOT NULL,
+    roleName varchar(50) NOT NULL UNIQUE,
     description varchar(200) DEFAULT '',
     createTime date not null,
     status boolean not null DEFAULT '1',
     sort Integer NOT NULL DEFAULT '0',
-)
+    PRIMARY KEY (id)
+);
 
-CREATE TABLE public."sys_role_authority"(
+CREATE TABLE sys_role_authority(
     roleId bigint NOT NULL,
-    authorityId bigint NOT NULL
-)
-CREATE TABLE public."sys_user"(
+    authorityId bigint NOT NULL,
+    PRIMARY KEY (roleId,authorityId)
+);
+
+CREATE TABLE sys_user(
     id bigint,
-    username varchar(50) NOT NULL,
+    username varchar(50) NOT NULL UNIQUE,
     password varchar(100) NOT NULL,
     unionId varchar(50) DEFAULT '',
     mpOpenId varchar(50) DEFAULT '',
@@ -108,13 +119,17 @@ CREATE TABLE public."sys_user"(
     note varchar(50) DEFAULT '',
     createTime date NOT NULL,
     status boolean NOT NULL DEFAULT '1',
-    deleted boolean NOT NULL default '0'
-)
-CREATE TABLE public."sys_user_role"(
+    deleted boolean NOT NULL default '0',
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE sys_user_role(
     userId bigint NOT NULL,
-    roleId bigint NOT NULL
-)
-CREATE TABLE public."sys_user_token"(
+    roleId bigint NOT NULL,
+    PRIMARY KEY (userId,roleId)
+);
+
+CREATE TABLE sys_user_token(
     id bigint,
     userId bigint NOT NULL,
     tokenId varchar(50) NOT NULL,
@@ -123,11 +138,6 @@ CREATE TABLE public."sys_user_token"(
     os varchar(50) DEFAULT '',
     browser varchar(50) DEFAULT '',
     loginTime date NOT NULL,
-    lastAccessTime date NOT NULL
-)
-
-
-
-
-
-
+    lastAccessTime date NOT NULL,
+    PRIMARY KEY (id)
+);
