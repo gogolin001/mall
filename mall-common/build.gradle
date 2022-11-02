@@ -10,6 +10,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
     implementation "javax.servlet:javax.servlet-api:$javaxServletVersion"
     implementation "com.baomidou:mybatis-plus-boot-starter:$mybatisPlusStarterVersion"
+    implementation "com.baomidou:mybatis-plus-extension:$mybatisPlusStarterVersion"
     implementation "org.springframework.boot:spring-boot-starter-aop:$springBootVersion"
     implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
     implementation "org.springframework.boot:spring-boot-starter-data-redis:$springBootVersion"

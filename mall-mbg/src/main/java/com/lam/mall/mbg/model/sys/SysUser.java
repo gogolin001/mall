@@ -32,6 +32,9 @@ public class SysUser implements Serializable {
     @ApiModelProperty(value = "密码")
     private String password;
 
+    @ApiModelProperty(value = "昵称")
+    private String nickname;
+
     @ApiModelProperty(value = "微信UnionId")
     private String unionId;
 
