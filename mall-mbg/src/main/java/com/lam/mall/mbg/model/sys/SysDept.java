@@ -29,7 +29,7 @@ public class SysDept implements Serializable {
     private Long pid;
 
     @ApiModelProperty(value = "部门名称")
-    private String deptName;
+    private String name;
 
     @ApiModelProperty(value = "负责人")
     private String leader;

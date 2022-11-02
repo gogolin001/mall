@@ -29,20 +29,20 @@ public class SysConfig implements Serializable {
     /** 参数名称 */
     @ApiModelProperty(value = "参数名称")
     @TableField("config_name")
-    private String configName;
+    private String name;
 
     /** 参数键名 */
     @ApiModelProperty(value = "参数键名")
     @TableField("config_key")
-    private String configKey;
+    private String key;
 
     /** 参数键值 */
     @ApiModelProperty(value = "参数键值")
     @TableField("config_value")
-    private String configValue;
+    private String value;
 
     /** 系统内置（Y是 N否） */
     @ApiModelProperty(value = "系统内置：true=是,false=否")
     @TableField("config_type")
-    private boolean configType;
+    private boolean type;
 }

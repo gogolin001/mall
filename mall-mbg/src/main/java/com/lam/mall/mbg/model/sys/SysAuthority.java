@@ -27,11 +27,9 @@ public class SysAuthority implements Serializable {
     private Long pid;
 
     @ApiModelProperty(value = "名称")
-    @TableField(value = "authority_name")
     private String name;
 
     @ApiModelProperty(value = "权限值")
-    @TableField(value = "authority_value")
     private String value;
 
     @ApiModelProperty(value = "图标")
@@ -41,11 +39,9 @@ public class SysAuthority implements Serializable {
     private Byte type;
 
     @ApiModelProperty(value = "前端资源路径")
-    @TableField(value = "web_uri")
     private String webUri;
 
     @ApiModelProperty(value = "后台资源路径")
-    @TableField(value = "bg_uri")
     private String bgUri;
 
     @ApiModelProperty(value = "启用状态；0->禁用；1->启用")
