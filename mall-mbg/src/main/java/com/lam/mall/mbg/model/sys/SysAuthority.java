@@ -48,7 +48,7 @@ public class SysAuthority implements Serializable {
     private String bgUri;
 
     @ApiModelProperty(value = "启用状态；0->禁用；1->启用")
-    private boolean status;
+    private Boolean status;
 
     @ApiModelProperty(value = "排序")
     private Byte sort;

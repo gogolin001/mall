@@ -53,5 +53,5 @@ public class SysDept implements Serializable {
     private Byte deptType;
 
     @TableLogic
-    private boolean deleted;
+    private Boolean deleted;
 }

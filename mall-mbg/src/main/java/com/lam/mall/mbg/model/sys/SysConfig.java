@@ -40,5 +40,5 @@ public class SysConfig implements Serializable {
 
     /** 系统内置（Y是 N否） */
     @ApiModelProperty(value = "系统内置：true=是,false=否")
-    private boolean configType;
+    private Boolean configType;
 }

@@ -34,7 +34,7 @@ public class SysRole implements Serializable {
     private LocalDateTime createTime;
 
     @ApiModelProperty(value = "启用状态：0->禁用；1->启用")
-    private boolean status;
+    private Boolean status;
 
     @ApiModelProperty(value = "排序")
     private Integer sort;

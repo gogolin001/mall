@@ -54,8 +54,8 @@ public class SysUser implements Serializable {
     private LocalDateTime createTime;
 
     @ApiModelProperty(value = "帐号启用状态：0->禁用；1->启用")
-    private boolean status;
+    private Boolean status;
 
     @TableLogic
-    private boolean deleted;
+    private Boolean deleted;
 }

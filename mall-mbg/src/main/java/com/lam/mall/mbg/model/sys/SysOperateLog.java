@@ -11,6 +11,7 @@ import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -87,5 +88,5 @@ public class SysOperateLog implements Serializable {
     /** 操作时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "操作时间")
-    private Date operateTime;
+    private LocalDateTime operateTime;
 }

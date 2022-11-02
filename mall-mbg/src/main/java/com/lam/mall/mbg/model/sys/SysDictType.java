@@ -39,5 +39,5 @@ public class SysDictType implements Serializable {
     private String status;
 
     @TableLogic
-    private boolean deleted;
+    private Boolean deleted;
 }

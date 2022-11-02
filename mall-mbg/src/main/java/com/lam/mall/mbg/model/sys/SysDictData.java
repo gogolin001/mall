@@ -41,11 +41,11 @@ public class SysDictData  implements Serializable {
     private String dataType;
 
     @ApiModelProperty(value = "是否默认:1=是,0=否")
-    private boolean isDefault;
+    private Boolean isDefault;
 
     @ApiModelProperty(value = "状态:1=正常,0=停用")
-    private boolean status;
+    private Boolean status;
 
     @TableLogic
-    private boolean deleted;
+    private Boolean deleted;
 }
