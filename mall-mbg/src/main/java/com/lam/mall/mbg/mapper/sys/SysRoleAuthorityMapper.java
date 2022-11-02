@@ -13,9 +13,9 @@ import java.util.List;
 @Repository
 public interface SysRoleAuthorityMapper extends BaseMapper<SysRoleAuthority> {
     @Insert("<script>" +
-            "INSERT INTO sys_role_authority(id,roleId,authorityId) VALUES" +
+            "INSERT INTO sys_role_authority(roleId,authorityId) VALUES" +
             "<foreach collection='roleAuthority' item='item'   separator=','> " +
-            "(#{item.id},#{item.roleId},#{item.authorityId})" +
+            "(#{item.roleId},#{item.authorityId})" +
             "</foreach> " +
             "</script>")
     boolean insertBatch(@Param("roleAuthority") List<SysRoleAuthority> roleAuthorityList);

@@ -5,8 +5,8 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lam.mall.mbg.maper.sys.SysRoleAuthorityMapper;
-import com.lam.mall.mbg.maper.sys.SysRoleMapper;
+import com.lam.mall.mbg.mapper.sys.SysRoleAuthorityMapper;
+import com.lam.mall.mbg.mapper.sys.SysRoleMapper;
 import com.lam.mall.mbg.model.sys.SysAuthority;
 import com.lam.mall.mbg.model.sys.SysRole;
 import com.lam.mall.mbg.model.sys.SysRoleAuthority;
@@ -35,7 +35,6 @@ public class RoleService {
      */
     public int create(SysRole role){
         role.setCreateTime(LocalDateTime.now());
-        role.setAdminCount(0);
         role.setSort(0);
         return roleMapper.insert(role);
     }
