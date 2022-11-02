@@ -22,10 +22,6 @@ public class SysRoleAuthority implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "角色权限id")
-    @TableId(type = IdType.ASSIGN_ID,value = "id")
-    private Long id;
-
     @ApiModelProperty(value = "角色id")
     private Long roleId;
 

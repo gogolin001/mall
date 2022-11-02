@@ -12,7 +12,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * 字典类型表
+ * 字典分类表
  */
 @Getter
 @Setter

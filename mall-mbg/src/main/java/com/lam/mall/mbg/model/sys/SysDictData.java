@@ -25,6 +25,9 @@ public class SysDictData  implements Serializable {
     @TableId(type = IdType.ASSIGN_ID,value = "id")
     private Long id;
 
+    @ApiModelProperty(value = "字典分类id")
+    private Long typeId;
+
     @ApiModelProperty(value = "字典排序")
     private Byte sort;
 
@@ -32,15 +35,15 @@ public class SysDictData  implements Serializable {
     private String label;
 
     @ApiModelProperty(value = "字典键值")
-    private String value;
+    private String dataValue;
 
     @ApiModelProperty(value = "字典类型")
-    private String type;
+    private String dataType;
 
     @ApiModelProperty(value = "是否默认:1=是,0=否")
     private boolean isDefault;
 
-    @ApiModelProperty(value = "状态:0=正常,1=停用")
+    @ApiModelProperty(value = "状态:1=正常,0=停用")
     private boolean status;
 
     @TableLogic

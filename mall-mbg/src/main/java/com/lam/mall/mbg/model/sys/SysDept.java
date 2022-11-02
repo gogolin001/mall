@@ -29,7 +29,7 @@ public class SysDept implements Serializable {
     private Long pid;
 
     @ApiModelProperty(value = "部门名称")
-    private String name;
+    private String deptName;
 
     @ApiModelProperty(value = "负责人")
     private String leader;
@@ -44,10 +44,10 @@ public class SysDept implements Serializable {
     private String status;
 
     @ApiModelProperty(value = "显示顺序")
-    private Integer sort;
+    private Byte sort;
 
-    @ApiModelProperty(value = "删除标志（0代表存在 2代表删除）")
-    private String delFlag;
+    @ApiModelProperty(value = "类型（0代表部门 1代表集团 2代表子公司）")
+    private Byte deptType;
 
     @TableLogic
     private boolean deleted;

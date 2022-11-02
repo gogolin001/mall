@@ -1,9 +1,6 @@
 package com.lam.mall.mbg.model.sys;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,23 +24,18 @@ public class SysRole implements Serializable {
     private Long id;
 
     @ApiModelProperty(value = "名称")
-    private String name;
+    private String roleName;
 
     @ApiModelProperty(value = "描述")
     private String description;
 
-    @ApiModelProperty(value = "后台用户数量")
-    private Integer adminCount;
 
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
 
     @ApiModelProperty(value = "启用状态：0->禁用；1->启用")
-    private Integer status;
+    private boolean status;
 
     @ApiModelProperty(value = "排序")
     private Integer sort;
-
-    @TableLogic
-    private boolean deleted;
 }
