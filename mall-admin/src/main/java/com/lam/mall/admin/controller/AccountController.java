@@ -97,7 +97,7 @@ public class AccountController {
         data.put("icon", SysUser.getIcon());
         List<SysRole> roleList = userService.getRoleList(SysUser.getId());
         if(CollUtil.isNotEmpty(roleList)){
-            List<String> roles = roleList.stream().map(SysRole::getName).collect(Collectors.toList());
+            List<String> roles = roleList.stream().map(SysRole::getRoleName).collect(Collectors.toList());
             data.put("roles",roles);
         }
         return CommonResult.success(data);
@@ -164,7 +164,7 @@ public class AccountController {
 
     @ApiOperation("修改帐号状态")
     @PostMapping(value = "/updateStatus/{id}")
-    public CommonResult updateStatus(@PathVariable Long id,@RequestParam(value = "status") Integer status) {
+    public CommonResult updateStatus(@PathVariable Long id,@RequestParam(value = "status") Boolean status) {
         SysUser SysUser = new SysUser();
         SysUser.setStatus(status);
         int count = userService.update(id,SysUser);

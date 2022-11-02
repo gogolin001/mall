@@ -42,7 +42,7 @@ public class MallSecurityConfig {
             Map<String, ConfigAttribute> map = new ConcurrentHashMap<>();
             List<SysAuthority> resourceList = authorityService.listAll();
             for (SysAuthority resource : resourceList) {
-                map.put(resource.getBgUri(), new org.springframework.security.access.SecurityConfig(resource.getId() + ":" + resource.getName()));
+                map.put(resource.getBgUri(), new org.springframework.security.access.SecurityConfig(resource.getAuthorityName()));
             }
             return map;
         };
