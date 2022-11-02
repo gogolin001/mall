@@ -2,6 +2,7 @@ package com.lam.mall.admin.service;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.SmUtil;
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.Cached;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -15,6 +16,7 @@ import com.lam.mall.mbg.model.sys.SysRole;
 import com.lam.mall.mbg.model.sys.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -49,6 +51,10 @@ public class SysUserService {
      * 注册功能
      */
     public SysUser register(UserParam userParam){
+        SysUser user = new SysUser();
+        BeanUtils.copyProperties(userParam, user);
+        user.setStatus(true);
+        user.setPassword(SmUtil.sm3(userParam.getPassword()));
         return null;
     }
 

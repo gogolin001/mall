@@ -29,6 +29,7 @@ dependencies {
     implementation "org.opengauss:opengauss-jdbc:$opengaussVersion"
     implementation "com.alicp.jetcache:jetcache-starter-redis-lettuce:$jetcacheVersion"
     implementation "cn.hutool:hutool-all:$hutoolVersion"
+    implementation "org.bouncycastle:bcprov-jdk15to18:$bcprovVersion"
     implementation "com.baomidou:mybatis-plus-boot-starter:$mybatisPlusStarterVersion"
     implementation "com.baomidou:mybatis-plus-extension:$mybatisPlusStarterVersion"
 
