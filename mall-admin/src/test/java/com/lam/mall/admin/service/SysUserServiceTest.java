@@ -1,3 +1,4 @@
+/*
 package com.lam.mall.admin.service;
 
 import com.lam.mall.admin.dto.UserParam;
@@ -28,4 +29,4 @@ class SysUserServiceTest {
     @Test
     void login() {
     }
-}
+}*/
