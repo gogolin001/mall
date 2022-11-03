@@ -7,7 +7,7 @@ import org.springframework.stereotype.Indexed;
 
 @Indexed
 @MapperScan("com.lam.mall.mbg.mapper")
-@SpringBootApplication(scanBasePackages = "com.lam.mall")
+@SpringBootApplication(scanBasePackages = {"com.lam.mall.common","com.lam.mall.mbg","com.lam.mall.admin"})
 public class MallAdminApplication {
     public static void main(String[] args) {
         SpringApplication.run(MallAdminApplication.class, args);

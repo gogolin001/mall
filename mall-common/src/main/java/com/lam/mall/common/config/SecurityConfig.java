@@ -20,7 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 /**
  * SpringSecurity 5.4.x以上新用法配置，仅用于配置HttpSecurity
- * Created by macro on 2019/11/5.
+ * Created by lam on 2022/10/1.
  */
 @Configuration
 @EnableWebSecurity
@@ -41,15 +41,13 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity
-                .authorizeRequests();
+        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity.authorizeRequests();
         //不需要保护的资源路径允许访问
         for (String url : ignoreUrlsConfig.getUrls()) {
             registry.antMatchers(url).permitAll();
         }
         //允许跨域请求的OPTIONS请求
-        registry.antMatchers(HttpMethod.OPTIONS)
-                .permitAll();
+        registry.antMatchers(HttpMethod.OPTIONS).permitAll();
         // 任何请求需要身份认证
         registry.and()
                 .authorizeRequests()
