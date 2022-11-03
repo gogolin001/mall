@@ -47,7 +47,7 @@ public class SysOperateLog implements Serializable {
 
     /** 操作类别（0其它 1后台用户 2手机端用户） */
     @ApiModelProperty(value = "操作类别:0=其它,1=后台用户,2=手机端用户")
-    private Integer operatorType;
+    private Integer operateType;
 
     /** 操作人员 */
     @ApiModelProperty(value = "操作人员")

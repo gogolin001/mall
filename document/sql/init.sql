@@ -1,51 +1,51 @@
 CREATE TABLE sys_authority(
     id bigint,
     pid bigint NOT NULL DEFAULT '0',
-    typeId bigint NOT NULL DEFAULT '0',
-    authorityName varchar(100) NOT NULL,
-    authorityValue varchar(100) NOT NULL,
+    type_id bigint NOT NULL DEFAULT '0',
+    authority_name varchar(100) NOT NULL,
+    authority_value varchar(100) NOT NULL,
     icon varchar(50) DEFAULT '',
-    authorityType tinyint NOT NULL DEFAULT '0',
-    webUri varchar(200) DEFAULT '',
-    bgUri varchar(200) DEFAULT '',
+    authority_type tinyint NOT NULL DEFAULT '0',
+    web_uri varchar(200) DEFAULT '',
+    bg_uri varchar(200) DEFAULT '',
     status boolean NOT NULL DEFAULT '1',
     sort tinyint NOT NULL DEFAULT '0',
-    createTime date NOT NULL,
+    create_time date NOT NULL,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE sys_config(
     id bigint,
-    configName varchar(50) NOT NULL,
-    configKey varchar(50) NOT NULL UNIQUE,
-    configValue varchar(200) NOT NULL,
-    configType boolean NOT NULL default '0',
+    config_name varchar(50) NOT NULL,
+    config_key varchar(50) NOT NULL UNIQUE,
+    config_value varchar(200) NOT NULL,
+    config_type boolean NOT NULL default '0',
     PRIMARY KEY (id)
 );
 
 CREATE TABLE sys_dept(
     id bigint,
     pid bigint NOT NULL DEFAULT '0',
-    deptCode varchar(50) not null UNIQUE,
-    deptName varchar(50) not null ,
+    dept_ode varchar(50) not null UNIQUE,
+    dept_name varchar(50) not null ,
     leader varchar(50) DEFAULT '',
     phone varchar(30) DEFAULT '',
     email varchar(50) DEFAULT '',
     status boolean NOT NULL DEFAULT '1',
     sort tinyint NOT NULL DEFAULT '0',
-    deptType tinyint default '0',
+    dept_type tinyint default '0',
     deleted boolean NOT NULL default '0',
     PRIMARY KEY (id)
 );
 
 CREATE TABLE sys_dict_data(
     id bigint,
-    typeId bigint not null DEFAULT '0',
+    type_id bigint not null DEFAULT '0',
     sort tinyint NOT NULL DEFAULT '0',
     label varchar(50),
-    dataValue varchar(50),
-    dataType varchar(50) DEFAULT '',
-    isDefault boolean NOT NULL DEFAULT '0',
+    data_value varchar(50),
+    data_type varchar(50) DEFAULT '',
+    is_default boolean NOT NULL DEFAULT '0',
     status boolean NOT NULL default '1',
     deleted boolean NOT NULL default '0',
     PRIMARY KEY (id)
@@ -53,8 +53,8 @@ CREATE TABLE sys_dict_data(
 
 CREATE TABLE sys_dict_type(
     id bigint,
-    dictName varchar(50) NOT NULL UNIQUE,
-    dictType varchar(50) DEFAULT '',
+    dict_name varchar(50) NOT NULL UNIQUE,
+    dict_type varchar(50) DEFAULT '',
     status boolean not null DEFAULT '1',
     deleted boolean NOT NULL default '0',
     PRIMARY KEY (id)
@@ -63,28 +63,28 @@ CREATE TABLE sys_dict_type(
 CREATE TABLE sys_operate_log(
     id bigint,
     title varchar(50) DEFAULT '',
-    businessType tinyint DEFAULT '0',
+    business_type tinyint DEFAULT '0',
     method varchar(100) DEFAULT '',
-    requestMethod varchar(10) DEFAULT '',
-    operatorType tinyint NOT NULL DEFAULT '1',
-    operateName varchar(50)  DEFAULT '',
-    deptName varchar(50) default '',
+    request_method varchar(10) DEFAULT '',
+    operate_type tinyint NOT NULL DEFAULT '1',
+    operate_name varchar(50)  DEFAULT '',
+    dept_name varchar(50) default '',
     url varchar(200) default '',
     ip varchar(50) default '',
     location varchar(50) default '',
-    operateParam varchar(500) default '',
-    jsonResult text default '',
+    operate_param varchar(500) default '',
+    json_result text default '',
     status boolean not null default '1',
-    errorMsg boolean default '',
-    operateTime date not null,
+    error_msg boolean default '',
+    operate_time date not null,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE sys_post(
     id bigint,
-    postCode varchar(50) NOT NULL UNIQUE,
-    postName varchar(50) NOT NULL,
-    postSort Integer not null DEFAULT '0',
+    post_code varchar(50) NOT NULL UNIQUE,
+    post_name varchar(50) NOT NULL,
+    post_sort Integer not null DEFAULT '0',
     status boolean not null DEFAULT '1',
     deleted boolean NOT NULL default '0',
     PRIMARY KEY (id)
@@ -92,52 +92,52 @@ CREATE TABLE sys_post(
 
 CREATE TABLE sys_role(
     id bigint,
-    roleName varchar(50) NOT NULL UNIQUE,
+    role_name varchar(50) NOT NULL UNIQUE,
     description varchar(200) DEFAULT '',
-    createTime date not null,
+    create_time date not null,
     status boolean not null DEFAULT '1',
     sort Integer NOT NULL DEFAULT '0',
     PRIMARY KEY (id)
 );
 
 CREATE TABLE sys_role_authority(
-    roleId bigint NOT NULL,
-    authorityId bigint NOT NULL,
-    PRIMARY KEY (roleId,authorityId)
+    role_id bigint NOT NULL,
+    authority_id bigint NOT NULL,
+    PRIMARY KEY (role_id,authority_id)
 );
 
 CREATE TABLE sys_user(
     id bigint,
     username varchar(50) NOT NULL UNIQUE,
     password varchar(100) NOT NULL,
-    unionId varchar(50) DEFAULT '',
-    mpOpenId varchar(50) DEFAULT '',
-    miniOpenId varchar(50) DEFAULT '',
-    icon boolean DEFAULT '',
-    email boolean DEFAULT '',
-    nickName varchar(50) DEFAULT '',
+    union_id varchar(50) DEFAULT '',
+    mp_open_id varchar(50) DEFAULT '',
+    mini_open_id varchar(50) DEFAULT '',
+    nick_name varchar(50) DEFAULT '',
+    icon varchar(200) DEFAULT '',
+    email varchar(50) DEFAULT '',
     note varchar(50) DEFAULT '',
-    createTime date NOT NULL,
+    create_time date NOT NULL,
     status boolean NOT NULL DEFAULT '1',
     deleted boolean NOT NULL default '0',
     PRIMARY KEY (id)
 );
 
 CREATE TABLE sys_user_role(
-    userId bigint NOT NULL,
-    roleId bigint NOT NULL,
-    PRIMARY KEY (userId,roleId)
+    user_id bigint NOT NULL,
+    role_id bigint NOT NULL,
+    PRIMARY KEY (user_id,role_id)
 );
 
 CREATE TABLE sys_user_token(
     id bigint,
-    userId bigint NOT NULL,
-    tokenId varchar(50) NOT NULL,
+    user_id bigint NOT NULL,
+    token_id varchar(50) NOT NULL,
     ip varchar(50) DEFAULT '',
-    loginType varchar(50) DEFAULT '',
+    login_type varchar(50) DEFAULT '',
     os varchar(50) DEFAULT '',
     browser varchar(50) DEFAULT '',
-    loginTime date NOT NULL,
-    lastAccessTime date NOT NULL,
+    login_time date NOT NULL,
+    last_access_time date NOT NULL,
     PRIMARY KEY (id)
 );

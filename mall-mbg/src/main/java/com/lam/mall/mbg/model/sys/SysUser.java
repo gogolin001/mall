@@ -2,8 +2,10 @@ package com.lam.mall.mbg.model.sys;
 
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -38,14 +40,14 @@ public class SysUser implements Serializable {
     @ApiModelProperty(value = "小程序OpenId")
     private String miniOpenId;
 
+    @ApiModelProperty(value = "昵称")
+    private String nickName;
+
     @ApiModelProperty(value = "头像")
     private String icon;
 
     @ApiModelProperty(value = "邮箱")
     private String email;
-
-    @ApiModelProperty(value = "昵称")
-    private String nickName;
 
     @ApiModelProperty(value = "备注信息")
     private String note;

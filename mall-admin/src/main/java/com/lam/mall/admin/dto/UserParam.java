@@ -1,13 +1,17 @@
 package com.lam.mall.admin.dto;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 @Data
+@Builder
+@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
 public class UserParam {
     @NotEmpty

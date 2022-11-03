@@ -35,15 +35,14 @@ import java.util.List;
 public class SysUserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SysUserService.class);
 
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final JwtTokenUtil jwtTokenUtil;
+
+    private final PasswordEncoder passwordEncoder;
 
     private final SysUserMapper userMapper;
 
     @Autowired
-    public SysUserService(SysUserMapper sysUserMapper, JwtTokenUtil jwtTokenUtil, PasswordEncoder passwordEncoder){
+    public SysUserService(JwtTokenUtil jwtTokenUtil, PasswordEncoder passwordEncoder, SysUserMapper sysUserMapper){
         this.jwtTokenUtil = jwtTokenUtil;
         this.passwordEncoder = passwordEncoder;
         this.userMapper = sysUserMapper;
@@ -69,7 +68,8 @@ public class SysUserService {
         user.setStatus(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setCreateTime(LocalDateTime.now());
-        return null;
+        userMapper.insert(user);
+        return user;
     }
 
     /**
