@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @MapperScan("com.lam.mall.mbg.mapper")
-@SpringBootApplication(scanBasePackages = "com.lam.mall")
+@SpringBootApplication(scanBasePackages = {"com.lam.mall"})
 public class MallAdminApplication {
     public static void main(String[] args) {
         SpringApplication.run(MallAdminApplication.class, args);
