@@ -1,8 +1,8 @@
 package com.lam.mall.admin.service;
 
-import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.codec.Base64;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.crypto.SmUtil;
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.Cached;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -11,6 +11,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lam.mall.admin.bo.AdminUserDetails;
 import com.lam.mall.admin.dto.UpdateUserPasswordParam;
 import com.lam.mall.admin.dto.UserParam;
+import com.lam.mall.common.exception.Asserts;
+import com.lam.mall.common.util.JwtTokenUtil;
 import com.lam.mall.mbg.mapper.sys.SysUserMapper;
 import com.lam.mall.mbg.model.sys.SysRole;
 import com.lam.mall.mbg.model.sys.SysUser;
@@ -18,21 +20,32 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class SysUserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SysUserService.class);
 
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     private final SysUserMapper userMapper;
 
     @Autowired
-    public SysUserService(SysUserMapper sysUserMapper){
+    public SysUserService(SysUserMapper sysUserMapper, JwtTokenUtil jwtTokenUtil, PasswordEncoder passwordEncoder){
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.passwordEncoder = passwordEncoder;
         this.userMapper = sysUserMapper;
     }
 
@@ -44,7 +57,7 @@ public class SysUserService {
      */
     @Cached(name="user-", key="#username", expire = 3600, cacheType = CacheType.BOTH)
     public SysUser getAdminByUsername(String username) {
-        return userMapper.SelectByUserName(username);
+        return userMapper.selectByUserName(username);
     }
 
     /**
@@ -54,7 +67,8 @@ public class SysUserService {
         SysUser user = new SysUser();
         BeanUtils.copyProperties(userParam, user);
         user.setStatus(true);
-        user.setPassword(SmUtil.sm3(userParam.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setCreateTime(LocalDateTime.now());
         return null;
     }
 
@@ -64,8 +78,29 @@ public class SysUserService {
      * @param password 密码
      * @return 生成的JWT的token
      */
-    public String login(String username,String password){
-        return "";
+    public String login(String username, String password){
+        String token = "";
+        try{
+            UserDetails userDetails = loadUserByUsername(username);
+            if(ObjectUtil.isEmpty(userDetails)){
+                Asserts.fail("账号不存在");
+            }
+            else if(!passwordEncoder.matches(Base64.decodeStr(password),userDetails.getPassword())) {
+                Asserts.fail("密码错误");
+            }
+            else if(!userDetails.isEnabled()){
+                Asserts.fail("帐号已被禁用");
+            }
+            else{
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+                token = jwtTokenUtil.generateToken(userDetails);
+            }
+        }
+        catch(Exception e) {
+            Asserts.fail("系统异常！");
+        }
+        return token;
     }
 
     /**

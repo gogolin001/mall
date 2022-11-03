@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SysUserMapper extends BaseMapper<SysUser> {
     @Select("SELECT * FROM sys_user WHERE username=${username}")
-    SysUser SelectByUserName(@Param("orderId")String username);
+    SysUser selectByUserName(@Param("username")String username);
 }
