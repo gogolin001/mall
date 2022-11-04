@@ -95,10 +95,10 @@ secure:
       - /favicon.ico
       - /actuator/**
       - /druid/**
-      - /api/v1/account/login
-      - /api/v1/account/register
-      - /api/v1/account/info
-      - /api/v1/account/logout
+      - /api/v1/admin/account/login
+      - /api/v1/admin/account/register
+      - /api/v1/admin/account/info
+      - /api/v1/admin/account/logout
       - /minio/upload
 mybatis-plus:
   global-config:

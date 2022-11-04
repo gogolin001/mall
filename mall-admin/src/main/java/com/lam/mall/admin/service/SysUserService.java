@@ -3,8 +3,11 @@ package com.lam.mall.admin.service;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.alicp.jetcache.Cache;
+import com.alicp.jetcache.CacheManager;
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.Cached;
+import com.alicp.jetcache.template.QuickConfig;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -14,15 +17,17 @@ import com.lam.mall.admin.dto.UserParam;
 import com.lam.mall.common.exception.Asserts;
 import com.lam.mall.common.util.JwtTokenUtil;
 import com.lam.mall.mbg.mapper.sys.SysUserMapper;
+import com.lam.mall.mbg.mapper.sys.SysUserTokenMapper;
+import com.lam.mall.mbg.model.sys.SysAuthority;
 import com.lam.mall.mbg.model.sys.SysRole;
 import com.lam.mall.mbg.model.sys.SysUser;
+import com.lam.mall.mbg.model.sys.SysUserToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -30,6 +35,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -43,18 +49,51 @@ public class SysUserService {
 
     private final SysUserMapper userMapper;
 
+    private final SysUserTokenMapper userTokenMapper;
+
+    private final CacheManager cacheManager;
+
+    private Cache<String, SysUser> userCache;
+
+    private Cache<Long, SysUserToken> tokenCache;
+
     @Autowired
-    public SysUserService(JwtTokenUtil jwtTokenUtil, PasswordEncoder passwordEncoder, SysUserMapper sysUserMapper){
+    public SysUserService(JwtTokenUtil jwtTokenUtil, PasswordEncoder passwordEncoder, CacheManager cacheManager, SysUserMapper sysUserMapper, SysUserTokenMapper sysUserTokenMapper){
         this.jwtTokenUtil = jwtTokenUtil;
         this.passwordEncoder = passwordEncoder;
+        this.cacheManager = cacheManager;
         this.userMapper = sysUserMapper;
+        this.userTokenMapper = sysUserTokenMapper;
+    }
+
+    @PostConstruct
+    public void init() {
+        //用户缓存
+        QuickConfig qc1 = QuickConfig.newBuilder("user")
+                //.expire(Duration.ofSeconds(3600))
+                .cacheType(CacheType.BOTH) // two level cache
+                .localLimit(0)
+                .syncLocal(true) // invalidate local cache in all jvm process after update
+                .build();
+        userCache = cacheManager.getOrCreateCache(qc1);
+        userCache.config().setLoader(userMapper::selectByUserName);
+
+        //token缓存
+        QuickConfig qc2 = QuickConfig.newBuilder("userToken")
+                //.expire(Duration.ofSeconds(3600))
+                .cacheType(CacheType.BOTH) // two level cache
+                .localLimit(0)
+                .syncLocal(true) // invalidate local cache in all jvm process after update
+                .build();
+        tokenCache = cacheManager.getOrCreateCache(qc2);
+        tokenCache.config().setLoader(userTokenMapper::selectById);
     }
 
     /**
      * 获取当前用户
      * @return 当前用户
      */
-    public SysUser getCurrentMember() {
+    public SysUser getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if(ObjectUtil.isNull(auth)){
             return null;
@@ -123,6 +162,9 @@ public class SysUserService {
      * @param oldToken 旧的token
      */
     public String refreshToken(String oldToken){
+        if(StrUtil.isEmpty(oldToken)){
+            //jwtTokenUtil.getUserNameFromToken();
+        }
         return "";
     }
 

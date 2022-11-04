@@ -57,7 +57,7 @@ public class AccountController {
 
     @ApiOperation(value = "登录以后返回token")
     @PostMapping("/login")
-    public CommonResult login(@Validated UserLoginParam userLoginParam){
+    public CommonResult login(@Validated @RequestBody UserLoginParam userLoginParam){
         String token = userService.login(userLoginParam.getUsername(), userLoginParam.getPassword());
         if (token == null) {
             return CommonResult.validateFailed("用户名或密码错误");
