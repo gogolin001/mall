@@ -1,4 +1,3 @@
-/*
 package com.lam.mall.admin.service;
 
 import com.lam.mall.admin.dto.UserParam;
@@ -8,9 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @SpringBootTest
+@Transactional
 class SysUserServiceTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SysUserServiceTest.class);
@@ -19,6 +21,7 @@ class SysUserServiceTest {
 
     @DisplayName("测试用户注册")
     @Test
+    @Rollback
     void register() {
         var result = userService.register(
                 UserParam.builder().username("admin").password("admin@123").email("admin@mall.com").nickName("超管").build()
@@ -29,4 +32,4 @@ class SysUserServiceTest {
     @Test
     void login() {
     }
-}*/
+}
