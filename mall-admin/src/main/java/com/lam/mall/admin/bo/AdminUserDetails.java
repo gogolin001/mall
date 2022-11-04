@@ -1,5 +1,6 @@
 package com.lam.mall.admin.bo;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.lam.mall.mbg.model.sys.SysUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,6 +25,9 @@ public class AdminUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(CollectionUtil.isEmpty(this.authorityList)){
+            return null;
+        }
         //返回当前用户的角色
         return authorityList.stream().map(authority ->new SimpleGrantedAuthority(authority)).toList();
     }

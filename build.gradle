@@ -32,6 +32,7 @@ subprojects {
         hibernateValidatorVersion = "8.0.0.Final"
         druidVersion = "1.2.14"
         bcprovVersion = "1.72"
+        jaxbapiVersion = "2.3.1"
     }
 
     repositories {

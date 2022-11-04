@@ -134,25 +134,20 @@ public class SysUserService {
      */
     public String login(String username, String password){
         String token = "";
-        try{
-            UserDetails userDetails = loadUserByUsername(username);
-            if(ObjectUtil.isEmpty(userDetails)){
-                Asserts.fail("账号不存在");
-            }
-            else if(!passwordEncoder.matches(Base64.decodeStr(password),userDetails.getPassword())) {
-                Asserts.fail("密码错误");
-            }
-            else if(!userDetails.isEnabled()){
-                Asserts.fail("帐号已被禁用");
-            }
-            else{
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-                token = jwtTokenUtil.generateToken(userDetails);
-            }
+        UserDetails userDetails = loadUserByUsername(username);
+        if(ObjectUtil.isEmpty(userDetails)){
+            Asserts.fail("账号不存在");
         }
-        catch(Exception e) {
-            Asserts.fail("系统异常！");
+        else if(!passwordEncoder.matches(Base64.decodeStr(password),userDetails.getPassword())) {
+            Asserts.fail("密码错误");
+        }
+        else if(!userDetails.isEnabled()){
+            Asserts.fail("帐号已被禁用");
+        }
+        else{
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            token = jwtTokenUtil.generateToken(userDetails);
         }
         return token;
     }

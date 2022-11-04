@@ -18,7 +18,7 @@ dependencies {
     implementation "cn.hutool:hutool-all:$hutoolVersion"
     implementation "io.jsonwebtoken:jjwt:$jjwtVersion"
     implementation "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
-
+    implementation "javax.xml.bind:jaxb-api:$jaxbapiVersion"
     // 在线文档
     implementation "io.springfox:springfox-boot-starter:$springfoxVersion"
     implementation 'io.swagger:swagger-models:1.6.8'
