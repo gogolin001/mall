@@ -26,8 +26,11 @@ public class SysAuthority implements Serializable {
     @ApiModelProperty(value = "父级权限id")
     private Long pid;
 
-    @ApiModelProperty(value = "权限类型id")
-    private Long typeId;
+    @ApiModelProperty(value = "所属客户端")
+    private String clientType;
+
+    @ApiModelProperty(value = "权限分类")
+    private String authorityClassify;
 
     @ApiModelProperty(value = "名称")
     private String authorityName;
