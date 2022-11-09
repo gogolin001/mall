@@ -60,12 +60,12 @@ jetcache:
   local:
     default:
       type: caffeine
-      keyConvertor: fastjson2
+      keyConvertor: jackson
       limit: 100
   remote:
     default:
       type: redis.lettuce
-      keyConvertor: fastjson2
+      keyConvertor: jackson
       broadcastChannel: mall
 
 jwt:
