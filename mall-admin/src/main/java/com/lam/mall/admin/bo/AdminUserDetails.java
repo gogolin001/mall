@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -23,13 +24,21 @@ public class AdminUserDetails implements UserDetails {
         this.authorityList = resourceList;
     }
 
+    /**
+     * 返回权限
+     * @return
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(CollectionUtil.isEmpty(this.authorityList)){
-            return null;
+        Collection<SimpleGrantedAuthority> authorities=new ArrayList<>();
+        if(!CollectionUtil.isEmpty(this.sysUser.getRoles())){
+            authorities.addAll(this.sysUser.getRoles().stream().map(authority ->new SimpleGrantedAuthority("ROLE_"+authority)).toList());
         }
-        //返回当前用户的角色
-        return authorityList.stream().map(authority ->new SimpleGrantedAuthority(authority)).toList();
+        if(!CollectionUtil.isEmpty(this.authorityList)){
+            authorities.addAll(authorityList.stream().map(SimpleGrantedAuthority::new).toList());
+        }
+        //返回当前用户的角色和权限
+        return authorities;
     }
 
     @Override

@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * 权限表（目录、菜单、按钮、接口、资源）
@@ -55,7 +54,4 @@ public class SysAuthority implements Serializable {
 
     @ApiModelProperty(value = "排序")
     private Byte sort;
-
-    @ApiModelProperty(value = "创建时间")
-    private LocalDateTime createTime;
 }
