@@ -1,8 +1,10 @@
 package com.lam.mall.admin.service;
 
+import cn.hutool.core.util.StrUtil;
 import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.CacheManager;
 import com.alicp.jetcache.anno.CacheType;
+import com.alicp.jetcache.anno.Cached;
 import com.alicp.jetcache.template.QuickConfig;
 import com.lam.mall.mbg.mapper.sys.SysAuthorityMapper;
 import com.lam.mall.mbg.model.sys.SysAuthority;
@@ -10,37 +12,89 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.time.Duration;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SysAuthorityService {
 
+    /**
+     * 权限mapper
+     */
     private final SysAuthorityMapper authorityMapper;
 
+    /**
+     * jetcache管理器
+     */
     private final CacheManager cacheManager;
-    private Cache<Long, SysAuthority> authorityCache;
+    /**
+     * 权限缓存
+     */
+    private Cache<String, List<SysAuthority>> authorityCache;
+
+    /**
+     * 构造函数
+     * @param sysAuthorityMapper
+     * @param cacheManager
+     */
     @Autowired
     private SysAuthorityService(SysAuthorityMapper sysAuthorityMapper, CacheManager cacheManager){
         this.authorityMapper = sysAuthorityMapper;
         this.cacheManager = cacheManager;
     }
 
+    /**
+     * 初始化执行
+     */
     @PostConstruct
     public void init() {
         QuickConfig qc = QuickConfig.newBuilder("authority")
-                //.expire(Duration.ofSeconds(3600))
+                .expire(Duration.ofSeconds(86400))
                 .cacheType(CacheType.BOTH) // two level cache
                 .localLimit(0)
                 .syncLocal(true) // invalidate local cache in all jvm process after update
                 .build();
         authorityCache = cacheManager.getOrCreateCache(qc);
-        authorityCache.config().setLoader(authorityMapper::selectById);
+        authorityCache.config().setLoader(key -> authorityMapper.list());
     }
 
+    public int insert(SysAuthority authority){
+        return 0;
+    }
 
+    public int update(SysAuthority authority){
+        return 0;
+    }
+
+    public int delete(Long id){
+        return 0;
+    }
+
+    /**
+     * 获取所有权限（目录、菜单、按钮、接口）
+     * @return
+     */
+    @Cached(name="authority")
     public List<SysAuthority> listAll(){
-
-        var data = authorityCache.getAll(null);
         return authorityMapper.list();
+    }
+
+    /**
+     * 获取所有目录菜单按钮
+     * @return
+     */
+    public List<SysAuthority> getMenu(){
+        return authorityCache.get("authority").stream().filter(t->t.getAuthorityType() != 3).toList();
+    }
+
+    /**
+     * 获取资源清单
+     * @return
+     */
+    public Map<String,String> getResources(){
+        return authorityCache.get("authority").stream().filter(t-> StrUtil.isNotBlank(t.getBgUri()) && StrUtil.isNotBlank(t.getAuthorityValue())).collect(Collectors.toMap(SysAuthority::getAuthorityValue,SysAuthority::getBgUri));
     }
 }

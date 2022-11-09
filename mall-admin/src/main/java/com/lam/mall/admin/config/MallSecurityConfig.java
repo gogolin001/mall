@@ -36,14 +36,18 @@ public class MallSecurityConfig {
         return userService::loadUserByUsername;
     }
 
+    /**
+     * 动态权限配置（配置需要权限的路径）
+     * @return
+     */
     @Bean
     public DynamicSecurityService dynamicSecurityService() {
         return () -> {
             Map<String, ConfigAttribute> map = new ConcurrentHashMap<>();
-            List<SysAuthority> resourceList = authorityService.listAll();
-            for (SysAuthority resource : resourceList) {
-                map.put(resource.getBgUri(), new org.springframework.security.access.SecurityConfig(resource.getAuthorityName()));
-            }
+            Map<String,String> resourceList = authorityService.getResources();
+            resourceList.forEach((key,value)->{
+                map.put(value, new org.springframework.security.access.SecurityConfig(key));
+            });
             return map;
         };
     }
