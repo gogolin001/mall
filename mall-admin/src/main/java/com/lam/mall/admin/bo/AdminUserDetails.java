@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * SpringSecurity需要的用户详情
@@ -18,8 +19,8 @@ public class AdminUserDetails implements UserDetails {
     //后台用户
     private SysUser sysUser;
     //拥有资源列表
-    private List<String> authorityList;
-    public AdminUserDetails(SysUser sysUser, List<String> resourceList) {
+    private Set<String> authorityList;
+    public AdminUserDetails(SysUser sysUser, Set<String> resourceList) {
         this.sysUser = sysUser;
         this.authorityList = resourceList;
     }

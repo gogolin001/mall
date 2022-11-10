@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.time.Duration;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -77,9 +75,12 @@ public class SysAuthorityService {
      * 获取所有权限（目录、菜单、按钮、接口）
      * @return
      */
-    @Cached(name="authority")
-    public List<SysAuthority> listAll(){
-        return authorityMapper.list();
+    public Set<SysAuthority> listAll(){
+        return new HashSet<>(authorityCache.get("authority"));
+    }
+
+    public Set<SysAuthority> getAuthorityByIds(Set<Long> ids){
+        return listAll().stream().filter(t->ids.contains(t.getId())).collect(Collectors.toSet());
     }
 
     /**

@@ -38,6 +38,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class SysUserService {
@@ -57,13 +58,16 @@ public class SysUserService {
 
     private Cache<Long, SysUserToken> tokenCache;
 
+    private RoleService roleService;
+
     @Autowired
-    public SysUserService(JwtTokenUtil jwtTokenUtil, PasswordEncoder passwordEncoder, CacheManager cacheManager, SysUserMapper sysUserMapper, SysUserTokenMapper sysUserTokenMapper){
+    public SysUserService(JwtTokenUtil jwtTokenUtil, PasswordEncoder passwordEncoder, CacheManager cacheManager, SysUserMapper sysUserMapper, SysUserTokenMapper sysUserTokenMapper, RoleService roleService){
         this.jwtTokenUtil = jwtTokenUtil;
         this.passwordEncoder = passwordEncoder;
         this.cacheManager = cacheManager;
         this.userMapper = sysUserMapper;
         this.userTokenMapper = sysUserTokenMapper;
+        this.roleService = roleService;
     }
 
     @PostConstruct
@@ -108,9 +112,8 @@ public class SysUserService {
      * @param username 用户名
      * @return 用户信息
      */
-    @Cached(name="user-", key="#username", expire = 3600, cacheType = CacheType.BOTH)
     public SysUser getAdminByUsername(String username) {
-        return userMapper.selectByUserName(username);
+        return userCache.get(username);
     }
 
     /**
@@ -209,12 +212,33 @@ public class SysUserService {
     }
 
     /**
+     * 获取具有权限目录菜单
+     * @param userId
+     */
+    public void getMenu(Long userId){
+
+    }
+
+    /**
+     * 获取具有权限按钮
+     * @param userId
+     * @param authorityPid
+     */
+    public void getButton(Long userId, Long authorityPid){
+
+    }
+
+
+    /**
      * 根据用户id获取具有权限的接口（同时根据用户角色返回）
-     * @param adminId 用户id
+     * @param user 用户
      * @return 用户具有的权限
      */
-    public List<String> getResourceList(Long adminId){
-        return null;
+    public Set<String> getResourceList(SysUser user){
+        if(StrUtil.isBlankOrUndefined(user.getRolesStr())){
+            return null;
+        }
+        return roleService.listResource(user.getRoles());
     }
 
     /**
@@ -231,7 +255,7 @@ public class SysUserService {
         //获取用户信息
         SysUser user = getAdminByUsername(username);
         if (user != null) {
-            List<String> resourceList = getResourceList(user.getId());
+            Set<String> resourceList = getResourceList(user);
             return new AdminUserDetails(user,resourceList);
         }
         throw new UsernameNotFoundException("用户名或密码错误");

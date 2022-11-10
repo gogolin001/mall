@@ -10,6 +10,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 用户表
@@ -68,7 +70,7 @@ public class SysUser implements Serializable {
      * 获取当前用户所有角色名
      * @return 获取当前用户所有角色名称
      */
-    public List<String> getRoles(){
-        return rolesStr.isBlank() ? null : Arrays.stream(rolesStr.split(",")).toList();
+    public Set<String> getRoles(){
+        return rolesStr.isBlank() ? null : Arrays.stream(rolesStr.split(",")).collect(Collectors.toSet());
     }
 }

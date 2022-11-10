@@ -1,6 +1,10 @@
 package com.lam.mall.admin.service;
 
 import cn.hutool.core.util.StrUtil;
+import com.alicp.jetcache.Cache;
+import com.alicp.jetcache.CacheManager;
+import com.alicp.jetcache.anno.CacheType;
+import com.alicp.jetcache.template.QuickConfig;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -13,9 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class RoleService {
@@ -23,10 +31,44 @@ public class RoleService {
 
     private final SysRoleAuthorityMapper roleAuthorityMapper;
 
+    private final CacheManager cacheManager;
+
+    private Cache<String, SysRole> roleCache;
+
+    private Cache<String, Set<Long>> roleAuthorityCache;
+
+    private final SysAuthorityService authorityService;
+
+
     @Autowired
-    public RoleService(SysRoleMapper roleMapper, SysRoleAuthorityMapper roleAuthorityMapper){
+    public RoleService(SysRoleMapper roleMapper, SysRoleAuthorityMapper roleAuthorityMapper, CacheManager cacheManager, SysAuthorityService authorityService){
         this.roleMapper = roleMapper;
         this.roleAuthorityMapper = roleAuthorityMapper;
+        this.cacheManager = cacheManager;
+        this.authorityService = authorityService;
+    }
+
+    @PostConstruct
+    public void init() {
+        //用户缓存
+        QuickConfig qc1 = QuickConfig.newBuilder("role")
+                //.expire(Duration.ofSeconds(3600))
+                .cacheType(CacheType.BOTH) // two level cache
+                .localLimit(0)
+                .syncLocal(true) // invalidate local cache in all jvm process after update
+                .build();
+        roleCache = cacheManager.getOrCreateCache(qc1);
+        roleCache.config().setLoader(roleMapper::getByRoleName);
+
+        //token缓存
+        QuickConfig qc2 = QuickConfig.newBuilder("role_authority")
+                //.expire(Duration.ofSeconds(3600))
+                .cacheType(CacheType.BOTH) // two level cache
+                .localLimit(0)
+                .syncLocal(true) // invalidate local cache in all jvm process after update
+                .build();
+        roleAuthorityCache = cacheManager.getOrCreateCache(qc2);
+        roleAuthorityCache.config().setLoader(this::getRoleId);
     }
 
     /**
@@ -56,9 +98,8 @@ public class RoleService {
     /**
      * 获取所有角色列表
      */
-    public List<SysRole> list(){
-        roleMapper.selectList(new QueryWrapper());
-        return null;
+    public Set<SysRole> list(){
+        return roleMapper.list();
     }
 
     /**
@@ -70,11 +111,8 @@ public class RoleService {
         return roleMapper.selectPage(new Page<>(pageNum,pageSize),queryWrapper);
     }
 
-    /**
-     * 根据管理员ID获取对应菜单
-     */
-    public List<SysAuthority> getMenuList(Long adminId){
-        return null;
+    public Set<Long> getRoleId(String roleName){
+        return roleAuthorityMapper.getAuthorityIdsByRoleId(roleCache.get(roleName).getId());
     }
 
     /**
@@ -87,8 +125,18 @@ public class RoleService {
     /**
      * 获取角色相关资源
      */
-    public List<SysAuthority> listResource(Long roleId){
-        return null;
+    public Set<String> listResource(String roleName){
+        Set<String> roleNames = new HashSet<>();
+        roleNames.add(roleName);
+        return listResource(roleNames);
+    }
+
+    public Set<String> listResource(Set<String> roleNames){
+        Set<String> authorityValues= new HashSet<>();
+        roleNames.forEach(item -> {
+            authorityValues.addAll(authorityService.getAuthorityByIds(roleAuthorityCache.get(item)).stream().filter(t->StrUtil.isNotBlank(t.getBgUri())).map(m->m.getAuthorityValue()).collect(Collectors.toSet()));
+        });
+        return authorityValues;
     }
 
     /**
