@@ -112,7 +112,7 @@ public class SysUserService {
      * @param username 用户名
      * @return 用户信息
      */
-    public SysUser getAdminByUsername(String username) {
+    public SysUser getUserByUsername(String username) {
         var user = userCache.get(username);
         if(ObjectUtil.isNull(user)){
             user = userMapper.selectByUserName(username);
@@ -261,7 +261,7 @@ public class SysUserService {
      */
     public UserDetails loadUserByUsername(String username){
         //获取用户信息
-        SysUser user = getAdminByUsername(username);
+        SysUser user = getUserByUsername(username);
         if (user != null) {
             Set<String> resourceList = getResourceList(user);
             return new AdminUserDetails(user,resourceList);

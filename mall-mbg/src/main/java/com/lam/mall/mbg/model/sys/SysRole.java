@@ -23,12 +23,14 @@ public class SysRole implements Serializable {
     @TableId(type = IdType.ASSIGN_ID,value = "id")
     private Long id;
 
+    @ApiModelProperty(value = "编码")
+    private String roleCode;
+
     @ApiModelProperty(value = "名称")
     private String roleName;
 
     @ApiModelProperty(value = "描述")
     private String description;
-
 
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
