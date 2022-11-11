@@ -1,5 +1,6 @@
 package com.lam.mall.mbg.model.sys;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -71,6 +72,6 @@ public class SysUser implements Serializable {
      * @return 获取当前用户所有角色名称
      */
     public Set<String> getRoles(){
-        return rolesStr.isBlank() ? null : Arrays.stream(rolesStr.split(",")).collect(Collectors.toSet());
+        return StrUtil.isBlank(rolesStr) ? null : Arrays.stream(rolesStr.split(",")).collect(Collectors.toSet());
     }
 }

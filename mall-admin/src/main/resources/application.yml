@@ -95,6 +95,7 @@ secure:
       - /favicon.ico
       - /actuator/**
       - /druid/**
+      - /api/v1/admin/index
       - /api/v1/admin/account/login
       - /api/v1/admin/account/register
       - /api/v1/admin/account/info

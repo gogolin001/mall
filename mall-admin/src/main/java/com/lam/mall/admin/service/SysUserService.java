@@ -113,7 +113,15 @@ public class SysUserService {
      * @return 用户信息
      */
     public SysUser getAdminByUsername(String username) {
-        return userCache.get(username);
+        var user = userCache.get(username);
+        if(ObjectUtil.isNull(user)){
+            user = userMapper.selectByUserName(username);
+            if(ObjectUtil.isNull(user)){
+                return null;
+            }
+            userCache.put(username, user);
+        }
+        return user;
     }
 
     /**
@@ -215,8 +223,8 @@ public class SysUserService {
      * 获取具有权限目录菜单
      * @param userId
      */
-    public void getMenu(Long userId){
-
+    public Set<SysAuthority> getMenu(Long userId){
+        return null;
     }
 
     /**

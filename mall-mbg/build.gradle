@@ -14,7 +14,7 @@ dependencies {
     implementation "mysql:mysql-connector-java:$mysqlConnectorVersion"
     implementation "org.opengauss:opengauss-jdbc:$opengaussVersion"
     //implementation "org.apache.shardingsphere:shardingsphere-jdbc-core-spring-boot-starter:$shardingsphereVersion"
-
+    implementation "cn.hutool:hutool-all:$hutoolVersion"
     implementation "io.springfox:springfox-boot-starter:$springfoxVersion"
     implementation 'io.swagger:swagger-models:1.6.8'
     implementation 'io.swagger:swagger-annotations:1.6.8'

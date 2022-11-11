@@ -1,5 +1,6 @@
 package com.lam.mall.admin.service;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.CacheManager;
@@ -76,6 +77,9 @@ public class SysAuthorityService {
      * @return
      */
     public Set<SysAuthority> listAll(){
+        if(CollectionUtil.isEmpty(authorityCache.get("authority"))){
+            authorityCache.put("authority",authorityMapper.list());
+        }
         return new HashSet<>(authorityCache.get("authority"));
     }
 
@@ -96,6 +100,6 @@ public class SysAuthorityService {
      * @return
      */
     public Map<String,String> getResources(){
-        return authorityCache.get("authority").stream().filter(t-> StrUtil.isNotBlank(t.getBgUri()) && StrUtil.isNotBlank(t.getAuthorityValue())).collect(Collectors.toMap(SysAuthority::getAuthorityValue,SysAuthority::getBgUri));
+        return listAll().stream().filter(t-> StrUtil.isNotBlank(t.getBgUri()) && StrUtil.isNotBlank(t.getAuthorityValue())).collect(Collectors.toMap(SysAuthority::getAuthorityValue,SysAuthority::getBgUri));
     }
 }

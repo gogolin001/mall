@@ -93,7 +93,7 @@ public class AccountController {
         SysUser SysUser = userService.getAdminByUsername(username);
         Map<String, Object> data = new HashMap<>();
         data.put("username", SysUser.getUsername());
-        data.put("menus", roleService.getMenuList(SysUser.getId()));
+        data.put("menus", userService.getMenu(SysUser.getId()));
         data.put("icon", SysUser.getIcon());
         List<SysRole> roleList = userService.getRoleList(SysUser.getId());
         if(CollUtil.isNotEmpty(roleList)){
