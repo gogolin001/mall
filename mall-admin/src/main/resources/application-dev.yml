@@ -6,6 +6,8 @@ spring:
     password: "!Jmlide369258147"
     druid:
       max-active: 3
+      remove-abandoned: true
+      remove-abandoned-timeout: 1800
   redis:
     host: dev.jmlide.com
     password: jmlide@redis963

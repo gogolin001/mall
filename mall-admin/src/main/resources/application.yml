@@ -42,8 +42,6 @@ spring:
       test-on-return: false
       filters: stat,wall,slf4j
       time-between-log-stats-millis: 300000
-      remove-abandoned: true
-      remove-abandoned-timeout: 1800
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
       stat-view-servlet:
         enabled: true
