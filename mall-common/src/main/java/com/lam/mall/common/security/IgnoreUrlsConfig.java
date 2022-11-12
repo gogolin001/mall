@@ -1,4 +1,4 @@
-package com.lam.mall.common.config;
+package com.lam.mall.common.security;
 
 import lombok.Getter;
 import lombok.Setter;

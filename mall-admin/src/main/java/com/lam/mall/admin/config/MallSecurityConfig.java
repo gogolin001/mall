@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -40,13 +41,21 @@ public class MallSecurityConfig {
      */
     @Bean
     public DynamicSecurityService dynamicSecurityService() {
-        return () -> {
-            Map<String, ConfigAttribute> map = new ConcurrentHashMap<>();
-            Map<String,String> resourceList = authorityService.getResources();
-            resourceList.forEach((key,value)->{
-                map.put(value, new org.springframework.security.access.SecurityConfig(key));
-            });
-            return map;
+        return new DynamicSecurityService() {
+            @Override
+            public Map<String, ConfigAttribute> loadDataSource() {
+                Map<String, ConfigAttribute> map = new ConcurrentHashMap<>();
+                Map<String,String> resourceList = authorityService.getResources();
+                resourceList.forEach((key,value)->{
+                    map.put(value, new org.springframework.security.access.SecurityConfig(key));
+                });
+                return map;
+            }
+
+            public boolean tokenValidate(){
+                
+                return true;
+            }
         };
     }
 }

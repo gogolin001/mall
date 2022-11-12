@@ -1,6 +1,5 @@
 package com.lam.mall.common.security;
 
-import com.lam.mall.common.config.IgnoreUrlsConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.SecurityMetadataSource;
