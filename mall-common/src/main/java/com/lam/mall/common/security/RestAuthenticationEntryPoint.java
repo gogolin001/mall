@@ -1,4 +1,4 @@
-package com.lam.mall.common.component;
+package com.lam.mall.common.security;
 
 import cn.hutool.json.JSONUtil;
 import com.lam.mall.common.api.CommonResult;

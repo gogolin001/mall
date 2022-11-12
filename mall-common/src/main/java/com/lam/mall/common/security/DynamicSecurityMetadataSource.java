@@ -1,4 +1,4 @@
-package com.lam.mall.common.component;
+package com.lam.mall.common.security;
 
 import cn.hutool.core.util.URLUtil;
 import org.springframework.beans.factory.annotation.Autowired;

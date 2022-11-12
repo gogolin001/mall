@@ -1,4 +1,4 @@
-package com.lam.mall.common.component;
+package com.lam.mall.common.security;
 
 import com.lam.mall.common.util.JwtTokenUtil;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package com.lam.mall.common.component;
+package com.lam.mall.common.security;
 
 import org.springframework.security.access.ConfigAttribute;
 

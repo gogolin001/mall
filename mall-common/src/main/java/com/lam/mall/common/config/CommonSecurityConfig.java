@@ -1,7 +1,6 @@
 package com.lam.mall.common.config;
 
-import com.lam.mall.common.component.*;
-import com.lam.mall.common.config.IgnoreUrlsConfig;
+import com.lam.mall.common.security.*;
 import com.lam.mall.common.util.JwtTokenUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;

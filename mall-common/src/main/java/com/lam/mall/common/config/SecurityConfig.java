@@ -1,7 +1,6 @@
 package com.lam.mall.common.config;
 
-import com.lam.mall.common.component.*;
-import com.lam.mall.common.config.IgnoreUrlsConfig;
+import com.lam.mall.common.security.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

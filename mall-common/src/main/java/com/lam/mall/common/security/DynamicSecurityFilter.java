@@ -1,4 +1,4 @@
-package com.lam.mall.common.component;
+package com.lam.mall.common.security;
 
 import com.lam.mall.common.config.IgnoreUrlsConfig;
 import org.springframework.beans.factory.annotation.Autowired;

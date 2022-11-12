@@ -1,4 +1,4 @@
-package com.lam.mall.common.component;
+package com.lam.mall.common.security;
 
 import cn.hutool.core.collection.CollUtil;
 import org.springframework.security.access.AccessDecisionManager;

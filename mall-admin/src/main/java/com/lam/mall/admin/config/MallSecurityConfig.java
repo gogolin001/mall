@@ -1,7 +1,6 @@
 package com.lam.mall.admin.config;
 
-import com.lam.mall.mbg.model.sys.SysAuthority;
-import com.lam.mall.common.component.DynamicSecurityService;
+import com.lam.mall.common.security.DynamicSecurityService;
 import com.lam.mall.admin.service.SysUserService;
 import com.lam.mall.admin.service.SysAuthorityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
