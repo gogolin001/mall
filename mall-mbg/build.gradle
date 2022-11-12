@@ -11,7 +11,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 
     implementation "com.baomidou:mybatis-plus-boot-starter:$mybatisPlusStarterVersion"
-    implementation "mysql:mysql-connector-java:$mysqlConnectorVersion"
+    /*implementation "mysql:mysql-connector-java:$mysqlConnectorVersion"*/
     implementation "org.opengauss:opengauss-jdbc:$opengaussVersion"
     //implementation "org.apache.shardingsphere:shardingsphere-jdbc-core-spring-boot-starter:$shardingsphereVersion"
     implementation "cn.hutool:hutool-all:$hutoolVersion"

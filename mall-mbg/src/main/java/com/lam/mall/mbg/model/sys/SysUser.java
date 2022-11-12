@@ -1,6 +1,8 @@
 package com.lam.mall.mbg.model.sys;
 
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONArray;
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -10,7 +12,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -19,7 +21,7 @@ import java.util.stream.Collectors;
  */
 @Getter
 @Setter
-@TableName("sys_user")
+@TableName(value ="sys_user", autoResultMap = true)
 public class SysUser implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -55,8 +57,8 @@ public class SysUser implements Serializable {
     @ApiModelProperty(value = "备注信息")
     private String note;
 
-    @ApiModelProperty(value = "角色名（多个角色用逗号分割）")
-    private String rolesStr;
+    @ApiModelProperty(value = "角色Id")
+    private String roleIds;
 
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
@@ -67,11 +69,7 @@ public class SysUser implements Serializable {
     @TableLogic
     private Boolean deleted;
 
-    /**
-     * 获取当前用户所有角色名
-     * @return 获取当前用户所有角色名称
-     */
-    public Set<String> getRoles(){
-        return StrUtil.isBlank(rolesStr) ? null : Arrays.stream(rolesStr.split(",")).collect(Collectors.toSet());
+    public Set<Long> getRoleIdList(){
+        return StrUtil.isBlank(roleIds) ? null : Arrays.stream(roleIds.split(",")).map(Long::valueOf).collect(Collectors.toSet());
     }
 }

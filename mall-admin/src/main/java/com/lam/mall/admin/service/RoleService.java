@@ -33,9 +33,9 @@ public class RoleService {
 
     private final CacheManager cacheManager;
 
-    private Cache<String, SysRole> roleCache;
+    private Cache<Long, SysRole> roleCache;
 
-    private Cache<String, Set<Long>> roleAuthorityCache;
+    private Cache<Long, Set<Long>> roleAuthorityCache;
 
     private final SysAuthorityService authorityService;
 
@@ -58,7 +58,7 @@ public class RoleService {
                 .syncLocal(true) // invalidate local cache in all jvm process after update
                 .build();
         roleCache = cacheManager.getOrCreateCache(qc1);
-        roleCache.config().setLoader(roleMapper::getByRoleName);
+        roleCache.config().setLoader(roleMapper::selectById);
 
         //token缓存
         QuickConfig qc2 = QuickConfig.newBuilder("role_authority")
@@ -111,8 +111,8 @@ public class RoleService {
         return roleMapper.selectPage(new Page<>(pageNum,pageSize),queryWrapper);
     }
 
-    public Set<Long> getRoleId(String roleName){
-        return roleAuthorityMapper.getAuthorityIdsByRoleId(roleCache.get(roleName).getId());
+    public Set<Long> getRoleId(Long roleId){
+        return roleAuthorityMapper.getAuthorityIdsByRoleId(roleCache.get(roleId).getId());
     }
 
     /**
@@ -125,16 +125,18 @@ public class RoleService {
     /**
      * 获取角色相关资源
      */
-    public Set<String> listResource(String roleName){
-        Set<String> roleNames = new HashSet<>();
-        roleNames.add(roleName);
+    public Set<String> listResource(Long roleId){
+        Set<Long> roleNames = new HashSet<>();
+        roleNames.add(roleId);
         return listResource(roleNames);
     }
 
-    public Set<String> listResource(Set<String> roleNames){
+    public Set<String> listResource(Set<Long> roleIds){
         Set<String> authorityValues= new HashSet<>();
-        roleNames.forEach(item -> {
-            authorityValues.addAll(authorityService.getAuthorityByIds(roleAuthorityCache.get(item)).stream().filter(t->StrUtil.isNotBlank(t.getBgUri())).map(m->m.getAuthorityValue()).collect(Collectors.toSet()));
+        roleIds.forEach(item -> {
+            SysRole role =  roleCache.get(item);
+            authorityValues.add("ROLE_"+role.getRoleCode());
+            authorityValues.addAll(authorityService.getAuthorityByIds(roleAuthorityCache.get(item)).stream().filter(t->StrUtil.isNotBlank(t.getBgUri())).map(SysAuthority::getAuthorityValue).collect(Collectors.toSet()));
         });
         return authorityValues;
     }

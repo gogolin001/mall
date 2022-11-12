@@ -90,7 +90,7 @@ public class AccountController {
             return CommonResult.unauthorized(null);
         }
         String username = principal.getName();
-        SysUser SysUser = userService.getAdminByUsername(username);
+        SysUser SysUser = userService.getUserByUsername(username);
         Map<String, Object> data = new HashMap<>();
         data.put("username", SysUser.getUsername());
         data.put("menus", userService.getMenu(SysUser.getId()));

@@ -32,9 +32,6 @@ public class AdminUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<SimpleGrantedAuthority> authorities=new ArrayList<>();
-        if(!CollectionUtil.isEmpty(this.sysUser.getRoles())){
-            authorities.addAll(this.sysUser.getRoles().stream().map(authority ->new SimpleGrantedAuthority("ROLE_"+authority)).toList());
-        }
         if(!CollectionUtil.isEmpty(this.authorityList)){
             authorities.addAll(authorityList.stream().map(SimpleGrantedAuthority::new).toList());
         }

@@ -10,9 +10,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 
 @SpringBootTest
-@Transactional
+//@Transactional
 class SysUserServiceTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SysUserServiceTest.class);
@@ -24,9 +30,8 @@ class SysUserServiceTest {
     @Rollback
     void register() {
         var result = userService.register(
-                UserParam.builder().username("admin").password("admin@123").email("admin@mall.com").nickName("超管").build()
+                UserParam.builder().username("admin").password("admin@123").email("admin@mall.com").nickName("超管").roleIds("1").build()
         );
-
     }
 
     @Test

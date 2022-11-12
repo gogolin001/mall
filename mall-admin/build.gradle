@@ -30,7 +30,7 @@ dependencies {
 
 
     implementation "org.hibernate.validator:hibernate-validator:$hibernateValidatorVersion"
-    implementation "mysql:mysql-connector-java:$mysqlConnectorVersion"
+    /*implementation "mysql:mysql-connector-java:$mysqlConnectorVersion"*/
     implementation "org.opengauss:opengauss-jdbc:$opengaussVersion"
     implementation ("com.alicp.jetcache:jetcache-starter-redis-lettuce:$jetcacheVersion") {
         exclude group: "com.alibaba", module: "fastjson"

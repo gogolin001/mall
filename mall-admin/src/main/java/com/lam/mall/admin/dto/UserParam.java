@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.util.Set;
 
 @Data
 @Builder
@@ -29,4 +30,6 @@ public class UserParam {
     private String nickName;
     @ApiModelProperty(value = "备注")
     private String note;
+    @ApiModelProperty(value = "角色id")
+    private String roleIds;
 }
