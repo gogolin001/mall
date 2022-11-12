@@ -2,12 +2,15 @@ package com.lam.mall.admin.service;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.servlet.ServletUtil;
+import cn.hutool.http.useragent.UserAgent;
+import cn.hutool.http.useragent.UserAgentUtil;
 import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.CacheManager;
 import com.alicp.jetcache.anno.CacheType;
-import com.alicp.jetcache.anno.Cached;
 import com.alicp.jetcache.template.QuickConfig;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -17,6 +20,7 @@ import com.lam.mall.admin.dto.UpdateUserPasswordParam;
 import com.lam.mall.admin.dto.UserParam;
 import com.lam.mall.common.exception.Asserts;
 import com.lam.mall.common.util.JwtTokenUtil;
+import com.lam.mall.common.util.RequestUtil;
 import com.lam.mall.mbg.mapper.sys.SysUserMapper;
 import com.lam.mall.mbg.mapper.sys.SysUserTokenMapper;
 import com.lam.mall.mbg.model.sys.SysAuthority;
@@ -27,7 +31,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.connection.ConnectionUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,6 +41,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -58,18 +63,21 @@ public class SysUserService {
 
     private Cache<String, SysUser> userCache;
 
-    private Cache<Long, SysUserToken> tokenCache;
+    private Cache<String, SysUserToken> tokenCache;
 
-    private RoleService roleService;
+    private final RoleService roleService;
+
+    private final HttpServletRequest request;
 
     @Autowired
-    public SysUserService(JwtTokenUtil jwtTokenUtil, PasswordEncoder passwordEncoder, CacheManager cacheManager, SysUserMapper sysUserMapper, SysUserTokenMapper sysUserTokenMapper, RoleService roleService){
+    public SysUserService(JwtTokenUtil jwtTokenUtil, PasswordEncoder passwordEncoder, CacheManager cacheManager, SysUserMapper sysUserMapper, SysUserTokenMapper sysUserTokenMapper, RoleService roleService, HttpServletRequest request){
         this.jwtTokenUtil = jwtTokenUtil;
         this.passwordEncoder = passwordEncoder;
         this.cacheManager = cacheManager;
         this.userMapper = sysUserMapper;
         this.userTokenMapper = sysUserTokenMapper;
         this.roleService = roleService;
+        this.request = request;
     }
 
     @PostConstruct
@@ -161,6 +169,28 @@ public class SysUserService {
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
             token = jwtTokenUtil.generateToken(userDetails);
+
+            //do token
+            SysUserToken userToken = getToken(username,request.getHeader("client"));
+            if(ObjectUtil.isNull(userToken)){
+                userToken = SysUserToken.builder().clientType(request.getHeader("client")).build();
+            }
+            UserAgent ua = UserAgentUtil.parse(request.getHeader("user-agent"));
+            userToken.setToken(token)
+                    .setLoginTime(LocalDateTime.now())
+                    .setLastAccessTime(LocalDateTime.now())
+                    .setUseragent(request.getHeader("user-agent"))
+                    .setOs(ua.getOs().toString())
+                    .setBrowser(ua.getBrowser().toString()+ua.getVersion())
+                    .setIp(ServletUtil.getClientIP(request, null));
+
+            if(ObjectUtil.isNull(userToken.getId()) ){
+                userTokenMapper.insert(userToken);
+            }
+            else{
+                userTokenMapper.updateById(userToken);
+            }
+            tokenCache.put(username+":"+request.getHeader("client"), userToken);
         }
         return token;
     }
@@ -269,5 +299,25 @@ public class SysUserService {
             return new AdminUserDetails(user,resourceList);
         }
         throw new UsernameNotFoundException("用户名或密码错误");
+    }
+
+    public SysUserToken getToken(String username, String client){
+        SysUserToken userToken = tokenCache.get(username+":"+client);
+        if(ObjectUtil.isNull(userToken)){
+            userToken = userTokenMapper.SelectByUsernameAndClient(username, client);
+            if(ObjectUtil.isNull(userToken)){
+                return null;
+            }
+            tokenCache.put(username+":"+client,userToken);
+        }
+        return userToken;
+    }
+
+    public boolean tokenValidate(String username, String token){
+        SysUserToken userToken = getToken(username, request.getHeader("client"));
+        if(ObjectUtil.isNull(userToken) || !token.equals(userToken.getToken())){
+            return false;
+        }
+        return true;
     }
 }

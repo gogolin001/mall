@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -51,10 +50,9 @@ public class MallSecurityConfig {
                 });
                 return map;
             }
-
-            public boolean tokenValidate(){
-                
-                return true;
+            @Override
+            public boolean tokenValidate(String username, String token){
+                return userService.tokenValidate(username, token);
             }
         };
     }
