@@ -166,32 +166,52 @@ public class SysUserService {
             Asserts.fail("帐号已被禁用");
         }
         else{
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            token = jwtTokenUtil.generateToken(userDetails);
-
-            //do token
-            SysUserToken userToken = getToken(username,request.getHeader("client"));
-            if(ObjectUtil.isNull(userToken)){
-                userToken = SysUserToken.builder().clientType(request.getHeader("client")).build();
-            }
-            UserAgent ua = UserAgentUtil.parse(request.getHeader("user-agent"));
-            userToken.setToken(token)
-                    .setLoginTime(LocalDateTime.now())
-                    .setLastAccessTime(LocalDateTime.now())
-                    .setUseragent(request.getHeader("user-agent"))
-                    .setOs(ua.getOs().toString())
-                    .setBrowser(ua.getBrowser().toString()+ua.getVersion())
-                    .setIp(ServletUtil.getClientIP(request, null));
-
-            if(ObjectUtil.isNull(userToken.getId()) ){
-                userTokenMapper.insert(userToken);
-            }
-            else{
-                userTokenMapper.updateById(userToken);
-            }
-            tokenCache.put(username+":"+request.getHeader("client"), userToken);
+            token = handleToken(userDetails);
         }
+        return token;
+    }
+
+    /**
+     * 使用unionId、mpOpenId、miniOpenId登录
+     * @param openId
+     * @return
+     */
+    public String longByOpenId(String openId){
+        SysUser user = userMapper.selectByOpenId(openId);
+        if(ObjectUtil.isNull(user)){
+            Asserts.fail("未绑定用户");
+        }
+        UserDetails userDetails = loadUserByUsername(user.getUsername());
+        return handleToken(userDetails);
+    }
+
+    private String handleToken(UserDetails userDetails){
+        String token = "";
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        token = jwtTokenUtil.generateToken(userDetails);
+
+        //do token
+        SysUserToken userToken = getToken(userDetails.getUsername(),request.getHeader("client"));
+        if(ObjectUtil.isNull(userToken)){
+            userToken = SysUserToken.builder().clientType(request.getHeader("client")).build();
+        }
+        UserAgent ua = UserAgentUtil.parse(request.getHeader("user-agent"));
+        userToken.setToken(token)
+                .setLoginTime(LocalDateTime.now())
+                .setLastAccessTime(LocalDateTime.now())
+                .setUseragent(request.getHeader("user-agent"))
+                .setOs(ua.getOs().toString())
+                .setBrowser(ua.getBrowser().toString()+ua.getVersion())
+                .setIp(ServletUtil.getClientIP(request, null));
+
+        if(ObjectUtil.isNull(userToken.getId()) ){
+            userTokenMapper.insert(userToken);
+        }
+        else{
+            userTokenMapper.updateById(userToken);
+        }
+        tokenCache.put(userDetails.getUsername()+":"+request.getHeader("client"), userToken);
         return token;
     }
 
