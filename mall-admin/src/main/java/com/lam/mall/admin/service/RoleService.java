@@ -1,5 +1,6 @@
 package com.lam.mall.admin.service;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.CacheManager;
@@ -13,6 +14,7 @@ import com.lam.mall.mbg.mapper.sys.SysRoleMapper;
 import com.lam.mall.mbg.model.sys.SysAuthority;
 import com.lam.mall.mbg.model.sys.SysRole;
 import com.lam.mall.mbg.model.sys.SysRoleAuthority;
+import com.lam.mall.mbg.model.sys.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,7 +53,7 @@ public class RoleService {
     @PostConstruct
     public void init() {
         //用户缓存
-        QuickConfig qc1 = QuickConfig.newBuilder("role")
+        QuickConfig qc1 = QuickConfig.newBuilder("role:")
                 //.expire(Duration.ofSeconds(3600))
                 .cacheType(CacheType.BOTH) // two level cache
                 .localLimit(0)
@@ -61,7 +63,7 @@ public class RoleService {
         roleCache.config().setLoader(roleMapper::selectById);
 
         //token缓存
-        QuickConfig qc2 = QuickConfig.newBuilder("role_authority")
+        QuickConfig qc2 = QuickConfig.newBuilder("role_authority:")
                 //.expire(Duration.ofSeconds(3600))
                 .cacheType(CacheType.BOTH) // two level cache
                 .localLimit(0)
@@ -94,7 +96,17 @@ public class RoleService {
     public int delete(List<Long> ids){
         return roleMapper.deleteBatchIds(ids);
     }
-
+    public SysRole getRole(Long id) {
+        var user = roleCache.get(id);
+        if(ObjectUtil.isNull(user)){
+            user = roleMapper.selectById(id);
+            if(ObjectUtil.isNull(user)){
+                return null;
+            }
+            roleCache.put(id, user);
+        }
+        return user;
+    }
     /**
      * 获取所有角色列表
      */
@@ -112,7 +124,7 @@ public class RoleService {
     }
 
     public Set<Long> getRoleId(Long roleId){
-        return roleAuthorityMapper.getAuthorityIdsByRoleId(roleCache.get(roleId).getId());
+        return roleAuthorityMapper.getAuthorityIdsByRoleId(roleId);
     }
 
     /**
@@ -134,7 +146,7 @@ public class RoleService {
     public Set<String> listResource(Set<Long> roleIds){
         Set<String> authorityValues= new HashSet<>();
         roleIds.forEach(item -> {
-            SysRole role =  roleCache.get(item);
+            SysRole role =  getRole(item);
             authorityValues.add("ROLE_"+role.getRoleCode());
             authorityValues.addAll(authorityService.getAuthorityByIds(roleAuthorityCache.get(item)).stream().filter(t->StrUtil.isNotBlank(t.getBgUri())).map(SysAuthority::getAuthorityValue).collect(Collectors.toSet()));
         });

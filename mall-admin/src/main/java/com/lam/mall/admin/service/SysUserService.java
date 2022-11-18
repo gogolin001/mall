@@ -31,6 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -69,6 +70,9 @@ public class SysUserService {
 
     private final HttpServletRequest request;
 
+    @Value("${jwt.tokenHead}")
+    private String tokenHead;
+
     @Autowired
     public SysUserService(JwtTokenUtil jwtTokenUtil, PasswordEncoder passwordEncoder, CacheManager cacheManager, SysUserMapper sysUserMapper, SysUserTokenMapper sysUserTokenMapper, RoleService roleService, HttpServletRequest request){
         this.jwtTokenUtil = jwtTokenUtil;
@@ -83,7 +87,7 @@ public class SysUserService {
     @PostConstruct
     public void init() {
         //用户缓存
-        QuickConfig qc1 = QuickConfig.newBuilder("user")
+        QuickConfig qc1 = QuickConfig.newBuilder("user:")
                 //.expire(Duration.ofSeconds(3600))
                 .cacheType(CacheType.BOTH) // two level cache
                 .localLimit(0)
@@ -93,7 +97,7 @@ public class SysUserService {
         userCache.config().setLoader(userMapper::selectByUserName);
 
         //token缓存
-        QuickConfig qc2 = QuickConfig.newBuilder("userToken")
+        QuickConfig qc2 = QuickConfig.newBuilder("userToken:")
                 //.expire(Duration.ofSeconds(3600))
                 .cacheType(CacheType.BOTH) // two level cache
                 .localLimit(0)
@@ -194,7 +198,7 @@ public class SysUserService {
         //do token
         SysUserToken userToken = getToken(userDetails.getUsername(),request.getHeader("client"));
         if(ObjectUtil.isNull(userToken)){
-            userToken = SysUserToken.builder().clientType(request.getHeader("client")).build();
+            userToken = SysUserToken.builder().username(userDetails.getUsername()).clientType(request.getHeader("client")).build();
         }
         UserAgent ua = UserAgentUtil.parse(request.getHeader("user-agent"));
         userToken.setToken(token)
@@ -335,7 +339,7 @@ public class SysUserService {
 
     public boolean tokenValidate(String username, String token){
         SysUserToken userToken = getToken(username, request.getHeader("client"));
-        if(ObjectUtil.isNull(userToken) || !token.equals(userToken.getToken())){
+        if(ObjectUtil.isNull(userToken) || !token.substring(this.tokenHead.length()).equals(userToken.getToken())){
             return false;
         }
         return true;

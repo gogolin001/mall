@@ -30,7 +30,7 @@ public class SysUserToken implements Serializable {
     private Long id;
 
     @ApiModelProperty(value = "用户名")
-    private Long username;
+    private String username;
 
     @ApiModelProperty(value = "token")
     private String token;
