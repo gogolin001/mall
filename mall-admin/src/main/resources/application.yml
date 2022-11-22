@@ -102,7 +102,7 @@ secure:
 mybatis-plus:
   global-config:
     # 机械id
-    worker-id: 1
+    worker-id: 2
     # 数据标识id(机房id)
     datacenter-id: 1
     db-config:
