@@ -207,7 +207,7 @@ public class SysUserService {
                 .setUseragent(request.getHeader("user-agent"))
                 .setOs(ua.getOs().toString())
                 .setBrowser(ua.getBrowser().toString()+ua.getVersion())
-                .setIp(ServletUtil.getClientIP(request, null));
+                .setIp(ServletUtil.getClientIP(request));
 
         if(ObjectUtil.isNull(userToken.getId()) ){
             userTokenMapper.insert(userToken);

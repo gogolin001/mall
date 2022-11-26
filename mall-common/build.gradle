@@ -13,7 +13,9 @@ dependencies {
     implementation "com.baomidou:mybatis-plus-boot-starter:$mybatisPlusStarterVersion"
     implementation "com.baomidou:mybatis-plus-extension:$mybatisPlusStarterVersion"
     implementation "org.springframework.boot:spring-boot-starter-aop:$springBootVersion"
-    implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+    implementation ("org.springframework.boot:spring-boot-starter-web:$springBootVersion") {
+        exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
+    }
     implementation "org.springframework.boot:spring-boot-starter-data-redis:$springBootVersion"
     implementation "cn.hutool:hutool-all:$hutoolVersion"
     implementation "io.jsonwebtoken:jjwt:$jjwtVersion"
