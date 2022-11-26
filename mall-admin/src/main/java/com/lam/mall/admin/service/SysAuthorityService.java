@@ -84,7 +84,7 @@ public class SysAuthorityService {
     }
 
     public Set<SysAuthority> getAuthorityByIds(Set<Long> ids){
-        return listAll().stream().filter(t->ids.contains(t.getId())).collect(Collectors.toSet());
+        return listAll().stream().filter(t-> !CollectionUtil.isEmpty(ids) && ids.contains(t.getId())).collect(Collectors.toSet());
     }
 
     /**
