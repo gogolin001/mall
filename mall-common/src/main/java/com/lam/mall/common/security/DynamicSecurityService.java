@@ -2,8 +2,6 @@ package com.lam.mall.common.security;
 
 import org.springframework.security.access.ConfigAttribute;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
