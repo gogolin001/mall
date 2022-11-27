@@ -27,6 +27,7 @@ import com.lam.mall.mbg.model.sys.SysAuthority;
 import com.lam.mall.mbg.model.sys.SysRole;
 import com.lam.mall.mbg.model.sys.SysUser;
 import com.lam.mall.mbg.model.sys.SysUserToken;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -42,8 +43,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -207,7 +206,7 @@ public class SysUserService {
                 .setUseragent(request.getHeader("user-agent"))
                 .setOs(ua.getOs().toString())
                 .setBrowser(ua.getBrowser().toString()+ua.getVersion())
-                .setIp(ServletUtil.getClientIP(request));
+                .setIp(RequestUtil.getRequestIp(request));
 
         if(ObjectUtil.isNull(userToken.getId()) ){
             userTokenMapper.insert(userToken);

@@ -37,18 +37,16 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity
-                .authorizeRequests();
+        var registry = httpSecurity.authorizeHttpRequests();
         //不需要保护的资源路径允许访问
         for (String url : ignoreUrlsConfig.getUrls()) {
-            registry.antMatchers(url).permitAll();
+            registry.requestMatchers(url).permitAll();
         }
         //允许跨域请求的OPTIONS请求
-        registry.antMatchers(HttpMethod.OPTIONS)
-                .permitAll();
+        registry.requestMatchers(HttpMethod.OPTIONS).permitAll();
         // 任何请求需要身份认证
         registry.and()
-                .authorizeRequests()
+                .authorizeHttpRequests()
                 .anyRequest()
                 .authenticated()
                 // 关闭跨站请求防护及不使用session
