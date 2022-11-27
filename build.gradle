@@ -8,12 +8,12 @@ allprojects {
 subprojects {
 
     ext {//依赖版本
-        springBootVersion = "2.7.6"
+        springBootVersion = "3.0.0"
         mysqlConnectorVersion = "8.0.30"
         mybatisPlusStarterVersion = "3.5.2"
         fastjsonVersion = "2.0.14"
         junitVersion = "5.9.0"
-        javaxServletVersion = "4.0.1"
+        jakartaServletVersion = "6.0.0"
         commonsLang3Version = "3.12.0"
         jetcacheVersion = "2.7.1"
         shardingsphereVersion = "5.2.0"
@@ -32,7 +32,7 @@ subprojects {
         hibernateValidatorVersion = "8.0.0.Final"
         druidVersion = "1.2.15"
         bcprovVersion = "1.72"
-        jaxbapiVersion = "2.3.1"
+        jakartaXmlVersion = "4.0.0"
     }
 
     repositories {

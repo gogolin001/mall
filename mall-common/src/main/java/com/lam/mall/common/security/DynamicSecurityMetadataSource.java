@@ -1,6 +1,7 @@
 package com.lam.mall.common.security;
 
 import cn.hutool.core.util.URLUtil;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.web.FilterInvocation;
@@ -8,7 +9,6 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
-import javax.annotation.PostConstruct;
 import java.util.*;
 
 /**
