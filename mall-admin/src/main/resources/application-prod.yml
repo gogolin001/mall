@@ -22,10 +22,12 @@ spring:
       max-active: 3
       remove-abandoned: false
       remove-abandoned-timeout: 1800
-  redis:
-    host: dev.jmlide.com
-    password: jmlide@redis963
-    port: 16379
+  Data:
+    redis:
+      host: dev.jmlide.com
+      password: jmlide@redis963
+      port: 16379
+      database: 15
 jetcache:
   remote:
     default:

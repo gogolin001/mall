@@ -43,6 +43,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -87,8 +88,8 @@ public class SysUserService {
     public void init() {
         //用户缓存
         QuickConfig qc1 = QuickConfig.newBuilder("user:")
-                //.expire(Duration.ofSeconds(3600))
-                .cacheType(CacheType.BOTH) // two level cache
+                .expire(Duration.ofDays(1))
+                .cacheType(CacheType.REMOTE) // two level cache
                 .localLimit(0)
                 .syncLocal(true) // invalidate local cache in all jvm process after update
                 .build();
@@ -97,8 +98,8 @@ public class SysUserService {
 
         //token缓存
         QuickConfig qc2 = QuickConfig.newBuilder("userToken:")
-                //.expire(Duration.ofSeconds(3600))
-                .cacheType(CacheType.BOTH) // two level cache
+                .expire(Duration.ofDays(30))
+                .cacheType(CacheType.REMOTE) // two level cache
                 .localLimit(0)
                 .syncLocal(true) // invalidate local cache in all jvm process after update
                 .build();

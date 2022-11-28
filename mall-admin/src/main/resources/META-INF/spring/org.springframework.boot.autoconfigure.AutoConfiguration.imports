@@ -3,3 +3,7 @@ com.lam.mall.common.config.MybatisPlusConfig
 com.lam.mall.common.config.RedisConfig
 com.lam.mall.common.config.SecurityConfig
 com.lam.mall.common.config.WebMvcConfig
+com.alicp.jetcache.autoconfigure.JetCacheAutoConfiguration
+com.baomidou.mybatisplus.autoconfigure.IdentifierGeneratorAutoConfiguration
+com.baomidou.mybatisplus.autoconfigure.MybatisPlusLanguageDriverAutoConfiguration
+com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration
