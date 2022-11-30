@@ -53,11 +53,11 @@ dependencies {
     implementation "com.alibaba:druid-spring-boot-starter:$druidVersion"
     annotationProcessor 'org.springframework:spring-context-indexer'
 
-    implementation("javax.servlet:javax.servlet-api:4.0.1")
-    implementation("javax.xml.bind:jaxb-api:2.3.1")
+    implementation("javax.servlet:javax.servlet-api:$javaxServletVersion")
+    implementation("javax.xml.bind:jaxb-api:$jaxbApiVersion")
 
-    implementation('org.springdoc:springdoc-openapi-ui:1.6.13')
-    implementation("com.github.xiaoymin:knife4j-springdoc-ui:3.0.3")
+    implementation("org.springdoc:springdoc-openapi-ui:$springDocVersion")
+    implementation("com.github.xiaoymin:knife4j-springdoc-ui:$knife4jVersion")
 }
 
 tasks.named('test') {

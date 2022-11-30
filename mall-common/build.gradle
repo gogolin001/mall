@@ -21,15 +21,14 @@ dependencies {
     implementation "io.jsonwebtoken:jjwt:$jjwtVersion"
     implementation "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
 
-    // 在线文档
-    implementation "io.springfox:springfox-boot-starter:$springfoxVersion"
-    implementation 'io.swagger:swagger-models:1.6.8'
-    implementation 'io.swagger:swagger-annotations:1.6.8'
-    //"com.github.xiaoymin:knife4j-spring-boot-starter:$knife4jVersion"
     implementation("net.logstash.logback:logstash-logback-encoder:$logstashLogbackVersion")
 
     implementation("jakarta.servlet:jakarta.servlet-api:$jakartaServletVersion")
     implementation("jakarta.xml.bind:jakarta.xml.bind-api:$jakartaXmlVersion")
-    implementation("javax.servlet:javax.servlet-api:4.0.1")
-    implementation("javax.xml.bind:jaxb-api:2.3.1")
+
+    implementation("javax.servlet:javax.servlet-api:$javaxServletVersion")
+    implementation("javax.xml.bind:jaxb-api:$jaxbApiVersion")
+
+    implementation("org.springdoc:springdoc-openapi-ui:$springDocVersion")
+    implementation("com.github.xiaoymin:knife4j-springdoc-ui:$knife4jVersion")
 }

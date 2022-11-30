@@ -25,6 +25,7 @@ subprojects {
         alipayEasyVersion = "2.2.2"
         springfoxVersion = "3.0.0"
         knife4jVersion = "3.0.3"
+        springDocVersion = "1.6.13"
         logstashLogbackVersion = "7.2"
         jjwtVersion = "0.9.1"
         lettuceVersion = "6.2.1.RELEASE"
@@ -33,6 +34,8 @@ subprojects {
         druidVersion = "1.2.15"
         bcprovVersion = "1.72"
         jakartaXmlVersion = "4.0.0"
+        javaxServletVersion = "4.0.1"
+        jaxbApiVersion = "2.4.0-b180830.0359"
     }
 
     repositories {
