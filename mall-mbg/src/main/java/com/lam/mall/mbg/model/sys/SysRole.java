@@ -1,7 +1,7 @@
 package com.lam.mall.mbg.model.sys;
 
 import com.baomidou.mybatisplus.annotation.*;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,25 +19,25 @@ public class SysRole implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "角色id")
-    @TableId(type = IdType.ASSIGN_ID,value = "id")
+    @Schema(title = "角色id")
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
-    @ApiModelProperty(value = "编码")
+    @Schema(title = "编码")
     private String roleCode;
 
-    @ApiModelProperty(value = "名称")
+    @Schema(title = "名称")
     private String roleName;
 
-    @ApiModelProperty(value = "描述")
+    @Schema(title = "描述")
     private String description;
 
-    @ApiModelProperty(value = "创建时间")
+    @Schema(title = "创建时间")
     private LocalDateTime createTime;
 
-    @ApiModelProperty(value = "启用状态：0->禁用；1->启用")
+    @Schema(title = "启用状态：0->禁用；1->启用")
     private Boolean status;
 
-    @ApiModelProperty(value = "排序")
+    @Schema(title = "排序")
     private Integer sort;
 }

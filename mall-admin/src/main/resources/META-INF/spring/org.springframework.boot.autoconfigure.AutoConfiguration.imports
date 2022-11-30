@@ -4,7 +4,7 @@ com.lam.mall.common.config.RedisConfig
 com.lam.mall.common.config.SecurityConfig
 com.lam.mall.common.config.WebMvcConfig
 com.alicp.jetcache.autoconfigure.JetCacheAutoConfiguration
+com.baomidou.mybatisplus.autoconfigure.SafetyEncryptProcessor
 com.baomidou.mybatisplus.autoconfigure.IdentifierGeneratorAutoConfiguration
 com.baomidou.mybatisplus.autoconfigure.MybatisPlusLanguageDriverAutoConfiguration
 com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration
-springfox.boot.starter.autoconfigure.OpenApiAutoConfiguration

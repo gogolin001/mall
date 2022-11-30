@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,20 +21,20 @@ public class SysPost implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "岗位id")
-    @TableId(type = IdType.ASSIGN_ID,value = "id")
+    @Schema(title = "岗位id")
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
-    @ApiModelProperty(value = "岗位编码")
+    @Schema(title = "岗位编码")
     private String postCode;
 
-    @ApiModelProperty(value = "岗位名称")
+    @Schema(title = "岗位名称")
     private String postName;
 
-    @ApiModelProperty(value = "岗位排序")
+    @Schema(title = "岗位排序")
     private Integer postSort;
 
-    @ApiModelProperty(value = "状态：0=正常,1=停用")
+    @Schema(title = "状态：0=正常,1=停用")
     private Boolean status;
 
     @TableLogic

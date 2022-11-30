@@ -3,7 +3,7 @@ package com.lam.mall.mbg.model.sys;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,34 +25,34 @@ public class SysUserToken implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "主键")
-    @TableId(type = IdType.ASSIGN_ID,value = "id")
+    @Schema(title = "主键")
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
-    @ApiModelProperty(value = "用户名")
+    @Schema(title = "用户名")
     private String username;
 
-    @ApiModelProperty(value = "token")
+    @Schema(title = "token")
     private String token;
 
-    @ApiModelProperty(value = "登录ip地址")
+    @Schema(title = "登录ip地址")
     private String ip;
 
-    @ApiModelProperty(value = "登录类型")
+    @Schema(title = "登录类型")
     private String clientType;
 
-    @ApiModelProperty(value = "操作系统")
+    @Schema(title = "操作系统")
     private String os;
 
-    @ApiModelProperty(value = "浏览器")
+    @Schema(title = "浏览器")
     private String browser;
 
-    @ApiModelProperty(value = "登录时间")
+    @Schema(title = "登录时间")
     private LocalDateTime loginTime;
 
-    @ApiModelProperty(value = "最近访问时间")
+    @Schema(title = "最近访问时间")
     private LocalDateTime lastAccessTime;
 
-    @ApiModelProperty(value = "浏览器标识")
+    @Schema(title = "浏览器标识")
     private String useragent;
 }
