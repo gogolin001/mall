@@ -13,8 +13,8 @@ spring:
       host: dev.jmlide.com
       password: jmlide@redis963
       port: 16379
-      database: 15
+      database: 14
 jetcache:
   remote:
     default:
-      uri: redis://jmlide%40redis963@dev.jmlide.com:16379/1?timeout=5s
+      uri: redis://jmlide%40redis963@dev.jmlide.com:16379/15?timeout=5s
