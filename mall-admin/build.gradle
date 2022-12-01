@@ -7,7 +7,7 @@ plugins {
 
 group = 'com.lam.mall'
 version = '1.0-SNAPSHOT'
-sourceCompatibility = '17'
+sourceCompatibility = '19'
 
 configurations {
     compileOnly {
