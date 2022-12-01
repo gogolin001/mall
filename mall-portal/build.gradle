@@ -1,14 +1,27 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version "$springBootVersion"
+    id 'io.spring.dependency-management' version "$dependencyManagementVersion"
+    id 'org.graalvm.buildtools.native' version "$graalvmBuildVersion"
 }
 
 group 'com.lam.mall'
 version '1.0-SNAPSHOT'
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
+    implementation project(path: ':mall-common', configuration:'default')
+    implementation project(path: ':mall-mbg', configuration:'default')
 
+    compileOnly("org.projectlombok:lombok:$lombokVersion")
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    implementation "org.springframework.boot:spring-boot-starter-undertow"
+    implementation ("org.springframework.boot:spring-boot-starter-web") {
+        exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
+    }
 }

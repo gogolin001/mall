@@ -1,19 +1,14 @@
 package com.lam.mall.admin.config;
 
-/*import com.lam.mall.common.config.BaseSwaggerConfig;
-import com.lam.mall.common.domain.SwaggerProperties;
-import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
-*/
-
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.media.StringSchema;
 import io.swagger.v3.oas.models.parameters.HeaderParameter;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,10 +20,11 @@ import org.springframework.context.annotation.Configuration;
  **/
 @Configuration
 public class SwaggerConfig {
+    private static final String SECURITY_SCHEME_NAME = "BearerAuth";
     @Bean
     public GroupedOpenApi userApi(){
         String[] paths = { "/**" };
-        String[] packagedToMatch = { "com.lam.mall.admin" };
+        String[] packagedToMatch = { "com.lam.mall.admin.controller" };
         return GroupedOpenApi.builder().group("用户模块")
                 .pathsToMatch(paths)
                 .addOperationCustomizer((operation, handlerMethod) -> {
@@ -40,13 +36,21 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("XXX用户系统API")
-                        .version("1.0")
-                        .description( "Knife4j集成springdoc-openapi示例")
-                        .termsOfService("http://doc.xiaominfo.com")
-                        .license(new License().name("Apache 2.0")
-                                .url("http://doc.xiaominfo.com")));
+                        .title("mall商城后台系统API")
+                        .version("1.0.0")
+                        .description( "B2B2C商城")
+                        .termsOfService("https://www.mall.com")
+                        .license(new License().name("Apache 2.0").url("https://www.mall.com")))
+                .externalDocs(new ExternalDocumentation()
+                        .description("mall商城开发第一个版本")
+                        .url("http://www.mall.com"))
+                .addSecurityItem(new SecurityRequirement().addList(SECURITY_SCHEME_NAME))
+                .components(new Components()
+                        .addSecuritySchemes(SECURITY_SCHEME_NAME,
+                                new SecurityScheme()
+                                        .name(SECURITY_SCHEME_NAME)
+                                        .type(SecurityScheme.Type.HTTP)
+                                        .scheme("Bearer ")
+                                        .bearerFormat("JWT")));
     }
-
-
 }
