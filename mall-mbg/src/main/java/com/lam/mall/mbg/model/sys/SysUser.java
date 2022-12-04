@@ -1,10 +1,8 @@
 package com.lam.mall.mbg.model.sys;
 
-import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONArray;
 import com.baomidou.mybatisplus.annotation.*;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +10,6 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,44 +23,44 @@ public class SysUser implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "用户id")
-    @TableId(type = IdType.ASSIGN_ID,value = "id")
+    @Schema(title = "用户id")
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
-    @ApiModelProperty(value = "用户名")
+    @Schema(title = "用户名")
     private String username;
 
-    @ApiModelProperty(value = "密码")
+    @Schema(title = "密码")
     private String password;
 
-    @ApiModelProperty(value = "微信UnionId")
+    @Schema(title = "微信UnionId")
     private String unionId;
 
-    @ApiModelProperty(value = "服务号Id")
+    @Schema(title = "服务号Id")
     private String mpOpenId;
 
-    @ApiModelProperty(value = "小程序OpenId")
+    @Schema(title = "小程序OpenId")
     private String miniOpenId;
 
-    @ApiModelProperty(value = "昵称")
+    @Schema(title = "昵称")
     private String nickName;
 
-    @ApiModelProperty(value = "头像")
+    @Schema(title = "头像")
     private String icon;
 
-    @ApiModelProperty(value = "邮箱")
+    @Schema(title = "邮箱")
     private String email;
 
-    @ApiModelProperty(value = "备注信息")
+    @Schema(title = "备注信息")
     private String note;
 
-    @ApiModelProperty(value = "角色Id")
+    @Schema(title = "角色Id")
     private String roleIds;
 
-    @ApiModelProperty(value = "创建时间")
+    @Schema(title = "创建时间")
     private LocalDateTime createTime;
 
-    @ApiModelProperty(value = "帐号启用状态：0->禁用；1->启用")
+    @Schema(title = "帐号启用状态：0->禁用；1->启用")
     private Boolean status;
 
     @TableLogic

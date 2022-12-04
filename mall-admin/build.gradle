@@ -1,7 +1,7 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.7.6'
-    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'org.springframework.boot' version "$springBootVersion"
+    id 'io.spring.dependency-management' version "$dependencyManagementVersion"
 }
 
 group = 'com.lam.mall'
@@ -44,9 +44,10 @@ dependencies {
     implementation "com.baomidou:mybatis-plus-extension:$mybatisPlusStarterVersion"
 
     implementation "com.alibaba:druid-spring-boot-starter:$druidVersion"
-    implementation "io.springfox:springfox-boot-starter:$springfoxVersion"
-    implementation 'io.swagger:swagger-models:1.6.8'
-    implementation 'io.swagger:swagger-annotations:1.6.8'
+
+    implementation("org.springdoc:springdoc-openapi-ui:$springDocVersion")
+    implementation("com.github.xiaoymin:knife4j-springdoc-ui:$knife4jVersion")
+
     annotationProcessor 'org.springframework:spring-context-indexer'
 
 }

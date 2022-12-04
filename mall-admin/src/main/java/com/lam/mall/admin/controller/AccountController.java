@@ -11,21 +11,21 @@ import com.lam.mall.common.api.CommonPage;
 import com.lam.mall.common.api.CommonResult;
 import com.lam.mall.mbg.model.sys.SysRole;
 import com.lam.mall.mbg.model.sys.SysUser;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Api("账号模块")
+@Tag(name = "账号模块")
 @RestController
 @RequestMapping("/api/v1/admin/account")
 public class AccountController {
@@ -45,7 +45,7 @@ public class AccountController {
         this.roleService = roleService;
     }
 
-    @ApiOperation(value = "用户注册")
+    @Operation(summary = "用户注册")
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public CommonResult<SysUser> register(@Validated UserParam userParam) {
         SysUser SysUser = userService.register(userParam);
@@ -55,7 +55,7 @@ public class AccountController {
         return CommonResult.success(SysUser);
     }
 
-    @ApiOperation(value = "登录以后返回token")
+    @Operation(summary = "登录以后返回token")
     @PostMapping("/login")
     public CommonResult login(@Validated @RequestBody UserLoginParam userLoginParam){
         String token = userService.login(userLoginParam.getUsername(), userLoginParam.getPassword());
@@ -69,7 +69,7 @@ public class AccountController {
     }
 
 
-    @ApiOperation(value = "刷新token")
+    @Operation(summary = "刷新token")
     @GetMapping(value = "/refreshToken")
     public CommonResult refreshToken(HttpServletRequest request) {
         String token = request.getHeader(tokenHeader);
@@ -83,7 +83,7 @@ public class AccountController {
         return CommonResult.success(tokenMap);
     }
 
-    @ApiOperation(value = "获取当前登录用户信息")
+    @Operation(summary = "获取当前登录用户信息")
     @GetMapping(value = "/info")
     public CommonResult getAdminInfo(Principal principal) {
         if(principal==null){
@@ -103,13 +103,13 @@ public class AccountController {
         return CommonResult.success(data);
     }
 
-    @ApiOperation(value = "登出功能")
+    @Operation(summary = "登出功能")
     @PostMapping(value = "/logout")
     public CommonResult logout() {
         return CommonResult.success(null);
     }
 
-    @ApiOperation("根据用户名或姓名分页获取用户列表")
+    @Operation(summary = "根据用户名或姓名分页获取用户列表")
     @GetMapping(value = "/list")
     public CommonResult<CommonPage<SysUser>> list(@RequestParam(value = "keyword", required = false) String keyword,
                                                   @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
@@ -118,14 +118,14 @@ public class AccountController {
         return CommonResult.success(CommonPage.restPage(adminList));
     }
 
-    @ApiOperation("获取指定用户信息")
+    @Operation(summary = "获取指定用户信息")
     @GetMapping(value = "/{id}")
     public CommonResult<SysUser> getItem(@PathVariable Long id) {
         SysUser admin = userService.getItem(id);
         return CommonResult.success(admin);
     }
 
-    @ApiOperation("修改指定用户信息")
+    @Operation(summary = "修改指定用户信息")
     @PostMapping(value = "/update/{id}")
     public CommonResult update(@PathVariable Long id, @RequestBody SysUser admin) {
         int count = userService.update(id, admin);
@@ -135,7 +135,7 @@ public class AccountController {
         return CommonResult.failed();
     }
 
-    @ApiOperation("修改指定用户密码")
+    @Operation(summary = "修改指定用户密码")
     @PostMapping(value = "/updatePassword")
     public CommonResult updatePassword(@Validated @RequestBody UpdateUserPasswordParam updatePasswordParam) {
         int status = userService.updatePassword(updatePasswordParam);
@@ -152,7 +152,7 @@ public class AccountController {
         }
     }
 
-    @ApiOperation("删除指定用户信息")
+    @Operation(summary = "删除指定用户信息")
     @PostMapping(value = "/delete/{id}")
     public CommonResult delete(@PathVariable Long id) {
         int count = userService.delete(id);
@@ -162,7 +162,7 @@ public class AccountController {
         return CommonResult.failed();
     }
 
-    @ApiOperation("修改帐号状态")
+    @Operation(summary = "修改帐号状态")
     @PostMapping(value = "/updateStatus/{id}")
     public CommonResult updateStatus(@PathVariable Long id,@RequestParam(value = "status") Boolean status) {
         SysUser SysUser = new SysUser();
@@ -174,7 +174,7 @@ public class AccountController {
         return CommonResult.failed();
     }
 
-    @ApiOperation("给用户分配角色")
+    @Operation(summary = "给用户分配角色")
     @PostMapping(value = "/role/update")
     public CommonResult updateRole(@RequestParam("adminId") Long adminId,
                                    @RequestParam("roleIds") List<Long> roleIds) {
@@ -185,7 +185,7 @@ public class AccountController {
         return CommonResult.failed();
     }
 
-    @ApiOperation("获取指定用户的角色")
+    @Operation(summary = "获取指定用户的角色")
     @RequestMapping(value = "/role/{adminId}", method = RequestMethod.GET)
     public CommonResult<List<SysRole>> getRoleList(@PathVariable Long adminId) {
         List<SysRole> roleList = userService.getRoleList(adminId);

@@ -16,6 +16,6 @@ dependencies {
     //implementation "org.apache.shardingsphere:shardingsphere-jdbc-core-spring-boot-starter:$shardingsphereVersion"
     implementation "cn.hutool:hutool-all:$hutoolVersion"
     implementation "io.springfox:springfox-boot-starter:$springfoxVersion"
-    implementation 'io.swagger:swagger-models:1.6.8'
-    implementation 'io.swagger:swagger-annotations:1.6.8'
+    implementation("org.springdoc:springdoc-openapi-ui:$springDocVersion")
+    implementation("com.github.xiaoymin:knife4j-springdoc-ui:$knife4jVersion")
 }

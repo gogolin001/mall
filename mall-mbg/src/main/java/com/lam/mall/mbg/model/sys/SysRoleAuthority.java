@@ -1,9 +1,7 @@
 package com.lam.mall.mbg.model.sys;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,9 +20,9 @@ public class SysRoleAuthority implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "角色id")
+    @Schema(title = "角色id")
     private Long roleId;
 
-    @ApiModelProperty(value = "权限id")
+    @Schema(title = "权限id")
     private Long authorityId;
 }

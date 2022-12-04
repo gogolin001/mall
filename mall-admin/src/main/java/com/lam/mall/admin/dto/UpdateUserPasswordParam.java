@@ -1,21 +1,20 @@
 package com.lam.mall.admin.dto;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import javax.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
 public class UpdateUserPasswordParam {
     @NotEmpty
-    @ApiModelProperty(value = "用户名", required = true)
+    @Schema(title = "用户名", requiredMode = Schema.RequiredMode.REQUIRED)
     private String username;
     @NotEmpty
-    @ApiModelProperty(value = "旧密码", required = true)
+    @Schema(title = "旧密码", requiredMode = Schema.RequiredMode.REQUIRED)
     private String oldPassword;
     @NotEmpty
-    @ApiModelProperty(value = "新密码", required = true)
+    @Schema(title = "新密码", requiredMode = Schema.RequiredMode.REQUIRED)
     private String newPassword;
 }
