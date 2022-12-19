@@ -2,7 +2,6 @@ package com.lam.mall.common.config;
 
 import com.lam.mall.common.security.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -37,16 +36,13 @@ public class SecurityConfig {
     @Autowired(required = false)
     private DynamicSecurityFilter dynamicSecurityFilter;
 
-    @Value("${spring.security.sm4Key:%@mKk2i!p^bj5XHD}")
-    private String sm4Key;
-
     /**
      * 密码明文加密方式配置（使用国密SM4）
      * @return
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new SM4PasswordEncoder(sm4Key);
+        return new SM3PasswordEncoder();
     }
 
     @Bean
