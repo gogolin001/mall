@@ -15,7 +15,6 @@ dependencies {
     implementation "org.opengauss:opengauss-jdbc:$opengaussVersion"
     //implementation "org.apache.shardingsphere:shardingsphere-jdbc-core-spring-boot-starter:$shardingsphereVersion"
     implementation "cn.hutool:hutool-all:$hutoolVersion"
-    implementation "io.springfox:springfox-boot-starter:$springfoxVersion"
     implementation("org.springdoc:springdoc-openapi-ui:$springDocVersion")
     implementation("com.github.xiaoymin:knife4j-springdoc-ui:$knife4jVersion")
 }
