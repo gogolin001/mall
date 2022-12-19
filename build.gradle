@@ -35,7 +35,8 @@ subprojects {
         bcprovVersion = "1.72"
         jaxbapiVersion = "2.3.1"
         knife4jVersion = "3.0.3"
-        springDocVersion = "1.6.13"
+        springDocVersion = "1.6.14"
+        bcprovVerion = "1.72"
     }
 
     repositories {

@@ -2,6 +2,7 @@ package com.lam.mall.common.config;
 
 import com.lam.mall.common.security.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -34,6 +36,18 @@ public class SecurityConfig {
     private DynamicSecurityService dynamicSecurityService;
     @Autowired(required = false)
     private DynamicSecurityFilter dynamicSecurityFilter;
+
+    @Value("${spring.security.sm4Key:%@mKk2i!p^bj5XHD}")
+    private String sm4Key;
+
+    /**
+     * 密码明文加密方式配置（使用国密SM4）
+     * @return
+     */
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new SM4PasswordEncoder(sm4Key);
+    }
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
