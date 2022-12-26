@@ -1,7 +1,5 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version "$springBootVersion"
-    id 'io.spring.dependency-management' version "$dependencyManagementVersion"
 }
 
 group 'com.lam.mall'
@@ -10,22 +8,23 @@ version '1.0-SNAPSHOT'
 dependencies {
     compileOnly("org.projectlombok:lombok:$lombokVersion")
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
-    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:$springBootVersion"
     implementation "javax.servlet:javax.servlet-api:$javaxServletVersion"
     implementation "com.baomidou:mybatis-plus-boot-starter:$mybatisPlusStarterVersion"
     implementation "com.baomidou:mybatis-plus-extension:$mybatisPlusStarterVersion"
-    implementation "org.springframework.boot:spring-boot-starter-aop"
-    implementation ("org.springframework.boot:spring-boot-starter-web") {
+    implementation "org.springframework.boot:spring-boot-starter-aop:$springBootVersion"
+    implementation ("org.springframework.boot:spring-boot-starter-web:$springBootVersion") {
         exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
     }
-    implementation ("org.springframework.boot:spring-boot-starter-data-redis"){
+    implementation ("org.springframework.boot:spring-boot-starter-data-redis:$springBootVersion"){
         exclude group: 'io.lettuce', module: "lettuce-core"
     }
 
     implementation "org.bouncycastle:bcprov-jdk18on:$bcprovVerion"
     implementation "cn.hutool:hutool-all:$hutoolVersion"
     implementation "io.jsonwebtoken:jjwt-api:$jjwtVersion"
-    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation 'com.auth0:java-jwt:4.2.1'
+    implementation "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
     implementation "javax.xml.bind:jaxb-api:$jaxbapiVersion"
     // 在线文档
     implementation("org.springdoc:springdoc-openapi-ui:$springDocVersion")
