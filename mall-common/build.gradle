@@ -22,14 +22,14 @@ dependencies {
         exclude group: 'io.lettuce', module: "lettuce-core"
     }
 
-    implementation "org.bouncycastle:bcprov-jdk15to18:$bcprovVerion"
+    implementation "org.bouncycastle:bcprov-jdk18on:$bcprovVerion"
     implementation "cn.hutool:hutool-all:$hutoolVersion"
-    implementation "io.jsonwebtoken:jjwt:$jjwtVersion"
+    implementation "io.jsonwebtoken:jjwt-api:$jjwtVersion"
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation "javax.xml.bind:jaxb-api:$jaxbapiVersion"
     // 在线文档
     implementation("org.springdoc:springdoc-openapi-ui:$springDocVersion")
     implementation("com.github.xiaoymin:knife4j-springdoc-ui:$knife4jVersion")
-    //"com.github.xiaoymin:knife4j-spring-boot-starter:$knife4jVersion"
+
     implementation("net.logstash.logback:logstash-logback-encoder:$logstashLogbackVersion")
 }

@@ -8,27 +8,24 @@ allprojects {
 subprojects {
 
     ext {//依赖版本
-        springBootVersion = "2.7.6"
+        springBootVersion = "2.7.7"
         dependencyManagementVersion = "1.0.15.RELEASE"
-        mysqlConnectorVersion = "8.0.30"
+        mysqlConnectorVersion = "8.0.31"
         mybatisPlusStarterVersion = "3.5.2"
-        fastjsonVersion = "2.0.14"
-        junitVersion = "5.9.0"
+        fastjson2Version = "2.0.21"
         javaxServletVersion = "4.0.1"
-        commonsLang3Version = "3.12.0"
-        jetcacheVersion = "2.7.1"
-        shardingsphereVersion = "5.2.0"
+        jetcacheVersion = "2.7.2"
+        shardingsphereVersion = "5.3.0"
         lombokVersion = "1.18.24"
         hutoolVersion = "5.8.10"
-        easyExcelVersion = "3.1.1"
-        wxjavaVersion = "4.4.0"
-        alipayVersion = "4.34.0.ALL"
+        easyExcelVersion = "3.1.4"
+        wxjavaVersion = "4.4.7.B"
+        alipayVersion = "4.35.9.ALL"
         alipayEasyVersion = "2.2.2"
-        springfoxVersion = "3.0.0"
         knife4jVersion = "3.0.3"
         logstashLogbackVersion = "7.2"
-        jjwtVersion = "0.9.1"
-        lettuceVersion = "6.2.1.RELEASE"
+        jjwtVersion = "0.11.5"
+        lettuceVersion = "6.2.2.RELEASE"
         opengaussVersion = "3.1.0"
         hibernateValidatorVersion = "8.0.0.Final"
         druidVersion = "1.2.15"
@@ -37,6 +34,7 @@ subprojects {
         knife4jVersion = "3.0.3"
         springDocVersion = "1.6.14"
         bcprovVerion = "1.72"
+
     }
 
     repositories {

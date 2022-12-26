@@ -36,15 +36,6 @@ public class SecurityConfig {
     @Autowired(required = false)
     private DynamicSecurityFilter dynamicSecurityFilter;
 
-    /**
-     * 密码明文加密方式配置（使用国密SM4）
-     * @return
-     */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new SM3PasswordEncoder();
-    }
-
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity

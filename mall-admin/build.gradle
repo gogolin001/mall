@@ -14,8 +14,6 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
@@ -27,7 +25,7 @@ dependencies {
         exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
     }
     implementation ("org.springframework.boot:spring-boot-starter-data-redis"){
-        exclude group: 'io.lettuce', module: "lettuce-core"
+        //exclude group: 'io.lettuce', module: "lettuce-core"
     }
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation "org.springframework.boot:spring-boot-starter-actuator"
@@ -36,9 +34,11 @@ dependencies {
     implementation "org.hibernate.validator:hibernate-validator:$hibernateValidatorVersion"
     /*implementation "mysql:mysql-connector-java:$mysqlConnectorVersion"*/
     implementation "org.opengauss:opengauss-jdbc:$opengaussVersion"
+    //implementation "io.lettuce:lettuce-core:$lettuceVersion"
     implementation ("com.alicp.jetcache:jetcache-starter-redis-lettuce:$jetcacheVersion") {
         exclude group: "com.alibaba", module: "fastjson"
         exclude group: "com.alibaba.fastjson2", module: "fastjson2"
+        //exclude group: 'io.lettuce', module: "lettuce-core"
     }
     implementation "cn.hutool:hutool-all:$hutoolVersion"
     implementation "org.bouncycastle:bcprov-jdk15to18:$bcprovVersion"

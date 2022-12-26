@@ -16,9 +16,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class CommonSecurityConfig {
 
+    /**
+     * 密码明文加密方式配置（使用国密SM4）
+     * @return SM3摘要加密
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new SM3PasswordEncoder();
     }
 
     @Bean
