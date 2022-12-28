@@ -37,6 +37,7 @@ subprojects {
         javaJwtVersion = "4.2.1"
         jakartaVersion = "6.0.0"
         mybatisBootVersion = "3.0.1"
+        graalvmBuildVersion = "0.9.18"
     }
 
     repositories {
@@ -46,27 +47,6 @@ subprojects {
 
     /*dependencies {
         implementation(
-                "javax.servlet:javax.servlet-api:$javaxServletVersion",
-                // json
-                "com.alibaba:fastjson:$fastjsonVersion",
-                // excel
-                "com.alibaba:easyexcel:$easyExcelVersion",
-                // 常用库
-                "cn.hutool:hutool-all:$hutoolVersion",
-                "net.logstash.logback:logstash-logback-encoder:$logstashLogbackVersion",
-                //'ch.qos.logback:logback-classic:1.4.3',
-                //'org.slf4j:slf4j-api:2.0.3',
-                // web
-                "org.springframework.boot:spring-boot-starter-web:$springBootVersion",
-                "org.springframework.boot:spring-boot-starter-aop:$springBootVersion",
-                // 缓存
-                "io.lettuce:lettuce-core:$lettuceVersion",
-                "com.alicp.jetcache:jetcache-starter-redis-lettuce:$jetcacheVersion",
-                "org.springframework.boot:spring-boot-starter-data-redis:$springBootVersion",
-                // 数据库
-                "com.baomidou:mybatis-plus-boot-starter:$mybatisPlusStarterVersion",
-                "mysql:mysql-connector-java:$mysqlConnectorVersion",
-                "org.apache.shardingsphere:shardingsphere-jdbc-core-spring-boot-starter:$shardingsphereVersion",
                 // 微信
                 "com.github.binarywang:weixin-java-miniapp:$wxjavaVersion", //微信小程序
                 "com.github.binarywang:weixin-java-pay:$wxjavaVersion", //微信支付
@@ -76,26 +56,8 @@ subprojects {
                 // 支付宝
                 "com.alipay.sdk:alipay-sdk-java:$alipayVersion",
                 "com.alipay.sdk:alipay-easysdk:$alipayEasyVersion",
-                // 在线文档
-                "io.springfox:springfox-boot-starter:$springfoxVersion",
-                'io.swagger:swagger-models:1.6.7',
-                'io.swagger:swagger-annotations:1.6.7',
-                //"com.github.xiaoymin:knife4j-spring-boot-starter:$knife4jVersion",
-                // 权限
-                "io.jsonwebtoken:jjwt:$jjwtVersion",
-                "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
-
 
         )
-        compileOnly("org.projectlombok:lombok:$lombokVersion")
-        annotationProcessor("org.projectlombok:lombok:$lombokVersion")
-        annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:$springBootVersion")
-        // 单元测试
-        testCompileOnly("org.projectlombok:lombok:$lombokVersion")
-	    testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
-        testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
-        testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
-        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
     }*/
 
     configurations {
