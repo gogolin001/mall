@@ -1,8 +1,9 @@
 package com.lam.mall.admin.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

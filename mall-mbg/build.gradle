@@ -10,11 +10,17 @@ dependencies {
     compileOnly("org.projectlombok:lombok:$lombokVersion")
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 
-    implementation "com.baomidou:mybatis-plus-boot-starter:$mybatisPlusStarterVersion"
-    /*implementation "mysql:mysql-connector-java:$mysqlConnectorVersion"*/
+    implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:$mybatisBootVersion")
+    implementation ("com.baomidou:mybatis-plus-boot-starter:$mybatisPlusStarterVersion"){
+        exclude group: 'ch.qos.logback', module: "logback-classic"
+        exclude group: 'org.springframework.boot', module: "spring-boot-starter"
+        exclude group: 'org.springframework.boot', module: "spring-boot-starter-jdbc"
+        exclude group: 'org.mybatis', module: "mybatis"
+    }
+    /*runtimeOnly "com.mysql:mysql-connector-j:$mysqlConnectorVersion"*/
     implementation "org.opengauss:opengauss-jdbc:$opengaussVersion"
     //implementation "org.apache.shardingsphere:shardingsphere-jdbc-core-spring-boot-starter:$shardingsphereVersion"
     implementation "cn.hutool:hutool-all:$hutoolVersion"
-    implementation("org.springdoc:springdoc-openapi-ui:$springDocVersion")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springDocVersion")
     implementation("com.github.xiaoymin:knife4j-springdoc-ui:$knife4jVersion")
 }

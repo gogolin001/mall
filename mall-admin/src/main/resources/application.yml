@@ -14,15 +14,16 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-  redis:
-    timeout: 100ms
-    database: 0
-    lettuce:
-      pool:
-        max-active: 200  # 连接池最大连接数（使用负值表示没有限制）
-        max-wait: -1     # 连接池最大阻塞等待时间（使用负值表示没有限制）
-        max-idle: 10     # 连接池中的最大空闲连接
-        min-idle: 0      # 连接池中的最小空闲连接
+  data:
+    redis:
+      timeout: 100ms
+      database: 0
+      lettuce:
+        pool:
+          max-active: 200  # 连接池最大连接数（使用负值表示没有限制）
+          max-wait: -1     # 连接池最大阻塞等待时间（使用负值表示没有限制）
+          max-idle: 10     # 连接池中的最大空闲连接
+          min-idle: 0      # 连接池中的最小空闲连接
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     #driver-class-name: com.mysql.cj.jdbc.Driver
@@ -44,7 +45,7 @@ spring:
       time-between-log-stats-millis: 300000
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
       stat-view-servlet:
-        enabled: true
+        enabled: false
         login-password: "mall@963"
         login-username: mall
   main:
@@ -86,6 +87,7 @@ secure:
       - /swagger-ui.html
       - /swagger-ui/
       - /swagger-resources/**
+      - /api-docs
       - /v3/api-docs
       - /v3/api-docs/**
       - /**/*.html

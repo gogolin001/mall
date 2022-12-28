@@ -42,8 +42,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -207,7 +207,7 @@ public class SysUserService {
                 .setUseragent(request.getHeader("user-agent"))
                 .setOs(ua.getOs().toString())
                 .setBrowser(ua.getBrowser().toString()+ua.getVersion())
-                .setIp(ServletUtil.getClientIP(request));
+                .setIp(RequestUtil.getRequestIp(request));
 
         if(ObjectUtil.isNull(userToken.getId()) ){
             userTokenMapper.insert(userToken);
