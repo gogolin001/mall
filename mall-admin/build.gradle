@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version "$springBootVersion"
     id 'io.spring.dependency-management' version "$dependencyManagementVersion"
-    id 'org.graalvm.buildtools.native' version "$graalvmBuildVersion"
+    //id 'org.graalvm.buildtools.native' version "$graalvmBuildVersion"
 }
 
 group = 'com.lam.mall'

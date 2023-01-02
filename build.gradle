@@ -11,7 +11,7 @@ subprojects {
         springBootVersion = "3.0.1"
         dependencyManagementVersion = "1.1.0"
         mysqlConnectorVersion = "8.0.31"
-        mybatisPlusStarterVersion = "3.5.2.7-SNAPSHOT"
+        mybatisPlusStarterVersion = "3.5.3"
         fastjson2Version = "2.0.21"
         javaxServletVersion = "4.0.1"
         jetcacheVersion = "2.7.2"
