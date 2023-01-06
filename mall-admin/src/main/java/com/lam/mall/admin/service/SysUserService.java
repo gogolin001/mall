@@ -2,10 +2,8 @@ package com.lam.mall.admin.service;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
 import com.alicp.jetcache.Cache;
@@ -19,7 +17,7 @@ import com.lam.mall.admin.bo.AdminUserDetails;
 import com.lam.mall.admin.dto.UpdateUserPasswordParam;
 import com.lam.mall.admin.dto.UserParam;
 import com.lam.mall.common.exception.Asserts;
-import com.lam.mall.common.util.JwtTokenUtil;
+import com.lam.mall.common.security.JwtHelper;
 import com.lam.mall.common.util.RequestUtil;
 import com.lam.mall.mbg.mapper.sys.SysUserMapper;
 import com.lam.mall.mbg.mapper.sys.SysUserTokenMapper;
@@ -43,7 +41,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -52,7 +50,7 @@ import java.util.Set;
 public class SysUserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SysUserService.class);
 
-    private final JwtTokenUtil jwtTokenUtil;
+    private final JwtHelper jwtHelper;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -74,8 +72,8 @@ public class SysUserService {
     private String tokenHead;
 
     @Autowired
-    public SysUserService(JwtTokenUtil jwtTokenUtil, PasswordEncoder passwordEncoder, CacheManager cacheManager, SysUserMapper sysUserMapper, SysUserTokenMapper sysUserTokenMapper, RoleService roleService, HttpServletRequest request){
-        this.jwtTokenUtil = jwtTokenUtil;
+    public SysUserService(JwtHelper jwtHelper, PasswordEncoder passwordEncoder, CacheManager cacheManager, SysUserMapper sysUserMapper, SysUserTokenMapper sysUserTokenMapper, RoleService roleService, HttpServletRequest request){
+        this.jwtHelper = jwtHelper;
         this.passwordEncoder = passwordEncoder;
         this.cacheManager = cacheManager;
         this.userMapper = sysUserMapper;
@@ -193,7 +191,7 @@ public class SysUserService {
         String token = "";
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        token = jwtTokenUtil.generateToken(userDetails);
+        token = jwtHelper.genToken(userDetails.getUsername(),null);
 
         //do token
         SysUserToken userToken = getToken(userDetails.getUsername(),request.getHeader("client"));

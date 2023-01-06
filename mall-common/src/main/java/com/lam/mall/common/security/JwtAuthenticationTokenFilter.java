@@ -1,7 +1,6 @@
 package com.lam.mall.common.security;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.lam.mall.common.util.JwtTokenUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Autowired
     private UserDetailsService userDetailsService;
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private JwtHelper jwtHelper;
 
     @Autowired(required = false)
     private DynamicSecurityService dynamicSecurityService;
@@ -42,11 +41,11 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader(this.tokenHeader);
         if (authHeader != null && authHeader.startsWith(this.tokenHead)) {
             String authToken = authHeader.substring(this.tokenHead.length());// The part after "Bearer "
-            String username = jwtTokenUtil.getUserNameFromToken(authToken);
+            String username = jwtHelper.getUserNameFromToken(authToken);
             LOGGER.info("checking username:{}", username);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-                if (ObjectUtil.isNotNull(userDetails) && jwtTokenUtil.validateToken(authToken, userDetails)) {
+                if (ObjectUtil.isNotNull(userDetails) && jwtHelper.verifyToken(authToken, userDetails.getUsername())) {
                     if(ObjectUtil.isNull(dynamicSecurityService) || dynamicSecurityService.tokenValidate(username,authHeader)){
                         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

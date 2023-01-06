@@ -7,8 +7,7 @@ import com.auth0.jwt.exceptions.SignatureGenerationException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.extern.slf4j.Slf4j;
-import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPrivateKey;
-import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPublicKey;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 扩充auth0.java-jwt的签名算法
@@ -32,20 +31,14 @@ import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPublicKey;
  **/
 @Slf4j
 public class SMAlgorithm extends Algorithm {
-
-    private final BCECPublicKey publicKey;
-    private final BCECPrivateKey privateKey;
-
+    @Autowired
     private SM2 sm2;
 
     private static final byte JWT_PART_SEPARATOR = (byte) 46;
 
-    protected SMAlgorithm(BCECPublicKey publicKey, BCECPrivateKey privateKey) {
+    public SMAlgorithm() {
         super("SM3WithSM2", "SM3WithSM2");
-        this.publicKey = publicKey;
-        this.privateKey = privateKey;
-        this.sm2 = new SM2(privateKey,publicKey);
-        if (publicKey == null || privateKey == null) {
+        if (sm2 == null) {
             throw new IllegalArgumentException("The Key Provider cannot be null.");
         }
     }
@@ -93,34 +86,5 @@ public class SMAlgorithm extends Algorithm {
         hash[headerBytes.length] = JWT_PART_SEPARATOR;
         System.arraycopy(payloadBytes, 0, hash, headerBytes.length + 1, payloadBytes.length);
         return hash;
-    }
-
-    /**
-     * builder
-     */
-    public static class SMAlogrithmBuilder {
-        private BCECPublicKey publicKey;
-        private BCECPrivateKey privateKey;
-
-        SMAlogrithmBuilder() {
-        }
-
-        public SMAlgorithm.SMAlogrithmBuilder publicKey(final BCECPublicKey publicKey) {
-            this.publicKey = publicKey;
-            return this;
-        }
-
-        public SMAlgorithm.SMAlogrithmBuilder privateKey(final BCECPrivateKey privateKey) {
-            this.privateKey = privateKey;
-            return this;
-        }
-
-        public SMAlgorithm build() {
-            return new SMAlgorithm(this.publicKey, this.privateKey);
-        }
-    }
-
-    public static SMAlgorithm.SMAlogrithmBuilder builder() {
-        return new SMAlgorithm.SMAlogrithmBuilder();
     }
 }
