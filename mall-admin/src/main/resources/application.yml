@@ -72,6 +72,10 @@ jwt:
   secret: 9f$amuLu3JhU&3DVlx$t3mhsClBIVTiY #JWT加解密使用的密钥
   expiration: 604800 #JWT的超期限时间(60*60*24*7)
   tokenHead: 'Bearer '  #JWT负载中拿到开头
+  issuer: 'mall'
+  leeway: 180
+  publicKey: 'e2ee455e19eb29c21fba2206311ae1ffbe2b20fb08b4ae48ab03417fafd6fb97dda83eb0613ffcc168c9c6cd5253c3ca8fbc66ad6f8071712e24cd95b165879c2b69d84faf31919bea666cada611835f6c985152140333403fb1b75c3daa1457c233e0f2243d7c'
+  privateKey: '7b455ff81b444c7deaa388e9af11903c5c90986a423ea0e270b499d19c76988c'
 
 redis:
   database: mall

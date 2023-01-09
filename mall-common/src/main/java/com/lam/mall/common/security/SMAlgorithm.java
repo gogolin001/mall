@@ -1,13 +1,20 @@
 package com.lam.mall.common.security;
 
 import cn.hutool.core.codec.Base64;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.asymmetric.SM2;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.SignatureGenerationException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.extern.slf4j.Slf4j;
+import org.bouncycastle.crypto.engines.SM2Engine;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import java.security.Security;
 
 /**
  * 扩充auth0.java-jwt的签名算法
@@ -30,17 +37,19 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Created by zkk on 2020/9/23
  **/
 @Slf4j
+@Component
 public class SMAlgorithm extends Algorithm {
-    @Autowired
+    private JwtProperties jwtProperties;
     private SM2 sm2;
 
     private static final byte JWT_PART_SEPARATOR = (byte) 46;
 
-    public SMAlgorithm() {
+    @Autowired
+    public SMAlgorithm(JwtProperties jwtProperties) {
         super("SM3WithSM2", "SM3WithSM2");
-        if (sm2 == null) {
-            throw new IllegalArgumentException("The Key Provider cannot be null.");
-        }
+        this.jwtProperties = jwtProperties;
+        Security.addProvider(new BouncyCastleProvider());
+        this.sm2 = new SM2(jwtProperties.getPublicKey(),jwtProperties.getPrivateKey()).setMode(SM2Engine.Mode.C1C3C2);
     }
 
     @Override

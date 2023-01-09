@@ -4,6 +4,7 @@ import cn.hutool.crypto.asymmetric.SM2;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.lam.mall.common.security.*;
 import org.bouncycastle.crypto.engines.SM2Engine;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
@@ -18,25 +19,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class CommonSecurityConfig {
 
-    /**
-     * 公钥
-     */
-    @Value("${jwt.publicKey:e2ee455e19eb29c21fba2206311ae1ffbe2b20fb08b4ae48ab03417fafd6fb97dda83eb0613ffcc168c9c6cd5253c3ca8fbc66ad6f8071712e24cd95b165879c2b69d84faf31919bea666cada611835f6c985152140333403fb1b75c3daa1457c233e0f2243d7c}")
-    private String publicKeyStr;
-    /**
-     * 私钥
-     */
-    @Value("${jwt.privateKey:7b455ff81b444c7deaa388e9af11903c5c90986a423ea0e270b499d19c76988c}")
-    private String privateKeyStr;
-
     @Bean
-    public SM2 sm2(){
-        return new SM2(publicKeyStr,privateKeyStr).setMode(SM2Engine.Mode.C1C2C3);
+    public JwtProperties jwtProperties(){
+        return new JwtProperties();
     }
-
+    /**
+     * jwt Algorithm
+     * @return
+     */
     @Bean
     public Algorithm jwtAlgorithm() {
-        return new SMAlgorithm();
+        return new SMAlgorithm(jwtProperties());
     }
 
     /**
@@ -53,10 +46,9 @@ public class CommonSecurityConfig {
         return new IgnoreUrlsConfig();
     }
 
-
     @Bean
     public JwtHelper jwtHelper() {
-        return new JwtHelper();
+        return new JwtHelper(jwtAlgorithm(),jwtProperties());
     }
 
     @Bean

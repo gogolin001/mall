@@ -4,13 +4,14 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 
 import java.util.Date;
@@ -24,55 +25,32 @@ import java.util.Map;
  * @author Created by zkk on 2020/9/22
  **/
 @Slf4j
+@Component
 public class JwtHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtHelper.class);
 
+    private Algorithm algorithm;
+
+    private JwtProperties jwtProperties;
+
     @Autowired
-    private SMAlgorithm smAlgorithm;
-
-    /**
-     * 秘钥
-     */
-    @Value("${jwt.secret}")
-    private String secret;
-    /**
-     * 有效时长（单位秒,默认1小时）
-     */
-    @Value("${jwt.expiration:3600}")
-    private Long expiration;
-    /**
-     * tokent头
-     */
-    @Value("${jwt.tokenHead}")
-    private String tokenHead;
-    /**
-     * 发布者
-     */
-    @Value("${jwt.issuer:lam}")
-    private String issuer;
-
+    public JwtHelper(Algorithm algorithm,JwtProperties jwtProperties){
+        this.algorithm = algorithm;
+        this.jwtProperties = jwtProperties;
+    }
 
     /**
      * 生成token的过期时间
      */
     private Date generateExpirationDate() {
-        return new Date(System.currentTimeMillis() + expiration * 1000);
-    }
-
-    /**
-     * 从token中获取JWT中的负载
-     */
-    private Map<String, com.auth0.jwt.interfaces.Claim> getClaimsFromToken(String token) {
-        JWTVerifier verifier = JWT.require(smAlgorithm).withIssuer(issuer).build();
-        DecodedJWT jwt =  verifier.verify(token);
-        return jwt.getClaims();
+        return new Date(System.currentTimeMillis() + jwtProperties.getExpiration() * 1000);
     }
 
     /**
      * 从token中获取JWT中的负载
      */
     private DecodedJWT getDecodedJWT(String token) {
-        JWTVerifier verifier = JWT.require(smAlgorithm).withIssuer(issuer).build();
+        JWTVerifier verifier = JWT.require(algorithm).withIssuer(jwtProperties.getIssuer()).acceptLeeway(jwtProperties.getLeeway()).build();
         DecodedJWT jwt =  verifier.verify(token);
         return jwt;
     }
@@ -106,14 +84,14 @@ public class JwtHelper {
     public String genToken(String username, Map<String, String> claims){
         try {
             JWTCreator.Builder builder = JWT.create()
-                    .withIssuer(issuer) //token签发人
+                    .withIssuer(jwtProperties.getIssuer()) //token签发人
                     .withExpiresAt(generateExpirationDate()) //设置过期时间
                     .withIssuedAt(new Date())//设置证书发布时间
                     .withSubject(username) //用户名
                     ;
 
             claims.forEach(builder::withClaim);
-            return builder.sign(smAlgorithm);
+            return builder.sign(algorithm);
         } catch (IllegalArgumentException e) {
             log.error("jwt生成失败", e);
         }
@@ -126,13 +104,13 @@ public class JwtHelper {
      * @return jwt payload
      */
     public boolean verifyToken(String token, String username) {
-        return username.equals(getUserNameFromToken(token)) && !isTokenExpired(token);
+        return username.equals(getUserName(token)) && !isTokenExpired(token);
     }
 
     /**
      * 从token中获取登录用户名
      */
-    public String getUserNameFromToken(String token) {
+    public String getUserName(String token) {
         String username;
         try {
             username = getDecodedJWT(token).getSubject();
@@ -147,11 +125,11 @@ public class JwtHelper {
      *
      * @param oldToken 带tokenHead的token
      */
-    public String refreshHeadToken(String oldToken) {
+    public String refreshToken(String oldToken) {
         if(StrUtil.isEmpty(oldToken)){
             return null;
         }
-        String token = oldToken.substring(tokenHead.length());
+        String token = oldToken.substring(jwtProperties.getTokenHead().length());
         if(StrUtil.isEmpty(token)){
             return null;
         }
@@ -168,7 +146,7 @@ public class JwtHelper {
         if(tokenRefreshJustBefore(token,30*60)){
             return token;
         }else{
-            return genToken(getUserNameFromToken(token),null);
+            return genToken(getUserName(token),null);
         }
     }
 
@@ -177,11 +155,18 @@ public class JwtHelper {
      * @param token jwt token
      * @return jwt payload
      */
-    public Map<String, String> verifyToken(String token) {
+    public Map<String, String> getClaims(String token) {
         DecodedJWT jwt =  getDecodedJWT(token);
         Map<String,  com.auth0.jwt.interfaces.Claim> map = jwt.getClaims();
         Map<String, String> resultMap = new HashMap<>();
         map.forEach((k,v) -> resultMap.put(k, v.asString()));
         return resultMap;
+    }
+
+    /**
+     * 从token中获取JWT中的负载
+     */
+    public Map<String, com.auth0.jwt.interfaces.Claim> getClaimsFromToken(String token) {
+        return getDecodedJWT(token).getClaims();
     }
 }
