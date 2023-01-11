@@ -37,17 +37,15 @@ import java.security.Security;
  * @author Created by zkk on 2020/9/23
  **/
 @Slf4j
-@Component
 public class SMAlgorithm extends Algorithm {
+    @Autowired
     private JwtProperties jwtProperties;
     private SM2 sm2;
 
     private static final byte JWT_PART_SEPARATOR = (byte) 46;
 
-    @Autowired
-    public SMAlgorithm(JwtProperties jwtProperties) {
+    public SMAlgorithm() {
         super("SM3WithSM2", "SM3WithSM2");
-        this.jwtProperties = jwtProperties;
         Security.addProvider(new BouncyCastleProvider());
         this.sm2 = new SM2(jwtProperties.getPublicKey(),jwtProperties.getPrivateKey()).setMode(SM2Engine.Mode.C1C3C2);
     }

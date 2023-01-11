@@ -25,19 +25,14 @@ import java.util.Map;
  * @author Created by zkk on 2020/9/22
  **/
 @Slf4j
-@Component
 public class JwtHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtHelper.class);
 
+    @Autowired
     private Algorithm algorithm;
 
-    private JwtProperties jwtProperties;
-
     @Autowired
-    public JwtHelper(Algorithm algorithm,JwtProperties jwtProperties){
-        this.algorithm = algorithm;
-        this.jwtProperties = jwtProperties;
-    }
+    private JwtProperties jwtProperties;
 
     /**
      * 生成token的过期时间
