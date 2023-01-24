@@ -17,6 +17,10 @@ public class JwtProperties {
      */
     private Long expiration;
     /**
+     * head头
+     */
+    private String tokenHeader;
+    /**
      * tokent头
      */
     private String tokenHead;

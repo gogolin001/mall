@@ -1,7 +1,6 @@
 package com.lam.mall.common.security;
 
 import cn.hutool.core.codec.Base64;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.asymmetric.SM2;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.SignatureGenerationException;
@@ -11,8 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.bouncycastle.crypto.engines.SM2Engine;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import java.security.Security;
 
@@ -37,14 +34,14 @@ import java.security.Security;
  * @author Created by zkk on 2020/9/23
  **/
 @Slf4j
-public class SMAlgorithm extends Algorithm {
+public class SmAlgorithm extends Algorithm {
     @Autowired
     private JwtProperties jwtProperties;
     private SM2 sm2;
 
     private static final byte JWT_PART_SEPARATOR = (byte) 46;
 
-    public SMAlgorithm() {
+    public SmAlgorithm() {
         super("SM3WithSM2", "SM3WithSM2");
         Security.addProvider(new BouncyCastleProvider());
         this.sm2 = new SM2(jwtProperties.getPublicKey(),jwtProperties.getPrivateKey()).setMode(SM2Engine.Mode.C1C3C2);

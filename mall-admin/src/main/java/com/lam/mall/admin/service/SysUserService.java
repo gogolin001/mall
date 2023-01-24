@@ -18,6 +18,7 @@ import com.lam.mall.admin.dto.UpdateUserPasswordParam;
 import com.lam.mall.admin.dto.UserParam;
 import com.lam.mall.common.exception.Asserts;
 import com.lam.mall.common.security.JwtHelper;
+import com.lam.mall.common.security.JwtProperties;
 import com.lam.mall.common.util.RequestUtil;
 import com.lam.mall.mbg.mapper.sys.SysUserMapper;
 import com.lam.mall.mbg.mapper.sys.SysUserTokenMapper;
@@ -49,38 +50,27 @@ import java.util.Set;
 @Service
 public class SysUserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SysUserService.class);
-
-    private final JwtHelper jwtHelper;
-
-    private final PasswordEncoder passwordEncoder;
-
-    private final SysUserMapper userMapper;
-
-    private final SysUserTokenMapper userTokenMapper;
-
-    private final CacheManager cacheManager;
-
-    private Cache<String, SysUser> userCache;
-
-    private Cache<String, SysUserToken> tokenCache;
-
-    private final RoleService roleService;
-
-    private final HttpServletRequest request;
-
-    @Value("${jwt.tokenHead}")
-    private String tokenHead;
-
     @Autowired
-    public SysUserService(JwtHelper jwtHelper, PasswordEncoder passwordEncoder, CacheManager cacheManager, SysUserMapper sysUserMapper, SysUserTokenMapper sysUserTokenMapper, RoleService roleService, HttpServletRequest request){
-        this.jwtHelper = jwtHelper;
-        this.passwordEncoder = passwordEncoder;
-        this.cacheManager = cacheManager;
-        this.userMapper = sysUserMapper;
-        this.userTokenMapper = sysUserTokenMapper;
-        this.roleService = roleService;
-        this.request = request;
-    }
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private SysUserMapper userMapper;
+    @Autowired
+    private SysUserTokenMapper userTokenMapper;
+    @Autowired
+    private CacheManager cacheManager;
+    @Autowired
+    private Cache<String, SysUser> userCache;
+    @Autowired
+    private Cache<String, SysUserToken> tokenCache;
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    private HttpServletRequest request;
+    @Autowired
+    private JwtProperties jwtProperties;
+    @Autowired
+    private JwtHelper jwtHelper;
+
 
     @PostConstruct
     public void init() {
@@ -337,7 +327,7 @@ public class SysUserService {
 
     public boolean tokenValidate(String username, String token){
         SysUserToken userToken = getToken(username, request.getHeader("client"));
-        if(ObjectUtil.isNull(userToken) || !token.substring(this.tokenHead.length()).equals(userToken.getToken())){
+        if(ObjectUtil.isNull(userToken) || !token.substring(this.jwtProperties.getTokenHead().length()).equals(userToken.getToken())){
             return false;
         }
         return true;

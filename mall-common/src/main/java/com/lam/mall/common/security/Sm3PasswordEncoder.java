@@ -3,7 +3,7 @@ package com.lam.mall.common.security;
 import cn.hutool.crypto.SmUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-public class SM3PasswordEncoder implements PasswordEncoder {
+public class Sm3PasswordEncoder implements PasswordEncoder {
 
     @Override
     public String encode(CharSequence rawPassword) {

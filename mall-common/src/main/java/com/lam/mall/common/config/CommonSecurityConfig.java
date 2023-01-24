@@ -1,6 +1,5 @@
 package com.lam.mall.common.config;
 
-import com.auth0.jwt.algorithms.Algorithm;
 import com.lam.mall.common.security.*;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +27,7 @@ public class CommonSecurityConfig {
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new SM3PasswordEncoder();
+        return new Sm3PasswordEncoder();
     }
 
     @Bean

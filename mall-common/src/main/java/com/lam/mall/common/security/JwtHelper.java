@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 
 import java.util.Date;
@@ -25,11 +26,12 @@ import java.util.Map;
  * @author Created by zkk on 2020/9/22
  **/
 @Slf4j
+@Service
 public class JwtHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtHelper.class);
 
     @Autowired
-    private Algorithm algorithm;
+    private SmAlgorithm smAlgorithm;
 
     @Autowired
     private JwtProperties jwtProperties;
@@ -45,7 +47,7 @@ public class JwtHelper {
      * 从token中获取JWT中的负载
      */
     private DecodedJWT getDecodedJWT(String token) {
-        JWTVerifier verifier = JWT.require(algorithm).withIssuer(jwtProperties.getIssuer()).acceptLeeway(jwtProperties.getLeeway()).build();
+        JWTVerifier verifier = JWT.require(smAlgorithm).withIssuer(jwtProperties.getIssuer()).acceptLeeway(jwtProperties.getLeeway()).build();
         DecodedJWT jwt =  verifier.verify(token);
         return jwt;
     }
@@ -86,7 +88,7 @@ public class JwtHelper {
                     ;
 
             claims.forEach(builder::withClaim);
-            return builder.sign(algorithm);
+            return builder.sign(smAlgorithm);
         } catch (IllegalArgumentException e) {
             log.error("jwt生成失败", e);
         }
