@@ -7,6 +7,7 @@ import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * 生成jwt的工具类，基于auth0.java-jwt封装
@@ -31,10 +33,16 @@ public class JwtHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtHelper.class);
 
     @Autowired
-    private SmAlgorithm smAlgorithm;
-
-    @Autowired
     private JwtProperties jwtProperties;
+
+    private static SmAlgorithm smAlgorithm;
+
+    private SmAlgorithm getSmAlgorithm(){
+        if(jwtProperties!=null && smAlgorithm==null){
+            smAlgorithm = new SmAlgorithm(jwtProperties.getPublicKey(),jwtProperties.getPrivateKey());
+        }
+        return smAlgorithm;
+    }
 
     /**
      * 生成token的过期时间
@@ -47,7 +55,7 @@ public class JwtHelper {
      * 从token中获取JWT中的负载
      */
     private DecodedJWT getDecodedJWT(String token) {
-        JWTVerifier verifier = JWT.require(smAlgorithm).withIssuer(jwtProperties.getIssuer()).acceptLeeway(jwtProperties.getLeeway()).build();
+        JWTVerifier verifier = JWT.require(getSmAlgorithm()).withIssuer(jwtProperties.getIssuer()).acceptLeeway(jwtProperties.getLeeway()).build();
         DecodedJWT jwt =  verifier.verify(token);
         return jwt;
     }
@@ -84,11 +92,11 @@ public class JwtHelper {
                     .withIssuer(jwtProperties.getIssuer()) //token签发人
                     .withExpiresAt(generateExpirationDate()) //设置过期时间
                     .withIssuedAt(new Date())//设置证书发布时间
-                    .withSubject(username) //用户名
-                    ;
-
-            claims.forEach(builder::withClaim);
-            return builder.sign(smAlgorithm);
+                    .withSubject(username); //用户名
+            if(null != claims){
+                claims.forEach(builder::withClaim);
+            }
+            return builder.sign(getSmAlgorithm());
         } catch (IllegalArgumentException e) {
             log.error("jwt生成失败", e);
         }

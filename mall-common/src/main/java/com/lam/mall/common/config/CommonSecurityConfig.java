@@ -18,6 +18,10 @@ public class CommonSecurityConfig {
         return new JwtProperties();
     }
     @Bean
+    public JwtHelper jwtHelper() {
+        return new JwtHelper();
+    }
+    @Bean
     public IgnoreUrlsConfig ignoreUrlsConfig() {
         return new IgnoreUrlsConfig();
     }

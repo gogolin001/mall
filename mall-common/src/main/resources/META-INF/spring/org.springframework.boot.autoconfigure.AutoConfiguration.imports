@@ -1,6 +1,4 @@
 com.lam.mall.common.config.CommonSecurityConfig
-com.lam.mall.common.config.JwtConfig
-com.lam.mall.common.config.Jwt2Config
 com.lam.mall.common.config.MybatisPlusConfig
 com.lam.mall.common.config.RedisConfig
 com.lam.mall.common.config.SecurityConfig

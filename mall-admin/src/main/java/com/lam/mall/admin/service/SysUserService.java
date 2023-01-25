@@ -50,26 +50,28 @@ import java.util.Set;
 @Service
 public class SysUserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SysUserService.class);
-    @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
     private SysUserMapper userMapper;
-    @Autowired
     private SysUserTokenMapper userTokenMapper;
-    @Autowired
     private CacheManager cacheManager;
-    @Autowired
     private Cache<String, SysUser> userCache;
-    @Autowired
     private Cache<String, SysUserToken> tokenCache;
-    @Autowired
     private RoleService roleService;
-    @Autowired
     private HttpServletRequest request;
-    @Autowired
     private JwtProperties jwtProperties;
-    @Autowired
     private JwtHelper jwtHelper;
+
+    @Autowired
+    public SysUserService(JwtProperties jwtProperties, JwtHelper jwtHelper, PasswordEncoder passwordEncoder, CacheManager cacheManager, SysUserMapper sysUserMapper, SysUserTokenMapper sysUserTokenMapper, RoleService roleService, HttpServletRequest request){
+        this.jwtProperties = jwtProperties;
+        this.jwtHelper = jwtHelper;
+        this.passwordEncoder = passwordEncoder;
+        this.cacheManager = cacheManager;
+        this.userMapper = sysUserMapper;
+        this.userTokenMapper = sysUserTokenMapper;
+        this.roleService = roleService;
+        this.request = request;
+    }
 
 
     @PostConstruct
