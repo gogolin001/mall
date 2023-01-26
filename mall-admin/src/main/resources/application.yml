@@ -108,6 +108,7 @@ secure:
       - /api/v1/admin/account/info
       - /api/v1/admin/account/logout
       - /minio/upload
+      - /error
 mybatis-plus:
   global-config:
     # 机械id
