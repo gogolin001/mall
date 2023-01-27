@@ -6,7 +6,15 @@ spring:
     name: mall-admin
   profiles:
     active: dev #默认为开发环境
+  messages:
+    encoding: utf-8
+    basename: i18n.messages
+    cache-duration: 1
   servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
     multipart:
       enabled: true #默认支持文件上传.
       max-file-size: 100MB #最大支持文件大小

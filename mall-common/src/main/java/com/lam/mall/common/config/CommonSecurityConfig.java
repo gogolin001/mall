@@ -1,5 +1,6 @@
 package com.lam.mall.common.config;
 
+import com.lam.mall.common.domain.JwtProperties;
 import com.lam.mall.common.security.*;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;

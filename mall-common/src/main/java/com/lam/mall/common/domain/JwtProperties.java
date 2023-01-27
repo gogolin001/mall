@@ -1,4 +1,4 @@
-package com.lam.mall.common.security;
+package com.lam.mall.common.domain;
 
 import lombok.Getter;
 import lombok.Setter;
