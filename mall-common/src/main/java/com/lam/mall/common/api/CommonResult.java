@@ -8,11 +8,11 @@ public class CommonResult<T> {
     /**
      * 状态码
      */
-    private long code;
+    private int code;
     /**
      * 提示信息
      */
-    private String message;
+    private String msg;
     /**
      * 数据封装
      */
@@ -21,9 +21,9 @@ public class CommonResult<T> {
     protected CommonResult() {
     }
 
-    protected CommonResult(long code, String message, T data) {
+    protected CommonResult(int code, String message, T data) {
         this.code = code;
-        this.message = message;
+        this.msg = message;
         this.data = data;
     }
 
@@ -107,20 +107,20 @@ public class CommonResult<T> {
         return new CommonResult<T>(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), data);
     }
 
-    public long getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(long code) {
+    public void setCode(int code) {
         this.code = code;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMsg(String message) {
+        this.msg = message;
     }
 
     public T getData() {

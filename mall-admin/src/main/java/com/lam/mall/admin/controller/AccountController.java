@@ -209,6 +209,6 @@ public class AccountController {
         captcha.setGenerator(new MathGenerator(1)); // 自定义验证码内容为四则运算方式
         captcha.createCode(); // 生成code
 
-        return CommonResult.success(new CaptchaParam(IdUtil.simpleUUID(),captcha.getImageBase64Data()));
+        return CommonResult.success(new CaptchaParam(IdUtil.simpleUUID(),captcha.getImageBase64()));
     }
 }
