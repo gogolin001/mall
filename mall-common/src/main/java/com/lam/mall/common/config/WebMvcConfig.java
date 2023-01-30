@@ -103,8 +103,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     /**
      * 默认解析器 其中locale表示默认语言
      */
-    @Bean
+    /*@Bean
     public LocaleResolver localeResolver() {
         return new CommonLocaleResolver();
-    }
+    }*/
 }

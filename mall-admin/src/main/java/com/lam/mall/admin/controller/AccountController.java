@@ -1,7 +1,14 @@
 package com.lam.mall.admin.controller;
 
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.CircleCaptcha;
+import cn.hutool.captcha.LineCaptcha;
+import cn.hutool.captcha.ShearCaptcha;
+import cn.hutool.captcha.generator.MathGenerator;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.lam.mall.admin.dto.CaptchaParam;
 import com.lam.mall.admin.dto.UpdateUserPasswordParam;
 import com.lam.mall.admin.dto.UserLoginParam;
 import com.lam.mall.admin.dto.UserParam;
@@ -186,9 +193,23 @@ public class AccountController {
     }
 
     @Operation(summary = "获取指定用户的角色")
-    @RequestMapping(value = "/role/{adminId}", method = RequestMethod.GET)
+    @GetMapping(value = "/role/{adminId}")
     public CommonResult<List<SysRole>> getRoleList(@PathVariable Long adminId) {
         List<SysRole> roleList = userService.getRoleList(adminId);
         return CommonResult.success(roleList);
+    }
+
+    /**
+     * 获取验证码图片
+     * @return
+     */
+    @GetMapping(value = "/captchaImage")
+    public CommonResult<CaptchaParam> captchaImage(){
+        CircleCaptcha captcha = CaptchaUtil.createCircleCaptcha(100, 40, 4, 4);
+        MathGenerator mathGenerator = new MathGenerator(1);
+        captcha.setGenerator(mathGenerator); // 自定义验证码内容为四则运算方式
+        captcha.createCode(); // 生成code
+
+        return CommonResult.success(new CaptchaParam(IdUtil.simpleUUID(),mathGenerator.generate()));
     }
 }
