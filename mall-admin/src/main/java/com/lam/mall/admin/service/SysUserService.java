@@ -4,6 +4,9 @@ import cn.hutool.core.codec.Base64;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.SmUtil;
+import cn.hutool.crypto.asymmetric.KeyType;
+import cn.hutool.crypto.asymmetric.SM2;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
 import com.alicp.jetcache.Cache;
@@ -149,10 +152,11 @@ public class SysUserService {
     public String login(String username, String password){
         String token = "";
         UserDetails userDetails = loadUserByUsername(username);
+        SM2 sm2 = SmUtil.sm2(this.jwtProperties.getPrivateKey(),this.jwtProperties.getPublicKey());
         if(ObjectUtil.isEmpty(userDetails)){
             Asserts.fail("账号不存在");
         }
-        else if(!passwordEncoder.matches(Base64.decodeStr(password),userDetails.getPassword())) {
+        else if(!passwordEncoder.matches(StrUtil.utf8Str(sm2.decryptFromBcd(password, KeyType.PrivateKey)),userDetails.getPassword())) {
             Asserts.fail("密码错误");
         }
         else if(!userDetails.isEnabled()){
