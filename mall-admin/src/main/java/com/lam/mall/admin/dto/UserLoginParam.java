@@ -17,4 +17,15 @@ public class UserLoginParam
     @NotEmpty(message = "密码不能为空")
     @Schema(title = "密码", requiredMode = Schema.RequiredMode.REQUIRED)
     private String password;
+
+    @NotEmpty(message = "验证码Key不能为空")
+    @Schema(title = "验证码Key", requiredMode = Schema.RequiredMode.REQUIRED)
+    private String uuid;
+
+    @NotEmpty(message = "验证码不能为空")
+    @Schema(title = "验证码", requiredMode = Schema.RequiredMode.REQUIRED)
+    private String code;
+
+    @Schema(title = "记住我", requiredMode = Schema.RequiredMode.REQUIRED)
+    private Boolean rememberMe;
 }

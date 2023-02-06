@@ -4,7 +4,10 @@ import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.CircleCaptcha;
 import cn.hutool.captcha.generator.MathGenerator;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.math.Calculator;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.ObjUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.lam.mall.admin.dto.CaptchaParam;
 import com.lam.mall.admin.dto.UpdateUserPasswordParam;
@@ -25,6 +28,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -65,6 +71,21 @@ public class AccountController {
     @Operation(summary = "登录以后返回token")
     @PostMapping("/login")
     public CommonResult login(@Validated @RequestBody UserLoginParam userLoginParam){
+        Object codeRule = redis.get("capticha:"+userLoginParam.getUuid());
+        if(ObjUtil.isEmpty(codeRule)){
+            return CommonResult.failed("验证码过期，请获取新验证码");
+        }
+        try{
+            redis.del("capticha:"+userLoginParam.getUuid());
+            int code = (int) Calculator.conversion(codeRule.toString());
+            if(Integer.parseInt(userLoginParam.getCode()) != code ){
+                return CommonResult.failed("验证码错误");
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return CommonResult.failed("验证码异常");
+        }
+
         String token = userService.login(userLoginParam.getUsername(), userLoginParam.getPassword());
         if (token == null) {
             return CommonResult.validateFailed("用户名或密码错误");
@@ -205,12 +226,11 @@ public class AccountController {
      */
     @GetMapping(value = "/captchaImage")
     public CommonResult<CaptchaParam> captchaImage(){
-
         CircleCaptcha captcha = CaptchaUtil.createCircleCaptcha(100, 40, 4, 4);
         captcha.setGenerator(new MathGenerator(1)); // 自定义验证码内容为四则运算方式
         captcha.createCode(); // 生成code
         var param = new CaptchaParam(IdUtil.simpleUUID(),captcha.getImageBase64Data());
-        redis.set("capticha:" + param.getUuid(),captcha.getCode(), 20000);
+        redis.set("capticha:" + param.getUuid(),captcha.getCode(), 300);
         return CommonResult.success(param);
     }
 }
