@@ -2,8 +2,6 @@ package com.lam.mall.admin.controller;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.CircleCaptcha;
-import cn.hutool.captcha.LineCaptcha;
-import cn.hutool.captcha.ShearCaptcha;
 import cn.hutool.captcha.generator.MathGenerator;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.IdUtil;
@@ -16,13 +14,14 @@ import com.lam.mall.admin.service.RoleService;
 import com.lam.mall.admin.service.SysUserService;
 import com.lam.mall.common.api.CommonPage;
 import com.lam.mall.common.api.CommonResult;
+import com.lam.mall.common.domain.JwtProperties;
+import com.lam.mall.common.service.RedisService;
 import com.lam.mall.mbg.model.sys.SysRole;
 import com.lam.mall.mbg.model.sys.SysUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,19 +36,20 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/admin/account")
 public class AccountController {
 
-    @Value("${jwt.tokenHeader}")
-    private String tokenHeader;
-    @Value("${jwt.tokenHead}")
-    private String tokenHead;
-
     private final SysUserService userService;
 
     private final RoleService roleService;
 
+    private final JwtProperties jwtProperties;
+
+    private final RedisService redis;
+
     @Autowired
-    public AccountController(SysUserService sysUserService, RoleService roleService){
+    public AccountController(SysUserService sysUserService, RoleService roleService,JwtProperties jwtProperties, RedisService redis){
         this.userService = sysUserService;
         this.roleService = roleService;
+        this.jwtProperties = jwtProperties;
+        this.redis = redis;
     }
 
     @Operation(summary = "用户注册")
@@ -71,7 +71,7 @@ public class AccountController {
         }
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("token", token);
-        tokenMap.put("tokenHead", tokenHead);
+        tokenMap.put("tokenHead", this.jwtProperties.getTokenHead());
         return CommonResult.success(tokenMap);
     }
 
@@ -79,14 +79,14 @@ public class AccountController {
     @Operation(summary = "刷新token")
     @GetMapping(value = "/refreshToken")
     public CommonResult refreshToken(HttpServletRequest request) {
-        String token = request.getHeader(tokenHeader);
+        String token = request.getHeader(this.jwtProperties.getTokenHeader());
         String refreshToken = userService.refreshToken(token);
         if (refreshToken == null) {
             return CommonResult.failed("token已经过期！");
         }
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("token", refreshToken);
-        tokenMap.put("tokenHead", tokenHead);
+        tokenMap.put("tokenHead", this.jwtProperties.getTokenHead());
         return CommonResult.success(tokenMap);
     }
 
@@ -201,14 +201,16 @@ public class AccountController {
 
     /**
      * 获取验证码图片
-     * @return
+     * @return 返回验证码图片Base64
      */
     @GetMapping(value = "/captchaImage")
     public CommonResult<CaptchaParam> captchaImage(){
+
         CircleCaptcha captcha = CaptchaUtil.createCircleCaptcha(100, 40, 4, 4);
         captcha.setGenerator(new MathGenerator(1)); // 自定义验证码内容为四则运算方式
         captcha.createCode(); // 生成code
-
-        return CommonResult.success(new CaptchaParam(IdUtil.simpleUUID(),captcha.getImageBase64()));
+        var param = new CaptchaParam(IdUtil.simpleUUID(),captcha.getImageBase64Data());
+        redis.set("capticha:" + param.getUuid(),captcha.getCode(), 20000);
+        return CommonResult.success(param);
     }
 }

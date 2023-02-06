@@ -25,7 +25,7 @@ spring:
   data:
     redis:
       timeout: 100ms
-      database: 0
+      database: 14
       lettuce:
         pool:
           max-active: 200  # 连接池最大连接数（使用负值表示没有限制）
@@ -85,13 +85,6 @@ jwt:
   publicKey: 'MFkwEwYHKoZIzj0CAQYIKoEcz1UBgi0DQgAEjmGJnOtehi+epz05iyrYQSD9GmdB8foZuqm0asC1/xgH9HTevoquZtZpo7ICY/+SYif7BFb/kzDpbAHQ3oEzww=='
   privateKey: 'MIGTAgEAMBMGByqGSM49AgEGCCqBHM9VAYItBHkwdwIBAQQgMl53Ezx51dnRoJHx9S/19RRojvZzbKgywUWjNSnAXTWgCgYIKoEcz1UBgi2hRANCAASOYYmc616GL56nPTmLKthBIP0aZ0Hx+hm6qbRqwLX/GAf0dN6+iq5m1mmjsgJj/5JiJ/sEVv+TMOlsAdDegTPD'
 
-redis:
-  database: mall
-  key:
-    admin: 'sys:admin'
-    resourceList: 'sys:resourceList'
-  expire:
-    common: 86400 # 24小时
 secure:
   ignored:
     urls: #安全路径白名单
@@ -120,7 +113,7 @@ secure:
       - /api/v1/admin/account/captchaImage
 mybatis-plus:
   global-config:
-    # 机械id
+    # 机器id(额外扩展属性)
     worker-id: 2
     # 数据标识id(机房id)
     datacenter-id: 1
