@@ -52,7 +52,6 @@ dependencies {
 
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springDocVersion")
     implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:$springDocVersion")
-    //implementation("com.github.xiaoymin:knife4j-springdoc-ui:$knife4jVersion")
     implementation("com.github.xiaoymin:knife4j-openapi3-jakarta-spring-boot-starter:$knife4jVersion")
 
     annotationProcessor 'org.springframework:spring-context-indexer'

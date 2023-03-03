@@ -8,7 +8,7 @@ allprojects {
 subprojects {
 
     ext {//依赖版本
-        springBootVersion = "3.0.2"
+        springBootVersion = "3.0.3"
         dependencyManagementVersion = "1.1.0"
         mysqlConnectorVersion = "8.0.32"
         mybatisPlusStarterVersion = "3.5.3.1"
@@ -35,6 +35,7 @@ subprojects {
         javaJwtVersion = "4.3.0"
         jakartaVersion = "6.0.0"
         mybatisBootVersion = "3.0.1"
+        mybatisVersion = "3.5.12"
         graalvmBuildVersion = "0.9.18"
     }
 

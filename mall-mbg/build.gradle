@@ -10,7 +10,10 @@ dependencies {
     compileOnly("org.projectlombok:lombok:$lombokVersion")
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 
-    implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:$mybatisBootVersion")
+    implementation("org.mybatis:mybatis:$mybatisVersion")
+    implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:$mybatisBootVersion"){
+        exclude group: 'org.mybatis', module: "mybatis"
+    }
     implementation ("com.baomidou:mybatis-plus-boot-starter:$mybatisPlusStarterVersion"){
         exclude group: 'ch.qos.logback', module: "logback-classic"
         exclude group: 'org.springframework.boot', module: "spring-boot-starter"
@@ -23,6 +26,5 @@ dependencies {
     implementation "cn.hutool:hutool-all:$hutoolVersion"
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springDocVersion")
     implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:$springDocVersion")
-    //implementation("com.github.xiaoymin:knife4j-springdoc-ui:$knife4jVersion")
     implementation("com.github.xiaoymin:knife4j-openapi3-jakarta-spring-boot-starter:$knife4jVersion")
 }
