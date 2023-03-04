@@ -7,7 +7,6 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.math.Calculator;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ObjUtil;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.lam.mall.admin.dto.CaptchaParam;
 import com.lam.mall.admin.dto.UpdateUserPasswordParam;
@@ -28,9 +27,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -112,17 +108,16 @@ public class AccountController {
     }
 
     @Operation(summary = "获取当前登录用户信息")
-    @GetMapping(value = "/info")
-    public CommonResult getAdminInfo(Principal principal) {
+    @GetMapping(value = "/getInfo")
+    public CommonResult getInfo(Principal principal) {
         if(principal==null){
             return CommonResult.unauthorized(null);
         }
         String username = principal.getName();
         SysUser SysUser = userService.getUserByUsername(username);
         Map<String, Object> data = new HashMap<>();
-        data.put("username", SysUser.getUsername());
-        data.put("menus", userService.getMenu(SysUser.getId()));
-        data.put("icon", SysUser.getIcon());
+        data.put("permissions", userService.getMenu(SysUser.getId()));
+        data.put("user", SysUser);
         List<SysRole> roleList = userService.getRoleList(SysUser.getId());
         if(CollUtil.isNotEmpty(roleList)){
             List<String> roles = roleList.stream().map(SysRole::getRoleName).collect(Collectors.toList());
