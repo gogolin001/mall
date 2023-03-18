@@ -31,3 +31,8 @@ jetcache:
   remote:
     default:
       uri: redis://jmlide%40redis963@dev.jmlide.com:16379/1?timeout=5s
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false

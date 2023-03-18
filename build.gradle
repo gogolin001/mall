@@ -31,11 +31,11 @@ subprojects {
         bcprovVersion = "1.72"
         jaxbapiVersion = "2.3.1"
         knife4jVersion = "4.0.0"
-        springDocVersion = "2.0.2"
+        springDocVersion = "2.0.4"
         javaJwtVersion = "4.3.0"
         jakartaVersion = "6.0.0"
         mybatisBootVersion = "3.0.1"
-        mybatisVersion = "3.5.12"
+        mybatisVersion = "3.5.13"
         graalvmBuildVersion = "0.9.18"
     }
 
