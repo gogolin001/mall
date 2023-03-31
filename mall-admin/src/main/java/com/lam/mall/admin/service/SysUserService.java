@@ -153,6 +153,10 @@ public class SysUserService {
         String token = "";
         UserDetails userDetails = loadUserByUsername(username);
         SM2 sm2 = SmUtil.sm2(this.jwtProperties.getPrivateKey(),this.jwtProperties.getPublicKey());
+        //判断加密的密码是否04开头，如果非04开头则自动增加
+        if(!StrUtil.startWith(password,"04")){
+            password = "04" + password;
+        }
         if(ObjectUtil.isEmpty(userDetails)){
             Asserts.fail("账号不存在");
         }
