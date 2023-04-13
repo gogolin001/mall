@@ -1,2 +1,2 @@
 # 第三方不兼容类库进行引用
-com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+# com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
