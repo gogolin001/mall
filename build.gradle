@@ -8,35 +8,35 @@ allprojects {
 subprojects {
 
     ext {//依赖版本
-        springBootVersion = "3.0.5"
+        springBootVersion = "3.0.6"
         dependencyManagementVersion = "1.1.0"
-        mysqlConnectorVersion = "8.0.32"
+        mysqlConnectorVersion = "8.0.33"
         mybatisPlusStarterVersion = "3.5.3.1"
-        fastjson2Version = "2.0.26"
+        fastjson2Version = "2.0.29"
         javaxServletVersion = "4.0.1"
         jetcacheVersion = "2.7.3"
         shardingsphereVersion = "5.3.2"
         lombokVersion = "1.18.26"
-        hutoolVersion = "5.8.16"
+        hutoolVersion = "5.8.18"
         easyExcelVersion = "3.2.1"
-        wxjavaVersion = "4.4.9.B"
-        alipayVersion = "4.35.87.ALL"
+        wxjavaVersion = "4.5.0"
+        alipayVersion = "4.35.110.ALL"
         alipayEasyVersion = "2.2.2"
         logstashLogbackVersion = "7.3"
         jjwtVersion = "0.11.5"
-        lettuceVersion = "6.2.3.RELEASE"
-        opengaussVersion = "3.1.1"
+        lettuceVersion = "6.2.4.RELEASE"
+        opengaussVersion = "5.0.0"
         hibernateValidatorVersion = "8.0.0.Final"
         druidVersion = "1.2.17"
-        bcprovVersion = "1.72"
+        bcprovVersion = "1.73"
         jaxbapiVersion = "2.3.1"
         knife4jVersion = "4.1.0"
-        springDocVersion = "2.0.4"
+        springDocVersion = "2.1.0"
         javaJwtVersion = "4.3.0"
         jakartaVersion = "6.0.0"
         mybatisBootVersion = "3.0.1"
         mybatisVersion = "3.5.13"
-        graalvmBuildVersion = "0.9.18"
+        graalvmBuildVersion = "0.9.21"
     }
 
     repositories {
@@ -62,10 +62,5 @@ subprojects {
     configurations {
         //移除spring boot 默认logger依赖
         all*.exclude module: 'spring-boot-starter-logging'
-    }
-
-
-    tasks.withType(JavaCompile) {
-        options.encoding = "UTF-8"
     }
 }

@@ -53,7 +53,7 @@ spring:
       time-between-log-stats-millis: 300000
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
       stat-view-servlet:
-        enabled: false
+        enabled: true
         login-password: "mall@963"
         login-username: mall
   main:
