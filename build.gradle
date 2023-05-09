@@ -36,7 +36,7 @@ subprojects {
         jakartaVersion = "6.0.0"
         mybatisBootVersion = "3.0.1"
         mybatisVersion = "3.5.13"
-        graalvmBuildVersion = "0.9.21"
+        graalvmBuildVersion = "0.9.18"
     }
 
     repositories {
@@ -62,5 +62,8 @@ subprojects {
     configurations {
         //移除spring boot 默认logger依赖
         all*.exclude module: 'spring-boot-starter-logging'
+    }
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
     }
 }
