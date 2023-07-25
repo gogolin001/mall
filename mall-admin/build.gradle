@@ -7,7 +7,7 @@ plugins {
 
 group = 'com.lam.mall'
 version = '1.0-SNAPSHOT'
-sourceCompatibility = '19'
+sourceCompatibility = '20'
 
 
 dependencies {
@@ -58,6 +58,13 @@ dependencies {
 
 tasks.withType(JavaCompile).configureEach {
     options.compilerArgs += "--enable-preview"
+    options.encoding = "UTF-8"
+}
+tasks.withType(Test).configureEach {
+    jvmArgs += "--enable-preview"
+}
+tasks.withType(JavaExec).configureEach {
+    jvmArgs += "--enable-preview"
 }
 tasks.named('test') {
     useJUnitPlatform()

@@ -43,3 +43,7 @@ dependencies {
 
     implementation("net.logstash.logback:logstash-logback-encoder:$logstashLogbackVersion")
 }
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += "--enable-preview"
+    options.encoding = "UTF-8"
+}
