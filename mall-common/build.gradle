@@ -25,9 +25,7 @@ dependencies {
     implementation "com.baomidou:mybatis-plus-extension:$mybatisPlusStarterVersion"
 
     implementation "org.springframework.boot:spring-boot-starter-aop:$springBootVersion"
-    implementation ("org.springframework.boot:spring-boot-starter-web:$springBootVersion") {
-        exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
-    }
+    implementation ("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
     implementation ("org.springframework.boot:spring-boot-starter-data-redis:$springBootVersion"){
         exclude group: 'io.lettuce', module: "lettuce-core"
     }

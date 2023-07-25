@@ -8,7 +8,7 @@ allprojects {
 subprojects {
 
     ext {//依赖版本
-        springBootVersion = "3.0.6"
+        springBootVersion = "3.1.2"
         dependencyManagementVersion = "1.1.0"
         mysqlConnectorVersion = "8.0.33"
         mybatisPlusStarterVersion = "3.5.3.1"
@@ -17,7 +17,7 @@ subprojects {
         jetcacheVersion = "2.7.3"
         shardingsphereVersion = "5.3.2"
         lombokVersion = "1.18.26"
-        hutoolVersion = "5.8.18"
+        hutoolVersion = "5.8.20"
         easyExcelVersion = "3.2.1"
         wxjavaVersion = "4.5.0"
         alipayVersion = "4.35.110.ALL"
@@ -27,7 +27,7 @@ subprojects {
         lettuceVersion = "6.2.4.RELEASE"
         opengaussVersion = "5.0.0"
         hibernateValidatorVersion = "8.0.0.Final"
-        druidVersion = "1.2.17"
+        druidVersion = "1.2.18"
         bcprovVersion = "1.73"
         jaxbapiVersion = "2.3.1"
         knife4jVersion = "4.1.0"

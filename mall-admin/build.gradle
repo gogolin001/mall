@@ -7,7 +7,7 @@ plugins {
 
 group = 'com.lam.mall'
 version = '1.0-SNAPSHOT'
-sourceCompatibility = '17'
+sourceCompatibility = '19'
 
 
 dependencies {
@@ -23,10 +23,8 @@ dependencies {
     implementation project(path: ':mall-common', configuration:'default')
     implementation project(path: ':mall-mbg', configuration:'default')
 
-    implementation "org.springframework.boot:spring-boot-starter-undertow"
-    implementation ("org.springframework.boot:spring-boot-starter-web") {
-        exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
-    }
+
+    implementation ("org.springframework.boot:spring-boot-starter-web")
     implementation ("org.springframework.boot:spring-boot-starter-data-redis"){
         //exclude group: 'io.lettuce', module: "lettuce-core"
     }
@@ -58,6 +56,9 @@ dependencies {
 
 }
 
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += "--enable-preview"
+}
 tasks.named('test') {
     useJUnitPlatform()
 }
